@@ -5,11 +5,5 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './wiki-media.component.html',
   styleUrls: ['./wiki-media.component.scss']
 })
-export class WikiMediaComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class WikiMediaComponent{
 }

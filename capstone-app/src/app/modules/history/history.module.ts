@@ -6,6 +6,12 @@ import { WikiMediaComponent } from './wiki-media/wiki-media.component';
   declarations: [WikiMediaComponent],
   imports: [
     CommonModule
+  ],
+  exports: [
+    WikiMediaComponent
+  ],
+  entryComponents: [
+    WikiMediaComponent
   ]
 })
 export class HistoryModule { }
