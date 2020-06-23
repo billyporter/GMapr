@@ -9,8 +9,3 @@ import { WikiMediaComponent } from './wiki-media/wiki-media.component';
   ]
 })
 export class HistoryModule { }
-
-
-//mat-card
-//mat-label
-//[(ngModel)]
