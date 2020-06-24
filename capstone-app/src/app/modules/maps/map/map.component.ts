@@ -1,16 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
-  location!:google.maps.LatLng;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class MapComponent {
+  location!: google.maps.LatLng;
 }
