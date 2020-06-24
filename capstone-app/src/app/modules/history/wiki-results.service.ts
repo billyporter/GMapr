@@ -13,7 +13,7 @@ export class WikiResultsService {
   private static readonly URL_END = '&format=json';
   
   search(query: string): Observable<WikiSearchResult> {
-    const url = this.urlBeginning + query + this.urlEnd;
+    const url = this.URL_BEGINNING + query + this.URL_END;
     return this.http.get<WikiSearchResult>(this.url);
   }
 }
