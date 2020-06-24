@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 
 export class WikiResultsService {
   constructor(private readonly http: HttpClient) {}
-  query: string;
   urlBeginning = 'https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=';
   urlEnd = '&format=json';
   
