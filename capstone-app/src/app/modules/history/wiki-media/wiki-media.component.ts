@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
   templateUrl: './wiki-media.component.html',
   styleUrls: ['./wiki-media.component.scss']
 })
-export class WikiMediaComponent implements OnInit, OnDestroy{
+export class WikiMediaComponent implements OnInit, OnDestroy {
   wikiResult: WikiSearchResult;
   destroy$ = new Subject<void>();
   loading = true;
@@ -24,7 +24,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy{
     this.destroy$.next();
   }
 
-  getResults(){
+  getResults() {
     this.wikiService.search('Orlando, Florida').pipe(takeUntil(this.destroy$)).subscribe((result: WikiSearchResult) => {
       this.wikiResult = result;
       this.body = this.fixString(result.parse.text["*"]);
