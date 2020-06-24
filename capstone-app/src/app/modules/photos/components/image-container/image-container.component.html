@@ -1,0 +1,7 @@
+<div class="flex-container">
+  <div
+    class="picture"
+    *ngFor="let photo of photos | slice: 0:10; let i = index">
+    <img src="{{photo.link}}"/>
+  </div>
+</div>

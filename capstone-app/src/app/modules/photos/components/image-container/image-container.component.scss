@@ -1,0 +1,19 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.picture {
+  height: 300px;
+  flex-grow: 1;
+}
+
+img {
+  border: 3px solid white;
+  max-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
