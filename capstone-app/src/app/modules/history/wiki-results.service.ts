@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 
 export class WikiResultsService {
   constructor(private readonly http: HttpClient) {}
-  urlBeginning = 'https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=';
-  urlEnd = '&format=json';
+  private static readonly URL_BEGINNING = 'https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=';
+  private static readonly URL_END = '&format=json';
   
   search(query: string): Observable<WikiSearchResult> {
     const url = this.urlBeginning + query + this.urlEnd;
