@@ -33,12 +33,12 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   fixString(text: string): string {
-    var firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
-    var firstPartOfString = text.substring(firstIndex, text.length);
-    var endIndex = firstPartOfString.indexOf("<h2>", 0);
-    var startIndex = firstPartOfString.indexOf('</h2>', 0);
-    var middleOfString = firstPartOfString.substring(startIndex, endIndex);
-    var finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
+    let firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
+    let firstPartOfString = text.substring(firstIndex, text.length);
+    let endIndex = firstPartOfString.indexOf("<h2>", 0);
+    let startIndex = firstPartOfString.indexOf('</h2>', 0);
+    let middleOfString = firstPartOfString.substring(startIndex, endIndex);
+    let finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
     finalString.split('title="Edit section: History">edit').join('>');
     return finalString;
   }
