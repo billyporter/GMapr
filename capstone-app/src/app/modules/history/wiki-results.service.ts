@@ -12,9 +12,9 @@ export class WikiResultsService {
   query: string;
   urlBeginning = 'https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=';
   urlEnd = '&format=json';
-  url: string;
+  
   search(query: string): Observable<WikiSearchResult> {
-    this.url = this.urlBeginning + query + this.urlEnd;
+    const url = this.urlBeginning + query + this.urlEnd;
     return this.http.get<WikiSearchResult>(this.url);
   }
 }
