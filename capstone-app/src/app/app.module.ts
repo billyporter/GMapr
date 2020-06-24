@@ -4,6 +4,8 @@ import { HistoryModule } from './modules/history/history.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { WikiMediaComponent } from './modules/history/wiki-media/wiki-media.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import { AppComponent } from './app.component';
     HistoryModule,
     PhotosModule,
     MapsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
