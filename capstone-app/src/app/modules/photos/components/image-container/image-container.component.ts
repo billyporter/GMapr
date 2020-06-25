@@ -1,6 +1,5 @@
-import { MockPhotoFetcher } from './../../services/mock-photo-fetcher.service';
-import { Photo } from './../../photo-template';
-import { PhotoFetcher } from './../../services/photo-fetcher.service';
+import { Photo } from 'src/app/modules/photos/photo-template';
+import { PhotoFetcher } from 'src/app/modules/photos/services/photo-fetcher.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,15 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class ImageContainerComponent implements OnInit {
   photos: Photo[] = [];
 
-  constructor(
-    private photosService: PhotoFetcher,
-    private mockPhotosService: MockPhotoFetcher
-  ) {}
+  constructor(private photosService: PhotoFetcher) {}
 
   ngOnInit() {
-    this.getMockPhotos();
+    this.getPhotos();
   }
 
+  // TODO(billyporter): Allow userinput for limitPhotos instead of hardcoding
   getPhotos() {
     this.photosService.getPhotos().subscribe((results) => {
       for (const item in results.items) {
@@ -34,23 +31,11 @@ export class ImageContainerComponent implements OnInit {
           this.photos.push(photo);
         }
       }
+      this.limitPhotos(6);
     });
   }
 
-  getMockPhotos() {
-    this.mockPhotosService.getPhotos().subscribe((results) => {
-      for (const item in results.items) {
-        if (item) {
-          const photo = {
-            title: results.items[item].title,
-            link: results.items[item].link,
-            contextLink: results.items[item].image.contextLink,
-            height: results.items[item].image.height,
-            width: results.items[item].image.width,
-          };
-          this.photos.push(photo);
-        }
-      }
-    });
+  limitPhotos(limit: number) {
+    this.photos = this.photos.slice(0, limit);
   }
 }
