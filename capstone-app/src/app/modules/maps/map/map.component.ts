@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent {
-  location!: google.maps.LatLng;
+  // these coordinates are for a location in Miami
+  location = new google.maps.LatLng(26.011760, -80.139050);
 }
