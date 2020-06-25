@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HistoryModule,
     PhotosModule,
-    MapsModule,
+    MapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
