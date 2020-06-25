@@ -3,12 +3,15 @@ import { WikiSearchResult } from '../WikiSearchTemplate';
 import { WikiResultsService } from '../wiki-results.service';
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-wiki-media-history-section',
   templateUrl: './wiki-media.component.html',
   styleUrls: ['./wiki-media.component.scss']
 })
+// TODO(sarahhud): Add testing to ensure http request is sent to the wikipedia api.
+// TODO(sarahhud): Add testing to ensure it displays location history.
 export class WikiMediaComponent implements OnInit, OnDestroy {
   wikiResult: WikiSearchResult;
   destroy$ = new Subject<void>();
@@ -25,7 +28,11 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   getResults() {
-    this.wikiService.search('Orlando, Florida').pipe(takeUntil(this.destroy$)).subscribe((result: WikiSearchResult) => {
+    // TODO(sarahhud): Add error handling for wikipedia request and testing.
+    // TODO(sarahhud): Replace 'Orlando, Florida' with actual query.
+    this.wikiService.search('Orlando, Florida')
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((result: WikiSearchResult) => {
       this.wikiResult = result;
       this.body = this.fixString(result.parse.text["*"]);
       this.loading = false;
