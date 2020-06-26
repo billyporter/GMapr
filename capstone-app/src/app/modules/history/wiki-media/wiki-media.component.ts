@@ -31,8 +31,8 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
     // TODO(sarahhud): Add error handling for wikipedia request and testing.
     // TODO(sarahhud): Replace 'Orlando, Florida' with actual query.
     this.wikiService.search('Orlando, Florida')
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((result: WikiSearchResult) => {
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result: WikiSearchResult) => {
       this.wikiResult = result;
       this.body = this.fixString(result.parse.text["*"]);
       this.loading = false;
