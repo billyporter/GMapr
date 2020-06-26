@@ -19,14 +19,14 @@ export class ImageContainerComponent implements OnInit {
   // TODO(billyporter): Allow userinput for limitPhotos instead of hardcoding
   getPhotos() {
     this.photosService.getPhotos().subscribe((results) => {
-      for (const item in results.items) {
+      for (const item of results.items) {
         if (item) {
           const photo = {
-            title: results.items[item].title,
-            link: results.items[item].link,
-            contextLink: results.items[item].image.contextLink,
-            height: results.items[item].image.height,
-            width: results.items[item].image.width,
+            title: item.title,
+            link: item.link,
+            contextLink: item.image.contextLink,
+            height: item.image.height,
+            width: item.image.width,
           };
           this.photos.push(photo);
         }

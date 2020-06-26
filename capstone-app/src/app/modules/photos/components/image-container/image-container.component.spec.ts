@@ -62,23 +62,12 @@ describe('ImageContainerComponent', () => {
       const bannerDe: DebugElement = fixture.debugElement;
       const bannerEl: HTMLElement = bannerDe.nativeElement;
       const imageList = bannerEl.querySelectorAll('img');
-      const testPhotosLinks: string[] = [];
-      const imageListLinks: string[] = [];
-      for (const image in imageList) {
-        if (imageList[image].src) {
-          imageListLinks.push(
-            `..${imageList[image].src.substring(
-              21,
-              imageList[image].src.length
-            )}`
-          );
-        }
-      }
-      for (const testPhoto in testPhotos) {
-        if (testPhoto) {
-          testPhotosLinks.push(testPhotos[testPhoto].link);
-        }
-      }
+      const imageListLinks = Array.from(imageList)
+        .filter((image) => !!image.src)
+        .map((image) => `..${image.src.substring(21, image.src.length)}`);
+      const testPhotosLinks = testPhotos
+        .filter((testPhoto) => !!testPhoto)
+        .map((testPhoto) => testPhoto.link);
       expect(imageListLinks).toEqual(testPhotosLinks);
     });
 

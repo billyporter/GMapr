@@ -20,7 +20,6 @@ export class PhotoFetcher {
    * TODO(billyporter): Add handling for requests that fail and requests that return 0 results.
    */
   getPhotos(): Observable<any> {
-    console.log('We here');
     const fullUrl = `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
                     `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
                     `${this.query}&${this.num}`;
