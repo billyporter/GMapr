@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class MockPhotoFetcher {
 
-  getPhotos(): Observable<any> {
+  getPhotos(query: string, limit: number): Observable<any> {
     return of(MockPhotos);
   }
 }

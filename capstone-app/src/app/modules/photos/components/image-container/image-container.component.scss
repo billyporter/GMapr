@@ -1,13 +1,108 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+  font-family: Georgia;
+  letter-spacing: 1.5px;
   margin-left: 10%;
   margin-right: 10%;
+  width: 80%;
+}
+
+.flex-container .picture {
+  border-radius: 3px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+  display: inline-block;
+  opacity: 0.99;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+}
+
+.flex-container .picture:before {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 0)),
+    to(rgba(0, 0, 0, 0.8))
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  content: "";
+  height: 50%;
+  left: 0;
+  position: absolute;
+  top: 100%;
+  transition-duration: 0.3s;
+  transition-property: top, opacity;
+  width: 100%;
+  z-index: 2;
+  -webkit-transition-property: top, opacity;
+  -webkit-transition-duration: 0.3s;
+}
+
+.flex-container .picture img {
+  backface-visibility: hidden;
+  display: block;
+  max-width: 100%;
+  -webkit-backface-visibility: hidden;
+}
+
+.flex-container .picture .details span {
+  bottom: 0;
+  color: #fff;
+  font-size: 16px;
+  padding: 20px;
+  position: absolute;
+  opacity: 0;
+  right: 0px;
+  z-index: 3;
+}
+
+.flex-container .picture .details .title {
+  font-size: 18px;
+  font-weight: 300px;
+  line-height: 1;
+}
+
+.flex-container .picture:hover .details span {
+  bottom: 20px;
+  opacity: 1;
+  transition-delay: 0.15s;
+  transition-duration: 0.3s;
+  transition-property: bottom, opacity;
+  -webkit-transition-delay: 0.15s;
+  -webkit-transition-duration: 0.3s;
+  -webkit-transition-property: bottom, opacity;
+}
+.flex-container .picture:focus:before,
+.flex-container .picture:hover:before {
+  top: 50%;
+}
+.flex-container .picture:focus .title,
+.flex-container .picture:hover .title {
+  transition-delay: 0.15s;
+  -webkit-transition-delay: 0.15s;
+}
+.flex-container .picture:focus .info,
+.flex-container .picture:hover .info {
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
 }
 
 .picture {
   flex-grow: 1;
   height: 300px;
+  position: relative;
+}
+
+.empty {
+  flex-grow: 1;
+  height: 300px;
+  position: relative;
 }
 
 img {
@@ -16,4 +111,8 @@ img {
   min-width: 100%;
   object-fit: cover;
   vertical-align: bottom;
+}
+
+a {
+  color: inherit;
 }
