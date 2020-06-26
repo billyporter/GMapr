@@ -34,7 +34,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       .subscribe((result: WikiSearchResult) => {
       this.wikiResult = result;
       console.log(result);
-      if (!result.error) {
+      if (this.wikiResult.parse.text) {
         this.body = this.fixString(result.parse.text["*"]);
         this.loading = false;
         this.setHtml(this.body);
@@ -57,7 +57,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   setHtml(text: string) {
-    let el = document.getElementById("body");
+    let el = document.getElementById('body');
     el.innerHTML = text;
   }
 
