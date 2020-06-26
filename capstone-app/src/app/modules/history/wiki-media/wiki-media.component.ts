@@ -20,22 +20,28 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults();
+    this.getResults('Orlando, Florida');
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  getResults() {
+  getResults(queryString: string) {
     // TODO(sarahhud): Add error handling for wikipedia request and testing.
-    // TODO(sarahhud): Replace 'Orlando, Florida' with actual query.
-    this.wikiService.search('Orlando, Florida')
+      this.wikiService.search(queryString)
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: WikiSearchResult) => {
       this.wikiResult = result;
-      this.body = this.fixString(result.parse.text["*"]);
-      this.loading = false;
+      console.log(result);
+      if (!result.error) {
+        this.body = this.fixString(result.parse.text["*"]);
+        this.loading = false;
+        this.setHtml(this.body);
+      }
+      else {
+        console.log("API did not return a valid response.");
+      }
     });
   }
 
@@ -48,6 +54,11 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
     let finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
     finalString.split('title="Edit section: History">edit').join('>');
     return finalString;
+  }
+
+  setHtml(text: string) {
+    let el = document.getElementById("body");
+    el.innerHTML = text;
   }
 
 }
