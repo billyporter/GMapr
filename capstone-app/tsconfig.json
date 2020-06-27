@@ -17,7 +17,9 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
