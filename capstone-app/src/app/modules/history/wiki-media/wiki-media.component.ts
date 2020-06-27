@@ -28,24 +28,24 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
 
   getResults(queryString: string) {
     // TODO(sarahhud): Add error handling for wikipedia request and testing.
-      this.wikiService.search(queryString)
+    this.wikiService.search(queryString)
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: WikiSearchResult) => {
-      this.wikiResult = result;
-      if (this.wikiResult.parse.text) {
-        this.body = this.fixString(result.parse.text["*"]);
-        this.loading = false;
-        this.setHtml(this.body);
-      }
-      else {
-        console.log("API did not return a valid response.");
-      }
+        this.wikiResult = result;
+        if (this.wikiResult.parse.text) {
+          this.body = this.fixString(result.parse.text["*"]);
+          this.loading = false;
+          this.setHtml(this.body);
+        }
+        else {
+          console.log("API did not return a valid response.");
+        }
     });
   }
 
   fixString(text: string): string {
     let firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
-    if(firstIndex != -1){
+    if(firstIndex !== -1){
       let firstPartOfString = text.substring(firstIndex, text.length);
       let endIndex = firstPartOfString.indexOf("<h2>", 0);
       let startIndex = firstPartOfString.indexOf('</h2>', 0);
@@ -54,7 +54,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       finalString.split('title="Edit section: History">edit').join('>');
       return finalString;
     }
-    console.log("<p>The city page was found, but unfortunatley there was no history paragraph found!</p>");
+    console.log("The city page was found, but unfortunately there was no history paragraph found!");
     return text;
   }
 
