@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class MapComponent {
   // these coordinates are for a location in Miami
-  location = new google.maps.LatLng(26.011760, -80.139050);
+  //location = new google.maps.LatLng(26.011760, -80.139050);
 }

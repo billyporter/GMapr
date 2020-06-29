@@ -35,6 +35,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
         console.log(result);
         if (this.wikiResult.parse.text) {
           this.body = this.fixString(result.parse.text["*"]);
+          console.log(this.fixString("<h2><span class=\"mw-headline\" id=\"History\">History</span><span class=\"mw-editsection\"><span class=\"mw-editsection-bracket\">[</span><a href=\"/w/index.php?title=Stillwater,_Oklahoma&amp;action=edit&amp;section=1\" title=\"Edit section: History\">edit</a><span class=\"mw-editsection-bracket\">]</span></span></h2><p>The north-central region of Oklahoma became part of the United States with the <a href=\"/wiki/Louisiana_Purchase\" title=\"Louisiana Purchase\">Louisiana Purchase</a> in 1803. In 1832, author and traveler <a href=\"/wiki/Washington_Irving\" title=\"Washington Irving\">Washington Irving</a> provided the first recorded description of the area around Stillwater in his book <i>A Tour on the Prairies</i>. He wrote of “a glorious prairie spreading out beneath the golden beams of an autumnal sun. The deep and frequent traces of buffalo, showed it to be a one of their favorite grazing grounds.”<sup id=\"cite_ref-9\" class=\"reference\"><a href=\"#cite_note-9\">&#91;9&#93;</a></sup></p><h2>More data that should not be represented!</h2>"));
           this.loading = false;
         }
         else {
@@ -44,7 +45,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   fixString(text: string): string {
-    console.log(text);
     let firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
     if(firstIndex !== -1){
       let firstPartOfString = text.substring(firstIndex, text.length);
