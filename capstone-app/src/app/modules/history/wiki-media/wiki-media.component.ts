@@ -35,7 +35,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
         if (this.wikiResult.parse.text) {
           this.body = this.fixString(result.parse.text["*"]);
           this.loading = false;
-          this.setHtml(this.body);
         }
         else {
           console.log("API did not return a valid response.");
@@ -56,11 +55,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
     }
     console.log("The city page was found, but unfortunately there was no history paragraph found!");
     return text;
-  }
-
-  setHtml(text: string) {
-    let el = document.getElementById('body');
-    el.innerHTML = text;
   }
 
 }

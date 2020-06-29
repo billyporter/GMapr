@@ -1,4 +1,4 @@
-<p *ngIf="!loading">
-  {{wikiResult.parse.title}}
-  <p id='body'>
-</p>
+<div *ngIf="!loading">
+  <h1 class="history-title">{{wikiResult.parse.title}}</h1>
+  <p class="history-body">{{body}}<p>
+</div>
