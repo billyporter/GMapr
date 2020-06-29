@@ -54,7 +54,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       if (paragraphs.length > 6){
         middleOfString = paragraphs.slice(0,5).join('');
       }
-    //  text = middleOfString.split(/<a.*?\/a>/g).join("");
       let history = middleOfString.split(/<.*?>/g).join("");
       return history.split(/&.*?;/g).join("");
     }
