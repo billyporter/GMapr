@@ -14,6 +14,7 @@ export class PhotoFetcher {
 
   constructor(private readonly http: HttpClient) { }
 
+  // TODO: Add interface
   getPhotos(query: string, limit: number): Observable<any> {
     query += '+1920';
     const fullUrl =
