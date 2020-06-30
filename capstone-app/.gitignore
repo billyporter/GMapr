@@ -50,3 +50,14 @@ Thumbs.db
 /backend/src/main/webapp/*.js
 /backend/src/main/webapp/*.html
 /backend/target/
+
+# Auto generated files
+main-es2015*
+main-es5*
+polyfills-es2015*
+polyfills-es5*
+runtime-es2015*
+runtime-es5*
+.editorconfig*
+.3rdpartylicenses.txt
+appengine-web.xml
