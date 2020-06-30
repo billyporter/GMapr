@@ -1,7 +1,14 @@
+<div *ngIf="!!errorMessage" class="error">
+  <p>{{ this.errorMessage }} for query: "{{ query }}"</p>
+</div>
 <div class="flex-container">
-  <div
-    class="picture"
-    *ngFor="let photo of photos">
-    <img src="{{photo.link}}"/>
+  <div class="picture" *ngFor="let photo of photos">
+    <a href="{{ photo.contextLink }}" target="_blank">
+      <img src="{{ photo.link }}" />
+      <div class="details">
+        <span class="title">{{ photo.title }}</span>
+      </div>
+    </a>
   </div>
+  <div class="empty"></div>
 </div>

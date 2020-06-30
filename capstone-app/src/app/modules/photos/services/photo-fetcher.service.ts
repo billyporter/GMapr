@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PhotoFetcher {
-
   private static LINK = 'https://www.googleapis.com/customsearch/v1?';
   private static API_KEY = 'key=AIzaSyDI9uo_xPRWlgF9bSWnJl1xSbeb394tgTo';
   private static SEARCH_ENGINE = 'cx=014012661603529902036:grbt2ttpety';
   private static SEARCH_TYPE = 'searchType=image';
-  private query = 'q=phoenixville';
-  private num = 'num=10';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
-  /* TODO(billyporter): Have getPhotos take arguments of query and num.
-   * TODO(billyporter): Add handling for requests that fail and requests that return 0 results.
-   */
-  getPhotos(): Observable<any> {
-    const fullUrl = `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
-                    `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
-                    `${this.query}&${this.num}`;
-    return this.http.get(fullUrl);
+  // TODO: Add interface
+  getPhotos(query: string, limit: number): Observable<any> {
+    query += '+1920';
+    const fullUrl =
+      `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
+      `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
+      `q=${query}&num=${limit}`;
+    return this.http.get(fullUrl).pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(`${error.status}, body was ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError('Could not locate images');
   }
 }

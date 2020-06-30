@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageContainerComponent implements OnInit {
   photos: Photo[] = [];
+  query: string;
+  limit: number;
+  errorMessage: string;
 
   constructor(private photosService: PhotoFetcher) {}
 
@@ -16,9 +19,10 @@ export class ImageContainerComponent implements OnInit {
     this.getPhotos();
   }
 
-  // TODO(billyporter): Allow userinput for limitPhotos instead of hardcoding
   getPhotos() {
-    this.photosService.getPhotos().subscribe((results) => {
+    this.query = 'Boston';
+    this.limit = 8;
+    this.photosService.getPhotos(this.query, this.limit).subscribe((results) => {
       for (const item of results.items) {
         if (item) {
           const photo = {
@@ -31,7 +35,14 @@ export class ImageContainerComponent implements OnInit {
           this.photos.push(photo);
         }
       }
-      this.limitPhotos(6);
+      if (this.photos.length === 0) {
+        this.errorMessage = '0 images found';
+      } else {
+        this.limitPhotos(this.limit);
+      }
+    }, (error) => {
+        this.errorMessage = error;
+        console.log(this.errorMessage);
     });
   }
 

@@ -27,7 +27,7 @@ describe('PhotoFetcher', () => {
   });
 
   it('getPhotos() should return data', () => {
-    photoService.getPhotos().subscribe((result) => {
+    photoService.getPhotos('Boston', 10).subscribe((result) => {
       expect(result).toEqual(ExpectedResponse);
     });
 
