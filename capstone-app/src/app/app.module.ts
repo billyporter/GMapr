@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PhotoFetcher } from './modules/photos/services/photo-fetcher.service';
 import { MockPhotoFetcher } from './modules/photos/services/mock-photo-fetcher.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { MockPhotoFetcher } from './modules/photos/services/mock-photo-fetcher.s
     PhotosModule,
     MapsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: PhotoFetcher, useExisting: MockPhotoFetcher }
