@@ -4,6 +4,7 @@ import { WikiResultsService } from '../wiki-results.service';
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-wiki-media-history-section',
@@ -16,6 +17,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   loading = true;
   body: string;
+  urls = new Map();
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
@@ -32,7 +34,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: WikiSearchResult) => {
         this.wikiResult = result;
-        console.log(result);
         if (this.wikiResult.parse.text) {
           this.body = this.fixString(result.parse.text["*"]);
           this.loading = false;
@@ -54,6 +55,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       if (paragraphs.length > 6){
         middleOfString = paragraphs.slice(0,5).join('');
       }
+      this.findHrefs(middleOfString);
       let history = middleOfString.split(/<.*?>/g).join("");
       return history.split(/&.*?;/g).join("");
     }
@@ -62,4 +64,21 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
     return history.split(/&.*?;/g).join("");
   }
 
+  findHrefs(text: string) {
+    let el = document.createElement("p");
+    el.innerHTML = text;
+    let hrefs = el.querySelectorAll("a");
+    for(let h of hrefs){
+      if (h.getAttribute('href').charAt(0) === '#'){
+        delete hrefs[h];
+      }
+      else {
+        let name = h.getAttribute('title');
+        let url = h.getAttribute('href').toString();
+        url = "https://en.wikipedia.org" + url;
+        this.urls.set(url, name);
+      }
+      console.log(this.urls);
+    }
+  }
 }
