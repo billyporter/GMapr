@@ -4,7 +4,6 @@ import { WikiResultsService } from '../wiki-results.service';
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-wiki-media-history-section',
