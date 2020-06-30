@@ -2,9 +2,9 @@
   <p>{{ this.errorMessage }} for query: "{{ query }}"</p>
 </div>
 <div class="flex-container">
-  <div class="picture" *ngFor="let photo of photos">
+  <div class="picture" *ngFor="let photo of displayPhotos; let i = index">
     <a href="{{ photo.contextLink }}" target="_blank">
-      <img src="{{ photo.link }}" />
+      <img src="{{ photo.link }}" (error)="removePhoto(i)"/>
       <div class="details">
         <span class="title">{{ photo.title }}</span>
       </div>
