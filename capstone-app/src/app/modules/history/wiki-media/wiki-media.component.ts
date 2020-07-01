@@ -21,7 +21,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('Stillwater, Oklahoma');
+    this.getResults('New York City');
   }
 
   ngOnDestroy(): void {
@@ -68,15 +68,17 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
     let el = document.createElement("p");
     el.innerHTML = text;
     let hrefs = Array.from(el.querySelectorAll("a"));
-    for(let h of hrefs){
-      if (h.getAttribute('href').charAt(0) === '#'){
+    let count = 1;
+    for (let h of hrefs) {
+      if (h.getAttribute('href').charAt(0) === '#' || h.getAttribute('title').startsWith('Edit')){
         delete hrefs[hrefs.indexOf(h)];
       }
-      else {
+      else if (count <= 15) {
         let name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = "https://en.wikipedia.org" + url;
         this.urls.set(url, name);
+        count ++;
       }
     }
   }
