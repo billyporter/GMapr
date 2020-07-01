@@ -1,5 +1,30 @@
-<google-map
-    [center] = "location"
-    height = "500px"
-    width = "100%"
-></google-map>
+<mat-form-field class="example-form-field">
+    <mat-label>Search for a city</mat-label>
+    <input matInput type="text"  #searchBar>
+    <button mat-button 
+    *ngIf="searchBar.value" 
+    matSuffix mat-icon-button aria-label="Clear" 
+    (click)="searchBar.value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+</mat-form-field>
+<button mat-icon-button color="primary" (click)="searchButton(searchBar.value)" >
+    <mat-icon >search</mat-icon>
+</button>
+
+<div #mapContainer>
+    <google-map
+    [center]="getCurrentOrSetLocation()"
+    height="750px"
+    width="100%"
+    [zoom] = "zoom"
+    (mapRightclick)="addMarker($event)">
+    <map-marker #markerp 
+    *ngFor="let marker of markers"
+    [position]="marker"
+    (mapClick)="clickMarker(markerp)"
+    (mapRightclick)="removeMarker(markerp)"
+    ></map-marker>
+    <map-info-window>Custom marker</map-info-window>
+    </google-map>
+</div>
