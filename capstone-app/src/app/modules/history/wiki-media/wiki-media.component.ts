@@ -16,10 +16,12 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   loading = true;
   body: string;
+  urls = new Map();
+
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('Stillwater, Oklahoma');
+    this.getResults('New York City');
   }
 
   ngOnDestroy(): void {
@@ -35,7 +37,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
         if (this.wikiResult.parse.text) {
           this.body = this.fixString(result.parse.text["*"]);
           this.loading = false;
-          this.setHtml(this.body);
         }
         else {
           console.log("API did not return a valid response.");
@@ -50,17 +51,35 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       let endIndex = firstPartOfString.indexOf("<h2>", 0);
       let startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
-      let finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
-      finalString.split('title="Edit section: History">edit').join('>');
-      return finalString;
+      let paragraphs = middleOfString.split('<p>');
+      if (paragraphs.length > 6){
+        middleOfString = paragraphs.slice(0,5).join('');
+      }
+      this.findHrefs(middleOfString);
+      let history = middleOfString.split(/<.*?>/g).join("");
+      return history.split(/&.*?;/g).join("");
     }
     console.log("The city page was found, but unfortunately there was no history paragraph found!");
-    return text;
+    let history = text.split(/<.*?>/g).join("");
+    return history.split(/&.*?;/g).join("");
   }
 
-  setHtml(text: string) {
-    let el = document.getElementById('body');
+  findHrefs(text: string) {
+    let el = document.createElement("p");
     el.innerHTML = text;
+    let hrefs = Array.from(el.querySelectorAll("a"));
+    let count = 1;
+    for (let h of hrefs) {
+      if (h.getAttribute('href').charAt(0) === '#' || h.getAttribute('title').startsWith('Edit')){
+        delete hrefs[hrefs.indexOf(h)];
+      }
+      else if (count <= 15) {
+        let name = h.getAttribute('title');
+        let url = h.getAttribute('href').toString();
+        url = "https://en.wikipedia.org" + url;
+        this.urls.set(url, name);
+        count ++;
+      }
+    }
   }
-
 }
