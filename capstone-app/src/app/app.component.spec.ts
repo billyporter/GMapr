@@ -28,5 +28,4 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain(fixture.componentInstance.title);
   });
-  
 });

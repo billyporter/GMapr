@@ -41,12 +41,12 @@ describe('WikiResultsService', () => {
   });
 
   it('search(query) should return data', () => {
-    service.search('Stillwater, Oklahoma').subscribe((service) => {
-      expect(service).toBeTruthy();
+    service.search('Stillwater, Oklahoma').subscribe((result) => {
+      expect(result).toBeTruthy();
     });
 
     const req = httpMock.expectOne((request) =>
-      request.url.includes('https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=')
+      request.url.includes('https://www.googleapis.com/customsearch/v1')
     );
     expect(req.request.method).toBe('GET');
     req.flush(testWikiResult);
