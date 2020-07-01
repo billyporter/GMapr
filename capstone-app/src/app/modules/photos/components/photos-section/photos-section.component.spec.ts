@@ -20,12 +20,10 @@ describe('PhotosSectionComponent', () => {
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
     getPhotosSpy = photosService.getPhotos.and.returnValue(of(MockTestImages));
 
-
     TestBed.configureTestingModule({
       declarations: [PhotosSectionComponent, ImageContainerComponent],
       imports: [PhotosModule],
-      providers: [ { provide: PhotoFetcher, useValue: photosService},
-      ]
+      providers: [{ provide: PhotoFetcher, useValue: photosService }],
     }).compileComponents();
   }));
 
@@ -50,17 +48,19 @@ describe('PhotosSectionComponent', () => {
       MatInputHarness.with({ selector: '.limit-input' })
     );
     await inputHarness.setValue('15');
-    fixture.whenStable().then(() => {
-      component.limitControl.markAsTouched();
-      expect(component.limitControl.invalid).toBe(true);
-      const errorElement = fixture.debugElement.nativeElement.querySelector(
-      'mat-error');
-      expect(errorElement.innerText).toContain('Must be between 1 and 10');
-    });
+    component.limitControl.markAsTouched();
+    fixture.detectChanges();
+    expect(component.limitControl.invalid).toBe(true);
+    const errorElement = fixture.debugElement.nativeElement.querySelector(
+      'mat-error'
+    );
+    expect(errorElement.innerText).toContain('Must be between 1 and 10');
   });
 
   it('max should change when it receives new limit', () => {
-    const myComponent = fixture.debugElement.query(By.directive(ImageContainerComponent));
+    const myComponent = fixture.debugElement.query(
+      By.directive(ImageContainerComponent)
+    );
     myComponent.triggerEventHandler('limitChange', 9);
     expect(component.maxPhotos).toEqual(9);
   });
