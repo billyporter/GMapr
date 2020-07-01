@@ -15,8 +15,12 @@
     "importHelpers": true,
     "target": "es2015",
     "lib": [
-      "es2018",
-      "dom"
+       "es5",
+       "es6",
+       "dom",
+       "dom.iterable",
+       "es2018",
+       "dom"
     ],
     "esModuleInterop": true,
     "resolveJsonModule": true

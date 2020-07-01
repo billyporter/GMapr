@@ -17,6 +17,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   loading = true;
   body: string;
   urls = new Map();
+
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
@@ -66,10 +67,10 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   findHrefs(text: string) {
     let el = document.createElement("p");
     el.innerHTML = text;
-    let hrefs = el.querySelectorAll("a");
+    let hrefs = Array.from(el.querySelectorAll("a"));
     for(let h of hrefs){
       if (h.getAttribute('href').charAt(0) === '#'){
-        delete hrefs[h];
+        delete hrefs[hrefs.indexOf(h)];
       }
       else {
         let name = h.getAttribute('title');
@@ -77,7 +78,6 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
         url = "https://en.wikipedia.org" + url;
         this.urls.set(url, name);
       }
-      console.log(this.urls);
     }
   }
 }
