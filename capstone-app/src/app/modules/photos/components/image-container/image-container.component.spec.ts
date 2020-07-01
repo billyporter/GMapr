@@ -72,7 +72,7 @@ describe('ImageContainerComponent', () => {
     });
 
     it('should fetch correctly', () => {
-      expect(component.photos).toEqual(testPhotos);
+      expect(component.originalPhotos).toEqual(testPhotos);
     });
   });
 });
