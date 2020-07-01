@@ -46,9 +46,6 @@ describe('WikiMediaComponent', () => {
   });
 
   describe('when test with asynchronous observable', () => {
-    beforeEach(() => {
-      getWikiResponseSpy.and.returnValue(asyncData(testWikiResult));
-    });
 
     it('should create', () => {
       expect(component).toBeTruthy();
