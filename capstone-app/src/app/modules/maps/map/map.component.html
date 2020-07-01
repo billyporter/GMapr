@@ -19,12 +19,12 @@
     width="100%"
     [zoom] = "zoom"
     (mapRightclick)="addMarker($event)">
-    <map-marker #markerp 
-    *ngFor="let marker of markers"
-    [position]="marker"
-    (mapClick)="clickMarker(markerp)"
-    (mapRightclick)="removeMarker(markerp)"
-    ></map-marker>
-    <map-info-window>Custom marker</map-info-window>
+        <map-marker #markerp 
+        *ngFor="let marker of markers"
+        [position]="marker"
+        (mapClick)="clickMarker(markerp)"
+        (mapRightclick)="removeMarker(markerp)"
+        ></map-marker>
+        <map-info-window>Custom marker</map-info-window>
     </google-map>
 </div>
