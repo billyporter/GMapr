@@ -12,6 +12,13 @@ export class ImageContainerComponent implements OnInit, OnChanges  {
   originalPhotos: Photo[] = [];
   query: string;
   errorMessage: string;
+
+  /**
+   * @Input limit - Receives count filter from parent on how many
+   * photos to display
+   * @Output limitChange - When an image cannot be displayed,
+   * tell the parent to update image count
+   */
   @Input() limit: number;
   @Output() limitChange = new EventEmitter<number>();
 
