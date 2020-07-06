@@ -1,6 +1,6 @@
 <div *ngIf="!loading" class="history">
-  <h1 class="history-title">{{wikiResult.parse.title}}</h1>
-  <p class="history-body">{{body}}<p>
+  <h1 class="history-title">{{title}}</h1>
+  <p class="history-body">{{history}}<p>
   <p class="more-reading-title">For further reading, see the links below.</p>
   <div class="more-reading">
     <p *ngFor="let url of urls | keyvalue">

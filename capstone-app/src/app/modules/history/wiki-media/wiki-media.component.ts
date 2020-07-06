@@ -12,7 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class WikiMediaComponent implements OnInit, OnDestroy {
-  wikiResult: WikiSearchResult;
+  history: string;
+  title: string;
   destroy$ = new Subject<void>();
   loading = true;
   body: string;
@@ -29,57 +30,20 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   getResults(queryString: string) {
-    // TODO(sarahhud): Add error handling for wikipedia request and testing.
     this.wikiService.search(queryString)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((result: WikiSearchResult) => {
-        this.wikiResult = result;
-        if (this.wikiResult.parse.text) {
-          this.body = this.fixString(result.parse.text['*']);
+      .subscribe((result: {title: string, history: string, furtherReading: Map<string, string>}) => {
+        this.history = result.history;
+        console.log(result);
+        this.urls = result.furtherReading
+        this.title = result.title;
+        if (this.history) {
+          this.body = this.history;
           this.loading = false;
         }
         else {
           console.log('API did not return a valid response.');
         }
     });
-  }
-
-  fixString(text: string): string {
-    const firstIndex = text.indexOf('<span class="mw-headline" id="History">History</span>', 0);
-    if (firstIndex !== -1){
-      const firstPartOfString = text.substring(firstIndex, text.length);
-      const endIndex = firstPartOfString.indexOf('<h2>', 0);
-      const startIndex = firstPartOfString.indexOf('</h2>', 0);
-      let middleOfString = firstPartOfString.substring(startIndex, endIndex);
-      const paragraphs = middleOfString.split('<p>');
-      if (paragraphs.length > 6){
-        middleOfString = paragraphs.slice(0,5).join('');
-      }
-      this.findHrefs(middleOfString);
-      let history = middleOfString.split(/<.*?>/g).join('');
-      return history.split(/&.*?;/g).join('');
-    }
-    console.log('The city page was found, but unfortunately there was no history paragraph found!');
-    let history = text.split(/<.*?>/g).join('');
-    return history.split(/&.*?;/g).join('');
-  }
-
-  findHrefs(text: string) {
-    const el = document.createElement('p');
-    el.innerHTML = text;
-    const hrefs = Array.from(el.querySelectorAll('a'));
-    let count = 1;
-    for (const h of hrefs) {
-      if (h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit'))){
-        delete hrefs[hrefs.indexOf(h)];
-      }
-      else if (count <= 15) {
-        let name = h.getAttribute('title');
-        let url = h.getAttribute('href').toString();
-        url = 'https://en.wikipedia.org' + url;
-        this.urls.set(url, name);
-        count ++;
-      }
-    }
   }
 }
