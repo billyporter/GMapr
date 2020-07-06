@@ -15,7 +15,6 @@ module.exports = function (config) {
     files: [
       'src/assets/mapScript.js',
       'src/assets/placeScript.js'
-
     ],
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser

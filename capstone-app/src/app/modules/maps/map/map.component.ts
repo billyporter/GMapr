@@ -1,6 +1,6 @@
 /// <reference types="googlemaps" />
 import { Component,  ViewChild, ElementRef } from '@angular/core';
-import {MapInfoWindow, MapMarker} from '@angular/google-maps';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map',
@@ -21,7 +21,6 @@ export class MapComponent {
   ngAfterViewInit() {
     setTimeout(() => {
      const input = this.searchBar.nativeElement;
-    
      const autoComplete = new google.maps.places.Autocomplete(input,
        {fields: ['geometry', 'name'], types: ['(cities)']});
      autoComplete.addListener('place_changed', () => {
@@ -44,7 +43,6 @@ export class MapComponent {
     if (!this.location) {
       return new google.maps.LatLng(this.position);
     }
-
     return this.location;
   }
 
@@ -60,7 +58,6 @@ export class MapComponent {
         lng: position.coords.longitude,
       }
     })
-
     return this.position;
   }
 
