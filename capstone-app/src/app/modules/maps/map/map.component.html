@@ -19,7 +19,7 @@
         width="100%"
         [zoom] = "zoom"
         (mapRightclick)="addMarker($event)">
-        <map-marker #markerp 
+        <map-marker #markerp class="marker"
             *ngFor="let marker of markers"
             [position]="marker"
             (mapClick)="clickMarker(markerp)"
