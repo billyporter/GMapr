@@ -12,10 +12,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   imports: [
     CommonModule,
     GoogleMapsModule,
-    MatIconModule,
+    MatAutocompleteModule,
     MatButtonModule,
+    MatIconModule,
     MatInputModule,
-    MatAutocompleteModule
   ],
   exports: [MapComponent]
 })

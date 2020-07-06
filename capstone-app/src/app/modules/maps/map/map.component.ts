@@ -12,11 +12,16 @@ export class MapComponent {
   @ViewChild('searchBar') searchBar: ElementRef;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
 
-  location!: google.maps.LatLng;
+  location?: google.maps.LatLng;
   zoom = 13;
-  position!: google.maps.LatLngLiteral;
+  position?: google.maps.LatLngLiteral;
   clickLocation: google.maps.LatLng[] = [];
   markers: google.maps.LatLng[] = [];
+
+  ngOnInit() {
+    this.getCurrentLocation();
+    this.getCurrentOrSetLocation();
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -29,26 +34,11 @@ export class MapComponent {
     });
   }
 
-  // update location using search button instead of input bar 
-  searchButton(barcation: String) {
-    const input = this.searchBar.nativeElement;
-    const autoComplete = new google.maps.places.Autocomplete(input,
-      {fields: ['geometry', 'name'], types: ['(cities)']});
-    autoComplete.addListener('place_changed', () => {
-      this.location = autoComplete.getPlace().geometry.location;
-    });
-  }
-
   getCurrentOrSetLocation() {
     if (!this.location) {
       return new google.maps.LatLng(this.position);
     }
     return this.location;
-  }
-
-  ngOnInit() {
-    this.getCurrentLocation();
-    this.getCurrentOrSetLocation();
   }
 
   getCurrentLocation () {
@@ -58,7 +48,6 @@ export class MapComponent {
         lng: position.coords.longitude,
       }
     })
-    return this.position;
   }
 
   addMarker(event: google.maps.MouseEvent) {
