@@ -8,12 +8,12 @@
       <mat-icon>close</mat-icon>
     </button>
 </mat-form-field>
-<button mat-icon-button color="primary" (click)="ngAfterViewInit()" >
+<button mat-icon-button color="primary" (click)="locationSearch()" >
     <mat-icon>search</mat-icon>
 </button>
 
 <div #mapContainer>
-    <google-map
+    <google-map class="map"
         [center]="getCurrentOrSetLocation()"
         height="750px"
         width="100%"

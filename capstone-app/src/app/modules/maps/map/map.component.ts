@@ -25,12 +25,16 @@ export class MapComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-     const input = this.searchBar.nativeElement;
-     const autoComplete = new google.maps.places.Autocomplete(input,
-       {fields: ['geometry', 'name'], types: ['(cities)']});
-     autoComplete.addListener('place_changed', () => {
-       this.location = autoComplete.getPlace().geometry.location;
-     });
+    this.locationSearch();
+    });
+  }
+
+  locationSearch() {
+    const input = this.searchBar.nativeElement;
+    const autoComplete = new google.maps.places.Autocomplete(input,
+      {fields: ['geometry', 'name'], types: ['(cities)']});
+    autoComplete.addListener('place_changed', () => {
+      this.location = autoComplete.getPlace().geometry.location;
     });
   }
 
