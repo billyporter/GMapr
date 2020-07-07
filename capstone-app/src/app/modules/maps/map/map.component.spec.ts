@@ -42,9 +42,9 @@ describe('MapComponent', () => {
     fixture.detectChanges();
 
     const markerDebug = fixture.debugElement.queryAll(By.css('.marker'));
-    const markerComponent = markerDebug.map(marker => marker.componentInstance.getPosition());
+    const markerPositions = markerDebug.map(marker => marker.componentInstance.getPosition());
 
-    expect(markerComponent).toEqual(fixture.componentInstance.markers);
+    expect(markerPositions).toEqual(fixture.componentInstance.markers);
   });
 
 

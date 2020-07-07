@@ -25,7 +25,7 @@ export class MapComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-    this.locationSearch();
+      this.locationSearch();
     });
   }
 
