@@ -58,7 +58,7 @@ export class WikiResultsService {
       }
       const furtherReading = this.findHrefs(middleOfString);
       let history = middleOfString.split(/<.*?>/g).join('');
-      history = history.split(/&.*?;/g).join('');
+      history = history.split(/\d*&.*?;/g).join('');
       return {history, furtherReading};
     }
     console.error('The city page was found, but unfortunately there was no history paragraph found!');
