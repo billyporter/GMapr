@@ -2,6 +2,7 @@ import { switchMap, map, mergeMap, catchError } from 'rxjs/operators';
 import { WikiSearchHandler } from './services/wiki-search-handler.service';
 import { Injectable } from '@angular/core';
 import { WikiSearchResult } from './WikiSearchTemplate';
+import { WikiServiceResult } from './WikiServiceResult';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
@@ -19,7 +20,7 @@ export class WikiResultsService {
     'https://en.wikipedia.org/w/api.php?origin=*&action=parse&page=';
   private static readonly URL_END = '&format=json';
 
-  search(query: string): Observable<{title: string, history: string, furtherReading: Map<string, string>}> {
+  search(query: string): Observable<WikiServiceResult> {
     return this.searchHandler
       .getQueryString(query)
       .pipe(
@@ -38,16 +39,13 @@ export class WikiResultsService {
           }
         }),
         catchError(() => {
-          console.log('API did not return a valid response.');
-          const title = '';
-          const history = '';
-          const furtherReading = new Map<string, string>();
-          return of({title, history, furtherReading});
+          console.error('API did not return a valid response.');
+          return of({title: '', history: ''});
         })
       );
   }
 
-  fixString(text: string): {history: string, furtherReading: Map<string, string>} {
+  fixString(text: string): {history: string, furtherReading?: Map<string, string>} {
     const firstIndex = text.indexOf('<span class="mw-headline" id="History">History</span>', 0);
     if (firstIndex !== -1){
       const firstPartOfString = text.substring(firstIndex, text.length);
@@ -63,10 +61,10 @@ export class WikiResultsService {
       history = history.split(/&.*?;/g).join('');
       return {history, furtherReading};
     }
-    console.log('The city page was found, but unfortunately there was no history paragraph found!');
+    console.error('The city page was found, but unfortunately there was no history paragraph found!');
     let history = text.split(/<.*?>/g).join('');
     history = history.split(/&.*?;/g).join('');
-    return {history, furtherReading: new Map()};
+    return {history};
   }
 
   findHrefs(text: string): Map<string, string> {
@@ -77,14 +75,14 @@ export class WikiResultsService {
     let count = 1;
     for (const h of hrefs) {
       if (h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit'))){
-        delete hrefs[hrefs.indexOf(h)];
+        //Do nothing. We just don't want to add that href to the map.
       }
       else if (count <= 15) {
         let name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://en.wikipedia.org' + url;
         urls.set(url, name);
-        count ++;
+        count++;
       }
     }
     return urls;
