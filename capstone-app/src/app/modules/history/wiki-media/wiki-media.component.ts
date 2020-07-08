@@ -24,7 +24,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('New York City');
+    this.getResults('New York City, NY');
   }
 
   ngOnDestroy(): void {

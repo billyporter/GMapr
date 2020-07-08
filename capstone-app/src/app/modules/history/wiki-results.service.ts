@@ -57,13 +57,15 @@ export class WikiResultsService {
         middleOfString = paragraphs.slice(0,5).join('');
       }
       const furtherReading = this.findHrefs(middleOfString);
-      let history = middleOfString.split(/<.*?>/g).join('');
+      let history = middleOfString.split(/<h3>[\s\S]*<\/h3>/g).join('');
+      history = history.split(/<.*?>/g).join('');
       history = history.split(/\d*&.*?;/g).join('');
       return {history, furtherReading};
     }
     console.error('The city page was found, but unfortunately there was no history paragraph found!');
+    //text = text.split()
     let history = text.split(/<.*?>/g).join('');
-    history = history.split(/&.*?;/g).join('');
+    history = history.split(/\d*&.*?;/g).join('');
     return {history};
   }
 
@@ -77,7 +79,7 @@ export class WikiResultsService {
       if (h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit'))){
         //Do nothing. We just don't want to add that href to the map.
       }
-      else if (count <= 15) {
+      else if (count <= 12) {
         let name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://en.wikipedia.org' + url;
