@@ -16,10 +16,12 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
   loading = true;
   body: string;
+  urls = new Map();
+
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('Stillwater, Oklahoma');
+    this.getResults('New York City');
   }
 
   ngOnDestroy(): void {
@@ -33,34 +35,51 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
       .subscribe((result: WikiSearchResult) => {
         this.wikiResult = result;
         if (this.wikiResult.parse.text) {
-          this.body = this.fixString(result.parse.text["*"]);
+          this.body = this.fixString(result.parse.text['*']);
           this.loading = false;
-          this.setHtml(this.body);
         }
         else {
-          console.log("API did not return a valid response.");
+          console.log('API did not return a valid response.');
         }
     });
   }
 
   fixString(text: string): string {
-    let firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
-    if(firstIndex !== -1){
-      let firstPartOfString = text.substring(firstIndex, text.length);
-      let endIndex = firstPartOfString.indexOf("<h2>", 0);
-      let startIndex = firstPartOfString.indexOf('</h2>', 0);
+    const firstIndex = text.indexOf('<span class="mw-headline" id="History">History</span>', 0);
+    if (firstIndex !== -1){
+      const firstPartOfString = text.substring(firstIndex, text.length);
+      const endIndex = firstPartOfString.indexOf('<h2>', 0);
+      const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
-      let finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
-      finalString.split('title="Edit section: History">edit').join('>');
-      return finalString;
+      const paragraphs = middleOfString.split('<p>');
+      if (paragraphs.length > 6){
+        middleOfString = paragraphs.slice(0,5).join('');
+      }
+      this.findHrefs(middleOfString);
+      let history = middleOfString.split(/<.*?>/g).join('');
+      return history.split(/&.*?;/g).join('');
     }
-    console.log("The city page was found, but unfortunately there was no history paragraph found!");
-    return text;
+    console.log('The city page was found, but unfortunately there was no history paragraph found!');
+    let history = text.split(/<.*?>/g).join('');
+    return history.split(/&.*?;/g).join('');
   }
 
-  setHtml(text: string) {
-    let el = document.getElementById('body');
+  findHrefs(text: string) {
+    const el = document.createElement('p');
     el.innerHTML = text;
+    const hrefs = Array.from(el.querySelectorAll('a'));
+    let count = 1;
+    for (const h of hrefs) {
+      if (h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit'))){
+        delete hrefs[hrefs.indexOf(h)];
+      }
+      else if (count <= 15) {
+        let name = h.getAttribute('title');
+        let url = h.getAttribute('href').toString();
+        url = 'https://en.wikipedia.org' + url;
+        this.urls.set(url, name);
+        count ++;
+      }
+    }
   }
-
 }

@@ -1,3 +1,5 @@
+import { MockWikiHandlerService } from './modules/history/services/mock-wiki-handler.service';
+import { WikiSearchHandler } from './modules/history/services/wiki-search-handler.service';
 import { PhotosModule } from './modules/photos/photos.module';
 import { MapsModule } from './modules/maps/maps.module';
 import { HistoryModule } from './modules/history/history.module';
@@ -20,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
   ],
   providers: [
-    { provide: PhotoFetcher, useExisting: MockPhotoFetcher }
+    { provide: PhotoFetcher, useExisting: MockPhotoFetcher },
+    { provide: WikiSearchHandler, useExisting: MockWikiHandlerService}
   ],
   bootstrap: [AppComponent],
 })
