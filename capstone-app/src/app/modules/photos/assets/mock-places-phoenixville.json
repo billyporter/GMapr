@@ -1,0 +1,7 @@
+{
+    "places": [
+        { "name":"PJ's Wings", "types":["Restaurant"]},
+        { "name":"Colonial Theater", "types":["History", "Entertainment"]},
+        { "name":"Valley Forge", "types":["History", "Landmark"]}
+    ]
+}
