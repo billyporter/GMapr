@@ -1,0 +1,7 @@
+{
+    "places": [
+        { "name":"Tea Party", "types":["Event", "History"]},
+        { "name":"Faneuil Hall", "types":["Restaurant", "History"]},
+        { "name":"Aquarium", "types":["Entertainment"]}
+    ]
+}
