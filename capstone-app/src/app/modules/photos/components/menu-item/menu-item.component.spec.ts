@@ -1,5 +1,5 @@
+import { PhotosModule } from './../../photos.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MenuItemComponent } from './menu-item.component';
 
 describe('MenuItemComponent', () => {
@@ -8,7 +8,8 @@ describe('MenuItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuItemComponent ]
+      declarations: [ MenuItemComponent ],
+      imports: [ PhotosModule ]
     })
     .compileComponents();
   }));
@@ -19,7 +20,10 @@ describe('MenuItemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should emit new filter', () => {
+    spyOn(component.filterSelected, 'emit');
+    component.select('test');
+    expect(component.filterSelected.emit).toHaveBeenCalledWith('test');
   });
+
 });
