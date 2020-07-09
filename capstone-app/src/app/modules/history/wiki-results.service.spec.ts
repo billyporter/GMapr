@@ -11,7 +11,7 @@ const history = 'The north-central region of Oklahoma became part of the United 
               + 'of the area around Stillwater in his book A Tour on the Prairies. '
               + 'He wrote of “a glorious prairie spreading out beneath the golden '
               + 'beams of an autumnal sun. The deep and frequent traces of buffalo, '
-              + 'showed it to be a one of their favorite grazing grounds.”9';
+              + 'showed it to be a one of their favorite grazing grounds.”';
 const furtherReading = new Map<string, string>();
 furtherReading.set("https://en.wikipedia.org/wiki/Louisiana_Purchase","Louisiana Purchase");
 furtherReading.set("https://en.wikipedia.org/wiki/Washington_Irving","Washington Irving");

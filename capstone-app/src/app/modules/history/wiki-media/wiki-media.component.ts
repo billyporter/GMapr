@@ -43,6 +43,7 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
         }
         else {
           this.error = 'API did not return a valid response.';
+          console.error('API did not return a valid response.');
         }
     });
   }

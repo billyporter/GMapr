@@ -53,10 +53,8 @@ export class WikiResultsService {
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
       const paragraphs = middleOfString.split('<p>');
-      if (paragraphs.length > 9){
-        console.log(paragraphs);
-        middleOfString = paragraphs.slice(5).join('******');
-        console.log(middleOfString);
+      if (paragraphs.length > 6){
+        middleOfString = paragraphs.slice(0,6).join('');
       }
       const furtherReading = this.findHrefs(middleOfString);
       let history = middleOfString.split(/<h3>[\s\S]*<\/h3>/g).join('');
@@ -78,11 +76,8 @@ export class WikiResultsService {
     const hrefs = Array.from(el.querySelectorAll('a'));
     let count = 1;
     for (const h of hrefs) {
-      if (h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit'))){
-        //Do nothing. We just don't want to add that href to the map.
-      }
-      else if (count <= 12) {
-        let name = h.getAttribute('title');
+      if (count <= 12 && !(h.getAttribute('href').charAt(0) === '#' || (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit')))) {
+        const name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://en.wikipedia.org' + url;
         urls.set(url, name);
