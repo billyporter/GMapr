@@ -1,39 +1,61 @@
 import { Photo } from 'src/app/modules/photos/photo-template';
 import { PhotoFetcher } from 'src/app/modules/photos/services/photo-fetcher.service';
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'app-image-container',
   templateUrl: './image-container.component.html',
   styleUrls: ['./image-container.component.scss'],
 })
-export class ImageContainerComponent implements OnInit, OnChanges  {
+export class ImageContainerComponent implements OnChanges {
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
-  query: string;
   errorMessage: string;
+  query = '';
+  previousCity = '';
+  previousFilter = '';
 
   /**
-   * @Input limit - Receives count filter from parent on how many
-   * photos to display
-   * @Output limitChange - When an image cannot be displayed,
-   * tell the parent to update image count
+   * @Input city: the city user searched for.
+   * @Input filter: the filter user clicked on.
+   * @Input limit: the photo number to display.
+   * @Output limitChange: if a photo cannot display, update limit.
    */
-  @Input() limit: number;
+  @Input() city: string;
+  @Input() filter: string;
+  @Input() limit = 10;
   @Output() limitChange = new EventEmitter<number>();
 
   constructor(private photosService: PhotoFetcher) {}
-  ngOnInit() {
-    this.limit = 10;
-    this.getPhotos();
-  }
 
   ngOnChanges() {
+    let somethingChanged = false;
     this.limitPhotos(this.limit);
+    if (this.city !== this.previousCity) {
+      this.filter = '';
+      this.previousCity = this.city;
+      somethingChanged = true;
+    }
+    if (this.filter !== this.previousFilter) {
+      this.previousFilter = this.filter;
+      somethingChanged = true;
+    }
+    this.query = this.filter
+      ? `${this.city} ${this.filter}`
+      : `${this.city} 1920`;
+    if (somethingChanged) {
+      this.getPhotos();
+    }
   }
 
   getPhotos() {
-    this.query = 'Boston';
+    this.originalPhotos = [];
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
         for (const item in results.items) {
@@ -51,24 +73,23 @@ export class ImageContainerComponent implements OnInit, OnChanges  {
         if (this.originalPhotos.length === 0) {
           this.errorMessage = '0 images found';
         } else {
+          this.limit = 10;
           this.limitPhotos(this.limit);
         }
       },
       (error) => {
         this.errorMessage = error;
-        console.log(this.errorMessage);
       }
     );
   }
 
   limitPhotos(limit: number) {
     this.displayPhotos = this.originalPhotos.slice(0, limit);
+    this.limitChange.emit(this.limit);
   }
 
   removePhoto(index: number) {
-    this.limit -= 1;
-    this.limitChange.emit(this.limit);
     this.originalPhotos.splice(index, 1);
+    this.limitPhotos(this.limit--);
   }
 }
-
