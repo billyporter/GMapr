@@ -44,12 +44,16 @@ describe('PhotosSectionComponent', () => {
   });
 
   it('should show error message if not in range', async () => {
+    component.city = 'Boston';
+    fixture.detectChanges();
+    console.log(component.city);
     const inputHarness = await loader.getHarness(
       MatInputHarness.with({ selector: '.limit-input' })
     );
     await inputHarness.setValue('15');
     component.limitControl.markAsTouched();
     fixture.detectChanges();
+    console.log(await inputHarness.getValue());
     expect(component.limitControl.invalid).toBe(true);
     const errorElement = fixture.debugElement.nativeElement.querySelector(
       'mat-error'
@@ -61,7 +65,7 @@ describe('PhotosSectionComponent', () => {
     const myComponent = fixture.debugElement.query(
       By.directive(ImageContainerComponent)
     );
-    myComponent.triggerEventHandler('limitChange', 9);
+    myComponent.triggerEventHandler('limitChange', { max: 9, wasRemoved: 1 });
     expect(component.maxPhotos).toEqual(9);
   });
 });
