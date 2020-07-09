@@ -59,7 +59,7 @@ export class WikiResultsService {
           middleOfString = paragraphs.slice(1,9).join('');
         }
         else {
-        middleOfString = paragraphs.slice(0,9).join('');
+          middleOfString = paragraphs.slice(0,9).join('');
         }
       }
       const furtherReading = this.findHrefs(middleOfString);
