@@ -6,6 +6,7 @@ import {
   OnChanges,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 
 @Component({
@@ -13,7 +14,7 @@ import {
   templateUrl: './image-container.component.html',
   styleUrls: ['./image-container.component.scss'],
 })
-export class ImageContainerComponent implements OnChanges {
+export class ImageContainerComponent implements OnChanges, OnInit {
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
   errorMessage: string;
@@ -30,9 +31,13 @@ export class ImageContainerComponent implements OnChanges {
   @Input() city: string;
   @Input() filter: string;
   @Input() limit = 10;
-  @Output() limitChange = new EventEmitter<number>();
+  @Output() limitChange = new EventEmitter<{max: number, wasRemoved: number}>();
 
   constructor(private photosService: PhotoFetcher) {}
+
+  ngOnInit() {
+    this.getPhotos();
+  }
 
   ngOnChanges() {
     let somethingChanged = false;
@@ -74,6 +79,7 @@ export class ImageContainerComponent implements OnChanges {
           this.errorMessage = '0 images found';
         } else {
           this.limit = 10;
+          this.limitChange.emit({max: this.limit, wasRemoved: 0});
           this.limitPhotos(this.limit);
         }
       },
@@ -85,11 +91,12 @@ export class ImageContainerComponent implements OnChanges {
 
   limitPhotos(limit: number) {
     this.displayPhotos = this.originalPhotos.slice(0, limit);
-    this.limitChange.emit(this.limit);
   }
 
   removePhoto(index: number) {
+    this.limit--;
     this.originalPhotos.splice(index, 1);
-    this.limitPhotos(this.limit--);
+    this.limitPhotos(this.limit);
+    this.limitChange.emit({max: this.limit, wasRemoved: 1});
   }
 }
