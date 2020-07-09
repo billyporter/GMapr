@@ -1,0 +1,248 @@
+{
+  "kind": "customsearch#search",
+  "url": {
+    "type": "application/json",
+    "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+  },
+  "queries": {
+    "request": [
+      {
+        "title": "Google Custom Search - boston massachusetts tea party",
+        "totalResults": "246000000",
+        "searchTerms": "boston massachusetts tea party",
+        "count": 10,
+        "startIndex": 1,
+        "inputEncoding": "utf8",
+        "outputEncoding": "utf8",
+        "safe": "off",
+        "cx": "014012661603529902036:grbt2ttpety",
+        "searchType": "image"
+      }
+    ],
+    "nextPage": [
+      {
+        "title": "Google Custom Search - boston massachusetts tea party",
+        "totalResults": "246000000",
+        "searchTerms": "boston massachusetts tea party",
+        "count": 10,
+        "startIndex": 11,
+        "inputEncoding": "utf8",
+        "outputEncoding": "utf8",
+        "safe": "off",
+        "cx": "014012661603529902036:grbt2ttpety",
+        "searchType": "image"
+      }
+    ]
+  },
+  "context": {
+    "title": "Google"
+  },
+  "searchInformation": {
+    "searchTime": 0.534742,
+    "formattedSearchTime": "0.53",
+    "totalResults": "246000000",
+    "formattedTotalResults": "246,000,000"
+  },
+  "items": [
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Massachusetts Boston Tea Party Ship & Museum visitors ...",
+      "htmlTitle": "<b>Boston Massachusetts Boston Tea Party</b> Ship &amp; Museum visitors ...",
+      "link": "https://c8.alamy.com/comp/A0J092/boston-massachusetts-boston-tea-party-ship-museum-visitors-reenact-A0J092.jpg",
+      "displayLink": "www.alamy.com",
+      "snippet": "Boston Massachusetts Boston Tea Party Ship & Museum visitors ...",
+      "htmlSnippet": "<b>Boston Massachusetts Boston Tea Party</b> Ship &amp; Museum visitors ...",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.alamy.com/boston-massachusetts-boston-tea-party-ship-museum-visitors-reenact-image1843345.html",
+        "height": 954,
+        "width": 1300,
+        "byteSize": 267539,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3qZb35rtXKWFBQkZPfd1mEMpdgNERB4deozNz3UDj9BixTWSWwI2YPg&s",
+        "thumbnailHeight": 110,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Massachusetts Boston Tea Party Ship & Museum.. visitors ...",
+      "htmlTitle": "<b>Boston Massachusetts Boston Tea Party</b> Ship &amp; Museum.. visitors ...",
+      "link": "https://i.pinimg.com/originals/44/41/97/4441978569be8273c014f48f23fe733e.jpg",
+      "displayLink": "www.pinterest.com",
+      "snippet": "Boston Massachusetts Boston Tea Party Ship & Museum.. visitors ...",
+      "htmlSnippet": "<b>Boston Massachusetts Boston Tea Party</b> Ship &amp; Museum.. visitors ...",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.pinterest.com/pin/435864070182478072/",
+        "height": 954,
+        "width": 1300,
+        "byteSize": 213415,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpN9IVWgQxeE8qFbuOkfsIeJ_ljoZyLx28zTKHCEa7B9rVins6vEYRCic&s",
+        "thumbnailHeight": 110,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Tea Party Ships and Museum Boston, Massachusetts, USA Stock ...",
+      "htmlTitle": "<b>Boston Tea Party</b> Ships and Museum <b>Boston</b>, <b>Massachusetts</b>, USA Stock ...",
+      "link": "https://c8.alamy.com/comp/PXFXDJ/boston-tea-party-ships-and-museum-boston-massachusetts-usa-PXFXDJ.jpg",
+      "displayLink": "www.alamy.com",
+      "snippet": "Boston Tea Party Ships and Museum Boston, Massachusetts, USA Stock ...",
+      "htmlSnippet": "<b>Boston Tea Party</b> Ships and Museum <b>Boston</b>, <b>Massachusetts</b>, USA Stock ...",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.alamy.com/boston-tea-party-ships-and-museum-boston-massachusetts-usa-image222855518.html",
+        "height": 956,
+        "width": 1300,
+        "byteSize": 396150,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5D0mvOV5mef7HNi_XRkNpR4iCevEtJs1oNhUhJR2K2aQIxgcKT_GJy5M&s",
+        "thumbnailHeight": 110,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Tea Party Raider Born",
+      "htmlTitle": "<b>Boston Tea Party</b> Raider Born",
+      "link": "https://www.massmoments.org/files/assets/moments/11-17-1738/11_17.1_1738.jpg",
+      "displayLink": "www.massmoments.org",
+      "snippet": "Boston Tea Party Raider Born",
+      "htmlSnippet": "<b>Boston Tea Party</b> Raider Born",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.massmoments.org/moment-details/boston-tea-party-raider-born.html",
+        "height": 605,
+        "width": 1400,
+        "byteSize": 841223,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCt6jXerCC0c6I_nQvkQNCS01RldArBpvkwUg7nZLzDg0FTN60gWwDFCU&s",
+        "thumbnailHeight": 65,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "USA MASSACHUSETTS BOSTON TEA PARTY SHIP BEAVER 11 Stock Photo - Alamy",
+      "htmlTitle": "USA <b>MASSACHUSETTS BOSTON TEA PARTY</b> SHIP BEAVER 11 Stock Photo - Alamy",
+      "link": "https://c8.alamy.com/comp/AR71T0/usa-massachusetts-boston-tea-party-ship-beaver-11-AR71T0.jpg",
+      "displayLink": "www.alamy.com",
+      "snippet": "USA MASSACHUSETTS BOSTON TEA PARTY SHIP BEAVER 11 Stock Photo - Alamy",
+      "htmlSnippet": "USA <b>MASSACHUSETTS BOSTON TEA PARTY</b> SHIP BEAVER 11 Stock Photo - Alamy",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.alamy.com/usa-massachusetts-boston-tea-party-ship-beaver-11-image9119807.html",
+        "height": 1390,
+        "width": 1020,
+        "byteSize": 348682,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaOWZ9Fy5f1Pel1FtRU1SGOleq3SiVgMt7JDO0QuNDiCCy3AL36VTB0QU&s",
+        "thumbnailHeight": 150,
+        "thumbnailWidth": 110
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Tea Party Museum: Sailing Ships & Interactive Fun",
+      "htmlTitle": "<b>Boston Tea Party</b> Museum: Sailing Ships &amp; Interactive Fun",
+      "link": "https://www.reverehotel.com/resourcefiles/mainimages/boston-tea-party-ships-and-museum-at-massachusetts-top.jpg",
+      "displayLink": "www.reverehotel.com",
+      "snippet": "Boston Tea Party Museum: Sailing Ships & Interactive Fun",
+      "htmlSnippet": "<b>Boston Tea Party</b> Museum: Sailing Ships &amp; Interactive Fun",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.reverehotel.com/explore/nearby-attractions/boston-tea-party-ships-museum",
+        "height": 673,
+        "width": 1600,
+        "byteSize": 163375,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQorGhSMBV3WFt1a2hxMoFqP4TBlgYYrez5RwWCzsWzP4JETr0iYS_rNhc&s",
+        "thumbnailHeight": 63,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Tea Party - Definition, Dates & Facts - HISTORY",
+      "htmlTitle": "<b>Boston Tea Party</b> - Definition, Dates &amp; Facts - HISTORY",
+      "link": "https://www.history.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY1ODI1MjU5NjQ2MjMxNjQ1/boston-tea-party-gettyimages-514890446.jpg",
+      "displayLink": "www.history.com",
+      "snippet": "Boston Tea Party - Definition, Dates & Facts - HISTORY",
+      "htmlSnippet": "<b>Boston Tea Party</b> - Definition, Dates &amp; Facts - HISTORY",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.history.com/topics/american-revolution/boston-tea-party",
+        "height": 1200,
+        "width": 1200,
+        "byteSize": 308582,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwWwCadSBzZOe8AV4rL6btbgSUu95NOX0kvxZiB6nOi_EzXbAOw3UdSZTG&s",
+        "thumbnailHeight": 150,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "The Boston Tea Party 1773. In Boston Harbor, a group of ...",
+      "htmlTitle": "The <b>Boston Tea Party</b> 1773. In <b>Boston</b> Harbor, a group of ...",
+      "link": "https://i.pinimg.com/originals/0f/b9/02/0fb902c40c1e346c2a206384b5349ae2.gif",
+      "displayLink": "www.pinterest.com",
+      "snippet": "The Boston Tea Party 1773. In Boston Harbor, a group of ...",
+      "htmlSnippet": "The <b>Boston Tea Party</b> 1773. In <b>Boston</b> Harbor, a group of ...",
+      "mime": "image/gif",
+      "fileFormat": "image/gif",
+      "image": {
+        "contextLink": "https://www.pinterest.com/pin/378654281150972858/",
+        "height": 868,
+        "width": 1024,
+        "byteSize": 437225,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWt-bN9GJtIINFX16-2DBhL-3viVQb8EEXGfuZDAYs_LBOSDg20cR_0ic&s",
+        "thumbnailHeight": 127,
+        "thumbnailWidth": 150
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Boston Tea Party - Definition, Dates & Facts - HISTORY",
+      "htmlTitle": "<b>Boston Tea Party</b> - Definition, Dates &amp; Facts - HISTORY",
+      "link": "https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTY1ODI1MjU5NjQ2MjMxNjQ1/boston-tea-party-gettyimages-514890446.jpg",
+      "displayLink": "www.history.com",
+      "snippet": "Boston Tea Party - Definition, Dates & Facts - HISTORY",
+      "htmlSnippet": "<b>Boston Tea Party</b> - Definition, Dates &amp; Facts - HISTORY",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.history.com/topics/american-revolution/boston-tea-party",
+        "height": 432,
+        "width": 768,
+        "byteSize": 86723,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAtzzGSB2HKBxUI5lrWTD6WZYT3vofFEyYlAtvDwB53RGWbaIYzq72FTA&s",
+        "thumbnailHeight": 80,
+        "thumbnailWidth": 142
+      }
+    },
+    {
+      "kind": "customsearch#result",
+      "title": "Amazon.com: Boston, Massachusetts - Boston Tea Party Scene (12x18 ...",
+      "htmlTitle": "Amazon.com: <b>Boston</b>, <b>Massachusetts</b> - <b>Boston Tea Party</b> Scene (12x18 ...",
+      "link": "https://images-na.ssl-images-amazon.com/images/I/71oA1U7cHTL._AC_SY679_.jpg",
+      "displayLink": "www.amazon.com",
+      "snippet": "Amazon.com: Boston, Massachusetts - Boston Tea Party Scene (12x18 ...",
+      "htmlSnippet": "Amazon.com: <b>Boston</b>, <b>Massachusetts</b> - <b>Boston Tea Party</b> Scene (12x18 ...",
+      "mime": "image/jpeg",
+      "fileFormat": "image/jpeg",
+      "image": {
+        "contextLink": "https://www.amazon.com/Boston-Massachusetts-Party-Travel-Poster/dp/B00N5C89K8",
+        "height": 679,
+        "width": 453,
+        "byteSize": 83455,
+        "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhaXtMQJqogS-JbniqMFedZGSPMcbG-ElFL8bgh0Wj-6kTU1TxuyfmNAc&s",
+        "thumbnailHeight": 139,
+        "thumbnailWidth": 93
+      }
+    }
+  ]
+}
