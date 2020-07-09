@@ -19,11 +19,10 @@
        "es6",
        "dom",
        "dom.iterable",
+       "es2019",
        "es2018",
        "dom"
-    ],
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
