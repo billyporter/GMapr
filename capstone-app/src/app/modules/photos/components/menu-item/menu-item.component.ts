@@ -17,7 +17,6 @@ export class MenuItemComponent {
     this.filterSelected.emit(name);
   }
 
-
   updateFilterSelected(newFilter: string) {
     this.markerFilter = newFilter;
     this.select(this.markerFilter);
