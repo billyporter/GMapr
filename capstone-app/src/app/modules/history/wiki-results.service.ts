@@ -53,8 +53,10 @@ export class WikiResultsService {
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
       const paragraphs = middleOfString.split('<p>');
-      if (paragraphs.length > 6){
-        middleOfString = paragraphs.slice(0,5).join('');
+      if (paragraphs.length > 9){
+        console.log(paragraphs);
+        middleOfString = paragraphs.slice(5).join('******');
+        console.log(middleOfString);
       }
       const furtherReading = this.findHrefs(middleOfString);
       let history = middleOfString.split(/<h3>[\s\S]*<\/h3>/g).join('');
@@ -63,8 +65,8 @@ export class WikiResultsService {
       return {history, furtherReading};
     }
     console.error('The city page was found, but unfortunately there was no history paragraph found!');
-    //text = text.split()
-    let history = text.split(/<.*?>/g).join('');
+    let history = text.split(/<h3>[\s\S]*<\/h3>/g).join('');
+    history = history.split(/<.*?>/g).join('');
     history = history.split(/\d*&.*?;/g).join('');
     return {history};
   }
