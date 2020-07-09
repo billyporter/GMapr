@@ -16,7 +16,6 @@ export class PhotoFetcher {
 
   // TODO: Add interface
   getPhotos(query: string, limit: number): Observable<any> {
-    query += '+1920';
     const fullUrl =
       `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
       `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
