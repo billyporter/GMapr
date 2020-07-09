@@ -1,21 +1,46 @@
-<div class="flex-container">
-    <form class="count">
-      <mat-form-field>
-        <mat-label>Number</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Ex. 10"
-          [formControl]="limitControl"
-          min="1"
-          max="{{maxPhotos}}"
-          class="limit-input"
-        >
-        <span matSuffix>count</span>
-        <mat-hint>Between 1 and 10</mat-hint>
-        <mat-error *ngIf="limitControl.invalid">Must be between 1 and 10</mat-error>
-      </mat-form-field>
-    </form>
-  </div>
-  <app-image-container [limit]="limitControl.value"
-  (limitChange)="updateLimit($event)"></app-image-container>
+<div class="flex-container"><div class="filter">
+  <span *ngFor="let item of navItems">
+    <span *ngIf="item.children && item.children.length > 0">
+      <ng-template matMenuContent></ng-template>
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu || defaultMenu">
+        {{item.name}}
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <app-menu-item #menu [items]="item.children" (filterSelected)="updateFilterSelected($event)"></app-menu-item>
+    </span>
+    <span *ngIf="!item.children || item.children.length === 0">
+      <button mat-menu-item>
+        <mat-icon>explore</mat-icon>
+        <span>{{ item.name }}</span>
+      </button>
+    </span>
+  </span>
+<mat-menu #defaultMenu="matMenu">
+</mat-menu>
+</div>
+  <form class="count">
+    <mat-form-field>
+      <mat-label>Number</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Ex. 10"
+        [formControl]="limitControl"
+        min="1"
+        class="limit-input"
+        max="{{ maxPhotos }}"
+      />
+      <span matSuffix>count</span>
+      <mat-hint>Between 1 and 10</mat-hint>
+      <mat-error *ngIf="limitControl.invalid"
+        >Must be between 1 and 10</mat-error
+      >
+    </mat-form-field>
+  </form>
+</div>
+<app-image-container
+  [filter]="markerFilter"
+  [limit]="limitControl.value"
+  [city]="city"
+  (limitChange)="updateLimit($event)"
+></app-image-container>
