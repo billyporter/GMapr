@@ -69,9 +69,25 @@ export class PhotosSectionComponent implements OnChanges, AfterViewChecked {
     this.navItems.push({ name: 'Tourist Attraction', children: tempItem });
   }
 
-  updateLimit(newLimit: number) {
-    this.maxPhotos = newLimit;
-    this.limitControl = new FormControl(newLimit);
+  /**
+   * Creating a new form control sets the current value of the form to the value input
+   * We only want the current value of the form to change in two scenarios:
+   * 1) The current value is maxed out and the new limit is more than the max
+   * ( This means ther user wants to display as many images as allowed )
+   * 2) There are bad photos which cannot be fetched so the new limit is less than max
+   */
+  updateLimit(newLimit: number, wasRemoved: number) {
+    if (this.limitControl.value === this.maxPhotos && this.maxPhotos < newLimit) {
+      this.maxPhotos = newLimit;
+      this.limitControl = new FormControl(newLimit);
+    }
+    else if (wasRemoved === 1 && this.limitControl.value >= newLimit) {
+      this.maxPhotos = newLimit;
+      this.limitControl = new FormControl(newLimit);
+    }
+    else {
+      this.maxPhotos = newLimit;
+    }
   }
 
   updateFilterSelected(newFilter: string) {
