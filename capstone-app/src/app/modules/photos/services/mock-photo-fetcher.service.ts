@@ -1,11 +1,11 @@
 import MockPhotosPa from 'src/app/modules/photos/assets/mock-images-one.json';
 import MockPhotosBos from 'src/app/modules/photos/assets/mock-images-two.json';
 import MockPhotosPj from 'src/app/modules/photos/assets/mock-pjs.json';
-import MockPhotosCol from 'src/app/modules/photos/assets/colonial-theater.json';
+import MockPhotosCol from 'src/app/modules/photos/assets/mock-colonial-theater.json';
 import MockPhotosVal from 'src/app/modules/photos/assets/mock-valley.json';
-import MockPhotosFan from 'src/app/modules/photos/assets/faneuil.json';
-import MockPhotosAq from 'src/app/modules/photos/assets/aquarium.json';
-import MockPhotosTea from 'src/app/modules/photos/assets/tea-party.json';
+import MockPhotosFan from 'src/app/modules/photos/assets/mock-faneuil.json';
+import MockPhotosAq from 'src/app/modules/photos/assets/mock-aquarium.json';
+import MockPhotosTea from 'src/app/modules/photos/assets/mock-tea-party.json';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
