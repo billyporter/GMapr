@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WikiMediaComponent } from './wiki-media.component';
-import MockWikiResponse from 'testing/mock-wiki-response.json';
+import MockWikiResponse from 'testing/mock-wiki-service-response.json';
 import { asyncData } from 'testing/async-observable-helpers';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
@@ -53,12 +53,12 @@ describe('WikiMediaComponent', () => {
 
     it('displays location history', () => {
       component.getResults('Stillwater, Oklahoma');
-      expect(component.body).toEqual(testWikiResult.parse.text["*"]);
+      expect(component.history).toEqual(testWikiResult.parse.text["*"]);
     });
 
     it('displays correct location title', () => {
       component.getResults('Stillwater, Oklahoma');
-      expect(component.wikiResult.parse.title).toEqual("Stillwater, Oklahoma");
+      expect(component.title).toEqual("Stillwater, Oklahoma");
     });
   });
 });
