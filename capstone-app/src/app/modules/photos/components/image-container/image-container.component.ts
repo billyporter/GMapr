@@ -37,7 +37,6 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.limitPhotos(this.limit);
     if (changes.city) {
       this.filter = '';
     }
@@ -47,6 +46,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     if (changes.city || changes.filter) {
       this.getPhotos();
     }
+    this.limitPhotos(this.limit);
   }
 
   getPhotos() {
@@ -68,9 +68,8 @@ export class ImageContainerComponent implements OnChanges, OnInit {
         if (this.originalPhotos.length === 0) {
           this.errorMessage = '0 images found';
         } else {
-          this.limit = 10;
-          this.limitChange.emit({max: this.limit, wasRemoved: 0});
           this.limitPhotos(this.limit);
+          this.limitChange.emit({max: 10, wasRemoved: 0});
         }
       },
       (error) => {
@@ -84,7 +83,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   }
 
   removePhoto(index: number) {
-    this.limit--;
+    this.limit = this.originalPhotos.length--;
     this.originalPhotos.splice(index, 1);
     this.limitPhotos(this.limit);
     this.limitChange.emit({max: this.limit, wasRemoved: 1});
