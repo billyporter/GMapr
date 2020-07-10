@@ -5,9 +5,10 @@ import { ImageContainerComponent } from './components/image-container/image-cont
 import { PhotosSectionComponent } from './components/photos-section/photos-section.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuItemComponent } from './components/menu-item/menu-item.component';
 
 @NgModule({
-  declarations: [ImageContainerComponent, PhotosSectionComponent],
+  declarations: [ImageContainerComponent, PhotosSectionComponent, MenuItemComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

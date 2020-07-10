@@ -6,7 +6,8 @@ import { Photo } from '../../photo-template';
 import MockTestImages from 'testing/mock-image-response.json';
 import { asyncData } from 'testing/async-observable-helpers';
 import { of } from 'rxjs';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges, SimpleChange } from '@angular/core';
+
 
 describe('ImageContainerComponent', () => {
   let component: ImageContainerComponent;
@@ -51,28 +52,39 @@ describe('ImageContainerComponent', () => {
     fixture = TestBed.createComponent(ImageContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    getPhotosSpy.and.returnValue(asyncData(testPhotos));
   });
 
-  describe('when test with asynchronous observable', () => {
-    beforeEach(() => {
-      getPhotosSpy.and.returnValue(asyncData(testPhotos));
-    });
+  it('should display a list of photos', () => {
+    const bannerDe: DebugElement = fixture.debugElement;
+    const bannerEl: HTMLElement = bannerDe.nativeElement;
+    const imageList = bannerEl.querySelectorAll('img');
+    const imageListLinks = Array.from(imageList)
+      .filter((image) => !!image.src)
+      .map((image) => `..${image.src.substring(21, image.src.length)}`);
+    const testPhotosLinks = testPhotos
+      .filter((testPhoto) => !!testPhoto)
+      .map((testPhoto) => testPhoto.link);
+    expect(imageListLinks).toEqual(testPhotosLinks);
+  });
 
-    it('should display a list of photos', () => {
-      const bannerDe: DebugElement = fixture.debugElement;
-      const bannerEl: HTMLElement = bannerDe.nativeElement;
-      const imageList = bannerEl.querySelectorAll('img');
-      const imageListLinks = Array.from(imageList)
-        .filter((image) => !!image.src)
-        .map((image) => `..${image.src.substring(21, image.src.length)}`);
-      const testPhotosLinks = testPhotos
-        .filter((testPhoto) => !!testPhoto)
-        .map((testPhoto) => testPhoto.link);
-      expect(imageListLinks).toEqual(testPhotosLinks);
-    });
+  it('should fetch correctly', () => {
+    expect(component.originalPhotos).toEqual(testPhotos);
+  });
 
-    it('should fetch correctly', () => {
-      expect(component.originalPhotos).toEqual(testPhotos);
-    });
+  it('limit change should be emitted when remove photos called', () => {
+    spyOn(component.limitChange, 'emit');
+    component.removePhoto(0);
+    expect(component.limitChange.emit).toHaveBeenCalled();
+  });
+
+  it('filter should be reset on new city input', () => {
+    component.city = 'Boston';
+    component.filter = 'Aquarium';
+    const changesObj: SimpleChanges = {
+      city: new SimpleChange('Boston', 'Philly', false)
+    };
+    component.ngOnChanges(changesObj);
+    expect(component.filter).toBe('');
   });
 });

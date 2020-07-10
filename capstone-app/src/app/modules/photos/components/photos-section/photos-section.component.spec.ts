@@ -9,14 +9,46 @@ import { of } from 'rxjs';
 import { PhotosSectionComponent } from './photos-section.component';
 import { PhotoFetcher } from '../../services/photo-fetcher.service';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { NavItem } from '../../nav-item';
+import { MatMenuHarness } from '@angular/material/menu/testing';
 
 describe('PhotosSectionComponent', () => {
   let component: PhotosSectionComponent;
   let fixture: ComponentFixture<PhotosSectionComponent>;
   let loader: HarnessLoader;
   let getPhotosSpy: jasmine.Spy;
+  let testItems: NavItem[];
 
   beforeEach(async(() => {
+    testItems = [
+      {
+        name: 'Tourist Attractions',
+        children: [
+          {
+            name: 'Park',
+            children: [
+              {
+                name: 'Central Park',
+              },
+            ],
+          },
+          {
+            name: 'Building',
+            children: [
+              {
+                name: 'New Guy',
+              },
+            ],
+          },
+          {
+            name: 'Boston',
+          }
+        ],
+      },
+    ];
+
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
     getPhotosSpy = photosService.getPhotos.and.returnValue(of(MockTestImages));
 
@@ -43,7 +75,25 @@ describe('PhotosSectionComponent', () => {
     expect(limit).toEqual('10');
   });
 
+  it('should show correct nav items', async () => {
+    component.navItems = testItems;
+    fixture.detectChanges();
+    const buttonHarness = await loader.getAllHarnesses(MatButtonHarness);
+    await buttonHarness[0].click();
+    const menuHarness = await loader.getAllHarnesses(MatMenuHarness);
+    const subItems = await menuHarness[0].getItems();
+    const subItemsText = [];
+    for (const item of subItems) {
+      subItemsText.push(await item.getText());
+    }
+    // abnormal list due to mat icon text
+    const expectedResponse = ['filter_list Park', 'filter_list Building', 'exploreBoston'];
+    expect(expectedResponse).toEqual(subItemsText);
+  });
+
   it('should show error message if not in range', async () => {
+    component.city = 'Boston';
+    fixture.detectChanges();
     const inputHarness = await loader.getHarness(
       MatInputHarness.with({ selector: '.limit-input' })
     );
@@ -61,7 +111,7 @@ describe('PhotosSectionComponent', () => {
     const myComponent = fixture.debugElement.query(
       By.directive(ImageContainerComponent)
     );
-    myComponent.triggerEventHandler('limitChange', 9);
+    myComponent.triggerEventHandler('limitChange', { max: 9, wasRemoved: 1 });
     expect(component.maxPhotos).toEqual(9);
   });
 });
