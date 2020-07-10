@@ -28,7 +28,7 @@
         [formControl]="limitControl"
         min="1"
         class="limit-input"
-        max="{{ maxPhotos }}"/>
+        max="{{ maxPhotos }}">
       <span matSuffix>count</span>
       <mat-hint>Between 1 and {{ maxPhotos }}</mat-hint>
       <mat-error *ngIf="limitControl.invalid"
