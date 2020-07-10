@@ -7,6 +7,7 @@ import {
   Output,
   EventEmitter,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 
 interface LimitChange {
@@ -20,23 +21,14 @@ interface LimitChange {
   styleUrls: ['./image-container.component.scss'],
 })
 export class ImageContainerComponent implements OnChanges, OnInit {
+  @Input() city!: string;
+  @Input() filter?: string;
+  @Input() limit = 10;
+  @Output() limitChange = new EventEmitter<LimitChange>();
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
   errorMessage: string;
   query = '';
-  previousCity = '';
-  previousFilter = '';
-
-  /**
-   * @Input city: the city user searched for.
-   * @Input filter: the filter user clicked on.
-   * @Input limit: the photo number to display.
-   * @Output limitChange: if a photo cannot display, update limit.
-   */
-  @Input() city: string;
-  @Input() filter: string;
-  @Input() limit = 10;
-  @Output() limitChange = new EventEmitter<LimitChange>();
 
   constructor(private photosService: PhotoFetcher) {}
 
@@ -44,22 +36,15 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     this.getPhotos();
   }
 
-  ngOnChanges() {
-    let somethingChanged = false;
+  ngOnChanges(changes: SimpleChanges) {
     this.limitPhotos(this.limit);
-    if (this.city !== this.previousCity) {
+    if (changes.city) {
       this.filter = '';
-      this.previousCity = this.city;
-      somethingChanged = true;
-    }
-    if (this.filter !== this.previousFilter) {
-      this.previousFilter = this.filter;
-      somethingChanged = true;
     }
     this.query = this.filter
       ? `${this.city} ${this.filter}`
       : `${this.city} 1920`;
-    if (somethingChanged) {
+    if (changes.city || changes.filter) {
       this.getPhotos();
     }
   }
