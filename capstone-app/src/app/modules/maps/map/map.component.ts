@@ -97,13 +97,19 @@ export class MapComponent implements AfterViewInit, OnInit{
         this.location = new google.maps.LatLng(this.position);
       }
       else {
-        // default location Bogota, Colombia
-        this.location = new google.maps.LatLng(4.7110, -74.0721);
+        // default location Los Angles
+        this.location = new google.maps.LatLng(34.0522, -118.2437);
       }
     }
   }
 
-  getCurrentLocation () {
+  setDefaultOrCurrentName(locationName: string) {
+    this.cityLocation = locationName;
+  }
+
+  async getCurrentLocation () {
+    let filterResult: string;
+    let prevResult: string = 'blank';
     navigator.geolocation.getCurrentPosition(position => {
       this.position = {
         lat: position.coords.latitude,
@@ -111,23 +117,63 @@ export class MapComponent implements AfterViewInit, OnInit{
       };
       this.location = new google.maps.LatLng(this.position);
       this.getCurrentOrSetLocation();
-      this.geocoder.geocode({'location': this.position}, function(results, status) {
+      this.geocoder.geocode({'location': this.position}, (results, status) => {
         if (status === 'OK') {
-          this.cityLocation = results[5].formatted_address;
+          for (let result of results) {
+            filterResult = result.formatted_address;
+            if (filterResult.match(/[1-1000]/)) {
+              continue;
+            }
+            if (filterResult.includes('County')){
+              continue;
+            }
+            if (!filterResult.includes(',')) {
+              continue;
+            }
+            if (filterResult.split(',').length > 3) {
+              continue;
+            }
+            if (filterResult.split(',').length > prevResult.split(',').length) {
+              this.cityLocation = filterResult;
+            }
+            else {
+              this.cityLocation = prevResult;
+            }
+            prevResult = filterResult;
+          }
         }
       });
       this.placesRequestFunc(this.location);
     }, () => {
       // default position
-      this.position = {lat: 4.7110, lng: -74.0721};
+      this.position = {lat: 34.0522, lng: -118.2437};
       this.getCurrentOrSetLocation();
-
-      this.geocoder.geocode({'location': this.position}, function(results, status) {
+      this.geocoder.geocode({'location': this.position}, (results, status) => {
         if (status === 'OK') {
-          this.cityLocation = results[5].formatted_address;
+          for (let result of results) {
+            filterResult = result.formatted_address;
+            if (filterResult.match(/[1-1000]/)) {
+              continue;
+            }
+            if (filterResult.includes('County')){
+              continue;
+            }
+            if (!filterResult.includes(',')) {
+              continue;
+            }
+            if (filterResult.split(',').length > 3) {
+              continue;
+            }
+            if (filterResult.split(',').length > prevResult.split(',').length) {
+              this.cityLocation = filterResult;
+            }
+            else {
+              this.cityLocation = prevResult;
+            }
+          }
         }
       });
-      this.cityLocation = 'Bogota, Colombia';
+      // this.cityLocation = 'Los Angles, CA, USA';
       this.placesRequestFunc(this.location);
     });
     
