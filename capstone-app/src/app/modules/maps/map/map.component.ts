@@ -24,6 +24,7 @@ export class MapComponent implements AfterViewInit, OnInit{
   markers: google.maps.MarkerOptions[] = [];
   locationNameArray: String[] = [];
   cityLocation: string;
+  cityName: string;
   geocoder = new google.maps.Geocoder();
   activeMark: string;
   testlocation: google.maps.LatLng = new google.maps.LatLng(26.011760, -80.139050);
@@ -34,7 +35,6 @@ export class MapComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit() {
-    this.getCurrentLocation();
     this.getCurrentOrSetLocation();
   }
 
@@ -57,15 +57,11 @@ export class MapComponent implements AfterViewInit, OnInit{
     });
   }
 
-  deleteAllMarks() {
-    this.searchMarkers = [];
-  }
-
   placesRequestFunc(location: google.maps.LatLng) {
     this.placesRequest.location = this.location;
     this.nearSearch.nearbySearch(this.placesRequest, results => {
       // resetting data
-      this.deleteAllMarks();
+      this.searchMarkers = [];
       this.markerData.clear();
       this.locationNameArray = [];
       for (const result of results) {
@@ -91,93 +87,15 @@ export class MapComponent implements AfterViewInit, OnInit{
     this.infoWindow.open(marker);
   }
 
+  // gets our default location
   getCurrentOrSetLocation() {
     if (!this.location) {
-      if (this.position) {
-        this.location = new google.maps.LatLng(this.position);
-      }
-      else {
-        // default location Los Angles
-        this.location = new google.maps.LatLng(34.0522, -118.2437);
-      }
+      this.cityLocation = "Los Angeles, CA, USA"
+      this.location = new google.maps.LatLng(34.0522, -118.2437);
+      setTimeout(() => {
+        this.placesRequestFunc(this.location);
+      });
     }
-  }
-
-  setDefaultOrCurrentName(locationName: string) {
-    this.cityLocation = locationName;
-  }
-
-  async getCurrentLocation () {
-    let filterResult: string;
-    let prevResult: string = 'blank';
-    navigator.geolocation.getCurrentPosition(position => {
-      this.position = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-      this.location = new google.maps.LatLng(this.position);
-      this.getCurrentOrSetLocation();
-      this.geocoder.geocode({'location': this.position}, (results, status) => {
-        if (status === 'OK') {
-          for (let result of results) {
-            filterResult = result.formatted_address;
-            if (filterResult.match(/[1-1000]/)) {
-              continue;
-            }
-            if (filterResult.includes('County')){
-              continue;
-            }
-            if (!filterResult.includes(',')) {
-              continue;
-            }
-            if (filterResult.split(',').length > 3) {
-              continue;
-            }
-            if (filterResult.split(',').length > prevResult.split(',').length) {
-              this.cityLocation = filterResult;
-            }
-            else {
-              this.cityLocation = prevResult;
-            }
-            prevResult = filterResult;
-          }
-        }
-      });
-      this.placesRequestFunc(this.location);
-    }, () => {
-      // default position
-      this.position = {lat: 34.0522, lng: -118.2437};
-      this.getCurrentOrSetLocation();
-      this.geocoder.geocode({'location': this.position}, (results, status) => {
-        if (status === 'OK') {
-          for (let result of results) {
-            filterResult = result.formatted_address;
-            if (filterResult.match(/[1-1000]/)) {
-              continue;
-            }
-            if (filterResult.includes('County')){
-              continue;
-            }
-            if (!filterResult.includes(',')) {
-              continue;
-            }
-            if (filterResult.split(',').length > 3) {
-              continue;
-            }
-            if (filterResult.split(',').length > prevResult.split(',').length) {
-              this.cityLocation = filterResult;
-            }
-            else {
-              this.cityLocation = prevResult;
-            }
-          }
-        }
-      });
-      // this.cityLocation = 'Los Angles, CA, USA';
-      this.placesRequestFunc(this.location);
-    });
-    
-    return this.position;
   }
 
   addMarker(event: google.maps.MouseEvent) {
