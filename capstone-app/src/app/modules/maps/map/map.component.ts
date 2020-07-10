@@ -76,7 +76,7 @@ export class MapComponent implements AfterViewInit, OnInit{
     });
   }
 
-  createMarker(result: google.maps.places.PlaceResult): google.maps.MarkerOptions {
+  createMarker(result: google.maps.places.PlaceResult) {
    return {
     position: result.geometry.location,
     title: result.name,
