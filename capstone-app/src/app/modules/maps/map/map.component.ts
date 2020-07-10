@@ -24,7 +24,7 @@ export class MapComponent implements AfterViewInit, OnInit{
   markers: google.maps.MarkerOptions[] = [];
   locationNameArray: String[] = [];
   cityLocation: string;
-  geocoder = new google.maps.Geocoder;
+  geocoder = new google.maps.Geocoder();
   activeMark: string;
   testlocation: google.maps.LatLng = new google.maps.LatLng(26.011760, -80.139050);
   placesRequest = {
