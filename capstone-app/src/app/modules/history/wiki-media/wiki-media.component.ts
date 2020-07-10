@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WikiSearchResult } from '../WikiSearchTemplate';
+import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -12,14 +13,18 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class WikiMediaComponent implements OnInit, OnDestroy {
-  wikiResult: WikiSearchResult;
+  history: string;
+  title: string;
+  error: string;
   destroy$ = new Subject<void>();
   loading = true;
   body: string;
+  urls = new Map();
+
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('Stillwater, Oklahoma');
+    this.getResults('New York City, NY');
   }
 
   ngOnDestroy(): void {
@@ -27,40 +32,19 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   }
 
   getResults(queryString: string) {
-    // TODO(sarahhud): Add error handling for wikipedia request and testing.
     this.wikiService.search(queryString)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: WikiSearchResult) => {
-        this.wikiResult = result;
-        if (this.wikiResult.parse.text) {
-          this.body = this.fixString(result.parse.text["*"]);
+      .subscribe((result: WikiServiceResult) => {
+        if (result.history) {
+          this.body = result.history;
+          this.history = result.history;
+          this.urls = result.furtherReading
+          this.title = result.title;
           this.loading = false;
-          this.setHtml(this.body);
         }
         else {
-          console.log("API did not return a valid response.");
+          this.error = 'API did not return a valid response.';
+          console.error('API did not return a valid response.');
         }
     });
   }
-
-  fixString(text: string): string {
-    let firstIndex = text.indexOf("<span class=\"mw-headline\" id=\"History\">History</span>", 0);
-    if(firstIndex !== -1){
-      let firstPartOfString = text.substring(firstIndex, text.length);
-      let endIndex = firstPartOfString.indexOf("<h2>", 0);
-      let startIndex = firstPartOfString.indexOf('</h2>', 0);
-      let middleOfString = firstPartOfString.substring(startIndex, endIndex);
-      let finalString = middleOfString.split('href="/wiki').join('target="_blank" href="https://en.wikipedia.org/wiki');
-      finalString.split('title="Edit section: History">edit').join('>');
-      return finalString;
-    }
-    console.log("The city page was found, but unfortunately there was no history paragraph found!");
-    return text;
-  }
-
-  setHtml(text: string) {
-    let el = document.getElementById('body');
-    el.innerHTML = text;
-  }
-
 }

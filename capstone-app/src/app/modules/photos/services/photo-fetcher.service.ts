@@ -20,7 +20,7 @@ export class PhotoFetcher {
     const fullUrl =
       `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
       `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
-      `q=${query}&num=${limit}`;
+      `q=${query.split(' ').join('+')}&num=${limit}`;
     return this.http.get(fullUrl).pipe(catchError(this.handleError));
   }
 

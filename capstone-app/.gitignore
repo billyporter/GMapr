@@ -61,3 +61,4 @@ runtime-es5*
 .editorconfig*
 .3rdpartylicenses.txt
 appengine-web.xml
+backend/src/main/webapp/*.map
