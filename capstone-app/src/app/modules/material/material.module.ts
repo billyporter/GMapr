@@ -7,12 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 const material = [
+  MatButtonModule,
   MatFormFieldModule,
-  MatSelectModule,
+  MatIconModule,
   MatInputModule,
   MatMenuModule,
-  MatButtonModule,
-  MatIconModule,
+  MatSelectModule,
 ];
 
 @NgModule({
