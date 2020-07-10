@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  ChangeDetectorRef,
-  AfterViewChecked,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import MockPlacesPa from 'src/app/modules/photos/assets/mock-places-phoenixville.json';
@@ -15,7 +13,8 @@ import { NavItem } from '../../nav-item';
   templateUrl: './photos-section.component.html',
   styleUrls: ['./photos-section.component.scss'],
 })
-export class PhotosSectionComponent implements OnChanges, AfterViewChecked {
+export class PhotosSectionComponent implements OnChanges {
+  @Input() city: string;
   limitControl = new FormControl(10, [Validators.min(1), Validators.max(10)]);
   maxPhotos = 10;
   mockPlacesPa: any = (MockPlacesPa as any).places;
@@ -30,9 +29,8 @@ export class PhotosSectionComponent implements OnChanges, AfterViewChecked {
   allTypes: string[];
   navItems: NavItem[] = [];
   markerFilter = '';
-  @Input() city: string;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
 
   // Until the photos section is connected to the maps, only mocks are supported
   ngOnChanges() {
@@ -43,10 +41,6 @@ export class PhotosSectionComponent implements OnChanges, AfterViewChecked {
     }
     this.extractUniqueTypes();
     this.populateNavItems();
-  }
-
-  ngAfterViewChecked() {
-    this.cdr.detectChanges();
   }
 
   /**
