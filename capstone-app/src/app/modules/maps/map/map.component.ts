@@ -68,8 +68,8 @@ export class MapComponent implements AfterViewInit, OnInit{
       this.deleteAllMarks();
       this.markerData.clear();
       this.locationNameArray = [];
-      for ( const result of results) {
-        this.searchMarkers.push(this.createMarker(result))
+      for (const result of results) {
+        this.searchMarkers.push(this.createMarker(result));
         this.locationNameArray.push(result.name);
         this.markerData.set(result.name, result.types);
       }
@@ -81,14 +81,14 @@ export class MapComponent implements AfterViewInit, OnInit{
     position: result.geometry.location,
     title: result.name,
     icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
+        url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
     }
    };
   }
 
   openInfoWindow(marker: MapMarker) {
     this.activeMark = marker._marker.getTitle();
-     this.infoWindow.open(marker);
+    this.infoWindow.open(marker);
   }
 
   getCurrentOrSetLocation() {
@@ -111,7 +111,7 @@ export class MapComponent implements AfterViewInit, OnInit{
       };
       this.location = new google.maps.LatLng(this.position);
       this.getCurrentOrSetLocation();
-      this.geocoder.geocode({'location': this.position, }, function(results, status) {
+      this.geocoder.geocode({'location': this.position}, function(results, status) {
         if (status === 'OK') {
           this.cityLocation = results[5].formatted_address;
         }
@@ -122,7 +122,7 @@ export class MapComponent implements AfterViewInit, OnInit{
       this.position = {lat: 4.7110, lng: -74.0721};
       this.getCurrentOrSetLocation();
 
-      this.geocoder.geocode({'location': this.position, }, function(results, status) {
+      this.geocoder.geocode({'location': this.position}, function(results, status) {
         if (status === 'OK') {
           this.cityLocation = results[5].formatted_address;
         }
