@@ -9,6 +9,11 @@ import {
   OnInit,
 } from '@angular/core';
 
+interface LimitChange {
+  max: number;
+  wasRemoved: number;
+}
+
 @Component({
   selector: 'app-image-container',
   templateUrl: './image-container.component.html',
@@ -31,7 +36,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   @Input() city: string;
   @Input() filter: string;
   @Input() limit = 10;
-  @Output() limitChange = new EventEmitter<{max: number, wasRemoved: number}>();
+  @Output() limitChange = new EventEmitter<LimitChange>();
 
   constructor(private photosService: PhotoFetcher) {}
 
