@@ -40,6 +40,7 @@ export class MapComponent implements AfterViewInit, OnInit{
 
   ngAfterViewInit() {
     setTimeout(() => {
+      this.placesRequestFunc(this.location);
       this.locationSearch();
     });
     this.nearSearch = new google.maps.places.PlacesService(this.mapComponent._googleMap);
@@ -92,9 +93,6 @@ export class MapComponent implements AfterViewInit, OnInit{
     if (!this.location) {
       this.cityLocation = "Los Angeles, CA, USA"
       this.location = new google.maps.LatLng(34.0522, -118.2437);
-      setTimeout(() => {
-        this.placesRequestFunc(this.location);
-      });
     }
   }
 
