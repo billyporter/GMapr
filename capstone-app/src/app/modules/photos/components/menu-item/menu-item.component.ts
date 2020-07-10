@@ -8,10 +8,10 @@ import { MatMenu } from '@angular/material/menu';
   styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemComponent {
-  markerFilter: string;
   @Input() items: NavItem[];
   @Output() filterSelected = new EventEmitter<string>();
   @ViewChild('childMenu') public childMenu?: MatMenu;
+  markerFilter: string;
 
   select(name: string) {
     this.filterSelected.emit(name);
