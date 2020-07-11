@@ -53,10 +53,9 @@ export class WikiResultsService {
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
       const paragraphs = middleOfString.split('<p>');
-      console.log(paragraphs);
       if (paragraphs.length > 9) {
-        if(paragraphs[0].startsWith("</h2")) {
-          middleOfString = paragraphs.slice(1,9).join('');
+        if (paragraphs[0].startsWith('</h2')) {
+          middleOfString = paragraphs.slice(1,10).join('');
         }
         else {
           middleOfString = paragraphs.slice(0,9).join('');
