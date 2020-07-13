@@ -11,15 +11,15 @@ export class AppComponent {
   city: string;
   markerData = new Map<string, string[]>();
 
-  updateActiveMarker(newActiveMarker: string){
+  updateActiveMarker(newActiveMarker: string) {
     this.activeMarker = newActiveMarker;
   }
 
-  updateMarkerData(newMarker: Map<string, string[]>){
+  updateMarkerData(newMarker: Map<string, string[]>) {
     this.markerData = newMarker;
   }
 
-  cityUpdate(newCity: string){
+  cityUpdate(newCity: string) {
     this.city = newCity;
   }
 }
