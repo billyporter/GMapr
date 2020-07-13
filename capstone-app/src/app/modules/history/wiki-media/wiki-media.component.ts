@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { WikiSearchResult } from '../WikiSearchTemplate';
 import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
@@ -28,8 +28,12 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.getResults(this.cityName);
   }
 
-  ngOnChanges(): void {
-    this.getResults(this.cityName);
+  ngOnChanges(changes: SimpleChanges): void {
+    let change = changes['cityName'];
+
+    if(!change.firstChange && change){
+      this.getResults(this.cityName);
+    }
   }
 
   ngOnDestroy(): void {
