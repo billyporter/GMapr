@@ -1,22 +1,33 @@
 
-.history-title {
+.history-title.mat-card-title {
   font-family: 'Open Sans', sans-serif;
+  font-weight: 590;
+  font-size: 45px;
+  text-align: center;
   margin-left: 3%;
   margin-right: 3%;
-  border-top: grey;
-  //border
-  margin-top: 7%;
+  padding-bottom: 30px;
   color: black;
 }
 
-.history-body {
+.history-body.mat-card {
+  padding: 5%;
+  line-height: 30px;
+  background-color: #F8F8F8;
+  height: auto;
+  width: auto;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+  font-size: 21px;
   color: black;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-top: 3%;
+  margin-left: 20%;
+  margin-right: 20%;
   margin-bottom: 2%;
   text-align: left;
+}
+
+.more-reading-card.mat-card {
+  background-color: #F8F8F8;
 }
 
 .more-reading {
@@ -35,6 +46,10 @@ p {
 a {
   font-style: italic;
   color: #425866;
+}
+
+.history-body-text {
+  margin-left: 5%;
 }
 
 .more-reading-title {

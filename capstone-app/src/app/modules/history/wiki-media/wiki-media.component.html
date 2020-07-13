@@ -2,12 +2,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <div *ngIf="!loading" class="history">
-  <h2 class="history-title">{{wikiResult.parse.title}}</h2>
-  <p class="history-body">{{body}}<p>
-  <h4 class="more-reading-title">Further Reading</h4>
-  <div class="more-reading">
-    <p *ngFor="let url of urls | keyvalue">
-      <a href="{{url.key}}" target="_blank">{{url.value}}</a>
-    </p>
-  </div>
+  <span class="border"></span>
+  <mat-card class="history-body">
+    <mat-card-title class="history-title">{{wikiResult.parse.title}}</mat-card-title>
+    {{body}}
+  </mat-card>
+    <mat-card class="more-reading">
+      <p *ngFor="let url of urls | keyvalue">
+        <a href="{{url.key}}" target="_blank">{{url.value}}</a>
+      </p>
+    </mat-card>
 </div>
