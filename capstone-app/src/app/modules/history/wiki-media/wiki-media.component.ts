@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { WikiSearchResult } from '../WikiSearchTemplate';
 import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrls: ['./wiki-media.component.scss']
 })
 
-export class WikiMediaComponent implements OnInit, OnDestroy {
+export class WikiMediaComponent implements OnChanges, OnInit {
   history: string;
   title: string;
   error: string;
@@ -20,11 +20,20 @@ export class WikiMediaComponent implements OnInit, OnDestroy {
   loading = true;
   body: string;
   urls = new Map();
+  @Input() cityName!: string;
 
   constructor(private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults('New York City, NY');
+    this.getResults(this.cityName);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    let change = changes['cityName'];
+
+    if(!change.firstChange && change){
+      this.getResults(this.cityName);
+    }
   }
 
   ngOnDestroy(): void {
