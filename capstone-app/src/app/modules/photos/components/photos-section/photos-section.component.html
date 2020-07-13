@@ -41,5 +41,6 @@
   [filter]="markerFilter"
   [limit]="limitControl.value"
   [city]="city"
+  [activeMarker]="activeMarker"
   (limitChange)="updateLimit($event.max, $event.wasRemoved)"
 ></app-image-container>
