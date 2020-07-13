@@ -24,6 +24,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   @Input() city!: string;
   @Input() filter?: string;
   @Input() limit = 10;
+  @Input() activeMarker?: string;
   @Output() limitChange = new EventEmitter<LimitChange>();
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
@@ -36,14 +37,18 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     this.getPhotos();
   }
 
+  // TODO(billyporter): Fix expressionchanged error
   ngOnChanges(changes: SimpleChanges) {
     if (changes.city) {
       this.filter = '';
     }
+    else if (changes.activeMarker) {
+      this.filter = this.activeMarker;
+    }
     this.query = this.filter
       ? `${this.city} ${this.filter}`
-      : `${this.city} 1920`;
-    if (changes.city || changes.filter) {
+      : `downtown ${this.city} 1910`;
+    if (changes.city || changes.filter || changes.activeMarker) {
       this.getPhotos();
     }
     this.limitPhotos(this.limit);
