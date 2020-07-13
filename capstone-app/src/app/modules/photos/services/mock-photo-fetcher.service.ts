@@ -30,13 +30,13 @@ export class MockPhotoFetcher {
       }
     }
     else {
-      if (query.includes('PJ')) {
+      if (query.includes('Pj')) {
         return of(MockPhotosPj);
       }
       else if (query.includes('Colonial')) {
         return of(MockPhotosCol);
       }
-      else if (query.includes('1920')) {
+      else if (query.includes('1910')) {
         return of(MockPhotosPa);
       }
       else {
