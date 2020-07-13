@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { Component,  ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { Component,  ViewChild, ElementRef, AfterViewInit, OnInit, Output, EventEmitter } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -12,6 +12,10 @@ export class MapComponent implements AfterViewInit, OnInit{
   @ViewChild('searchBar') searchBar: ElementRef;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
   @ViewChild(GoogleMap) mapComponent: GoogleMap;
+
+  @Output() activeMarkerOutput = new EventEmitter<string>();
+  @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
+  @Output() cityOutput = new EventEmitter<string>();
 
   nearSearch?: google.maps.places.PlacesService;
   location?: google.maps.LatLng;
@@ -55,6 +59,7 @@ export class MapComponent implements AfterViewInit, OnInit{
       this.location = autoComplete.getPlace().geometry.location;
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequestFunc(this.location);
+      this.cityOutput.emit(this.cityLocation);
     });
   }
 
@@ -70,6 +75,7 @@ export class MapComponent implements AfterViewInit, OnInit{
         this.locationNameArray.push(result.name);
         this.markerData.set(result.name, result.types);
       }
+      this.markerDataOutput.emit(this.markerData);
     });
   }
 
@@ -86,6 +92,7 @@ export class MapComponent implements AfterViewInit, OnInit{
   openInfoWindow(marker: MapMarker) {
     this.activeMark = marker._marker.getTitle();
     this.infoWindow.open(marker);
+    this.activeMarkerOutput.emit(this.activeMark);
   }
 
   // gets our default location
@@ -93,11 +100,12 @@ export class MapComponent implements AfterViewInit, OnInit{
     if (!this.location) {
       this.cityLocation = "Los Angeles, CA, USA"
       this.location = new google.maps.LatLng(34.0522, -118.2437);
+      this.cityOutput.emit(this.cityLocation);
     }
   }
 
   addMarker(event: google.maps.MouseEvent) {
-    this.markers.push({ 
+    this.markers.push({
          position: event.latLng,
          title: 'Custom Marker',
          icon: {
