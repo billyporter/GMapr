@@ -89,10 +89,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
    * 2) There are bad photos which cannot be fetched so the new limit is less than max
    */
   updateLimit(newLimit: number, wasRemoved: number) {
-    if (
-      this.limitControl.value === this.maxPhotos &&
-      this.maxPhotos < newLimit
-    ) {
+    if (this.limitControl.value === this.maxPhotos && this.maxPhotos < newLimit) {
       this.maxPhotos = newLimit;
       this.limitControl = new FormControl(newLimit);
     } else if (wasRemoved === 1 && this.limitControl.value >= newLimit) {
@@ -113,13 +110,13 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
 
   extractUniqueTypes() {
     this.allTypes = [];
-    const tempTypes: [string[]] = [[]];
+    const tempTypes: string[][] = [];
     for (const [key, value] of this.markerPlaces) {
       tempTypes.push(value);
     }
     this.allTypes = tempTypes.flat();
     const copyForSplicing = this.allTypes.slice();
-    this.uniqueTypes = this.allTypes = this.allTypes.filter((category) => {
+    this.uniqueTypes = this.allTypes.filter((category) => {
       copyForSplicing.splice(copyForSplicing.indexOf(category), 1);
       return !copyForSplicing.includes(category);
     });
