@@ -1,0 +1,248 @@
+{
+    "kind": "customsearch#search",
+    "url": {
+      "type": "application/json",
+      "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+    },
+    "queries": {
+      "request": [
+        {
+          "title": "Google Custom Search - boston massachusetts faneuil hall",
+          "totalResults": "6480000",
+          "searchTerms": "boston massachusetts faneuil hall",
+          "count": 10,
+          "startIndex": 1,
+          "inputEncoding": "utf8",
+          "outputEncoding": "utf8",
+          "safe": "off",
+          "cx": "014012661603529902036:grbt2ttpety",
+          "searchType": "image"
+        }
+      ],
+      "nextPage": [
+        {
+          "title": "Google Custom Search - boston massachusetts faneuil hall",
+          "totalResults": "6480000",
+          "searchTerms": "boston massachusetts faneuil hall",
+          "count": 10,
+          "startIndex": 11,
+          "inputEncoding": "utf8",
+          "outputEncoding": "utf8",
+          "safe": "off",
+          "cx": "014012661603529902036:grbt2ttpety",
+          "searchType": "image"
+        }
+      ]
+    },
+    "context": {
+      "title": "Google"
+    },
+    "searchInformation": {
+      "searchTime": 0.491233,
+      "formattedSearchTime": "0.49",
+      "totalResults": "6480000",
+      "formattedTotalResults": "6,480,000"
+    },
+    "items": [
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall - Wikipedia",
+        "htmlTitle": "<b>Faneuil Hall</b> - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Faneuil_Hall_Boston_Massachusetts.JPG/1200px-Faneuil_Hall_Boston_Massachusetts.JPG",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Faneuil Hall - Wikipedia",
+        "htmlSnippet": "<b>Faneuil Hall</b> - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Faneuil_Hall",
+          "height": 1732,
+          "width": 1200,
+          "byteSize": 688379,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9VXnP3tVqOtm8ql-RlxqdXw2SyvuI4CD4k76fEKppdFpNuoBivBW0Pg&s",
+          "thumbnailHeight": 150,
+          "thumbnailWidth": 104
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall – Boston, Massachusetts - Atlas Obscura",
+        "htmlTitle": "<b>Faneuil Hall</b> – <b>Boston</b>, <b>Massachusetts</b> - Atlas Obscura",
+        "link": "https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzgwZmY5NjdhZmVlOTYxZTE0N184MDBweC1Cb3N0b25GYW5ldWlsSGFsbDI1SnVuZTA3Qy5qcGciXSxbInAiLCJ0aHVtYiIsIngzOTA-Il0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdXQ",
+        "displayLink": "www.atlasobscura.com",
+        "snippet": "Faneuil Hall – Boston, Massachusetts - Atlas Obscura",
+        "htmlSnippet": "<b>Faneuil Hall</b> – <b>Boston</b>, <b>Massachusetts</b> - Atlas Obscura",
+        "mime": "image/",
+        "fileFormat": "image/",
+        "image": {
+          "contextLink": "https://www.atlasobscura.com/places/faneuil-hall",
+          "height": 390,
+          "width": 520,
+          "byteSize": 56613,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRehIvQS0h8AOezm1Tf41n6VLJUgLefP4YjX0ist9JUyGlSIEEL-eNMkQ&s",
+          "thumbnailHeight": 98,
+          "thumbnailWidth": 131
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall - Wikipedia",
+        "htmlTitle": "<b>Faneuil Hall</b> - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Faneuil_Hall_Boston_Massachusetts.JPG/250px-Faneuil_Hall_Boston_Massachusetts.JPG",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Faneuil Hall - Wikipedia",
+        "htmlSnippet": "<b>Faneuil Hall</b> - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Faneuil_Hall",
+          "height": 361,
+          "width": 250,
+          "byteSize": 32851,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKpSieIFj_PJV6CuoKpy7Mq0FlApyOXyRAy_BIH8KlXzIyDjmUxPN8&s",
+          "thumbnailHeight": 121,
+          "thumbnailWidth": 84
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall Marketplace | market, Boston, Massachusetts, United ...",
+        "htmlTitle": "<b>Faneuil Hall</b> Marketplace | market, <b>Boston</b>, <b>Massachusetts</b>, United ...",
+        "link": "https://cdn.britannica.com/20/90320-050-A6E982BE/Faneuil-Hall-Marketplace-Quincy-Market-Boston.jpg",
+        "displayLink": "www.britannica.com",
+        "snippet": "Faneuil Hall Marketplace | market, Boston, Massachusetts, United ...",
+        "htmlSnippet": "<b>Faneuil Hall</b> Marketplace | market, <b>Boston</b>, <b>Massachusetts</b>, United ...",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.britannica.com/place/Faneuil-Hall-Marketplace",
+          "height": 1055,
+          "width": 1600,
+          "byteSize": 438239,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3P3PVH7ybS5Jv5XgF69-HkDFHDdLTlvoe1AUEfrEtK3VOt_4Bwe-LCVQ&s",
+          "thumbnailHeight": 99,
+          "thumbnailWidth": 150
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall - Wikipedia",
+        "htmlTitle": "<b>Faneuil Hall</b> - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Faneuil_Hall_Boston_Massachusetts.JPG",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Faneuil Hall - Wikipedia",
+        "htmlSnippet": "<b>Faneuil Hall</b> - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Faneuil_Hall",
+          "height": 2441,
+          "width": 1691,
+          "byteSize": 1677945,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLu-YL_votkhamVDkJptdHrGuKBq12y1iCDjS9SLbJ8wJ1Pi1vI6eQXQ&s",
+          "thumbnailHeight": 150,
+          "thumbnailWidth": 104
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall Marketplace | Best Restaurants and Things to Do in Boston",
+        "htmlTitle": "<b>Faneuil Hall</b> Marketplace | Best Restaurants and Things to Do in <b>Boston</b>",
+        "link": "https://faneuilhallmarketplaceboston.com/faneuil-hall-marketplace-main/wp-content/uploads/sites/203/2017/09/things-to-do-in-boston-faneuil-hall-history.jpg",
+        "displayLink": "faneuilhallmarketplace.com",
+        "snippet": "Faneuil Hall Marketplace | Best Restaurants and Things to Do in Boston",
+        "htmlSnippet": "<b>Faneuil Hall</b> Marketplace | Best Restaurants and Things to Do in <b>Boston</b>",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://faneuilhallmarketplace.com/",
+          "height": 430,
+          "width": 900,
+          "byteSize": 65132,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9JEEoAgqniSyM4ctOO1wAkNghfWUR7IyLUIdxQOpJ8Y3W-xAk6bTF7g&s",
+          "thumbnailHeight": 70,
+          "thumbnailWidth": 146
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "boston-massachusetts-faneuil-hall-marketplace-top - Living + ...",
+        "htmlTitle": "<b>boston</b>-<b>massachusetts</b>-<b>faneuil</b>-<b>hall</b>-marketplace-top - Living + ...",
+        "link": "https://livingnomads.com/wp-content/uploads/2019/04/04/boston-massachusetts-faneuil-hall-marketplace-top.jpg",
+        "displayLink": "livingnomads.com",
+        "snippet": "boston-massachusetts-faneuil-hall-marketplace-top - Living + ...",
+        "htmlSnippet": "<b>boston</b>-<b>massachusetts</b>-<b>faneuil</b>-<b>hall</b>-marketplace-top - Living + ...",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://livingnomads.com/2019/04/boston-travel-blog/boston-massachusetts-faneuil-hall-marketplace-top/",
+          "height": 600,
+          "width": 959,
+          "byteSize": 207241,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTokOjer7huBnlUr4AtFoNgWMCqyQJIfNZdVVLZv9dlFfTG-hxkHpEmiQ&s",
+          "thumbnailHeight": 93,
+          "thumbnailWidth": 148
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall Marketplace: The Complete Guide",
+        "htmlTitle": "<b>Faneuil Hall</b> Marketplace: The Complete Guide",
+        "link": "https://www.tripsavvy.com/thmb/rfiW1Ty5Sq1ZdYuIPBZD8MYB3c8=/7111x5333/smart/filters:no_upscale()/GettyImages-538307614WEB-5c27a44bc9e77c000150ba7f.jpg",
+        "displayLink": "www.tripsavvy.com",
+        "snippet": "Faneuil Hall Marketplace: The Complete Guide",
+        "htmlSnippet": "<b>Faneuil Hall</b> Marketplace: The Complete Guide",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.tripsavvy.com/faneuil-hall-marketplace-the-complete-guide-4171862",
+          "height": 5333,
+          "width": 7111,
+          "byteSize": 6224871,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfQmlqvmKTIh80sg05CbKHsoucSlSJ-jCcDCW2Y2QAll5R362i98noH4E&s",
+          "thumbnailHeight": 112,
+          "thumbnailWidth": 150
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Faneuil Hall Marketplace: Boston shopping and restaurants in a ...",
+        "htmlTitle": "<b>Faneuil Hall</b> Marketplace: <b>Boston</b> shopping and restaurants in a ...",
+        "link": "http://faneuil-hall.visit-boston-massachusetts.com/Faneuil-Hall.jpg",
+        "displayLink": "faneuil-hall.visit-boston-massachusetts.com",
+        "snippet": "Faneuil Hall Marketplace: Boston shopping and restaurants in a ...",
+        "htmlSnippet": "<b>Faneuil Hall</b> Marketplace: <b>Boston</b> shopping and restaurants in a ...",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "http://faneuil-hall.visit-boston-massachusetts.com/",
+          "height": 351,
+          "width": 310,
+          "byteSize": 25227,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE6YwugXtxSrX4mFPA-1a2-XAIDlLhMbxcfIyknyTds3GcYKEy5d-b5w&s",
+          "thumbnailHeight": 120,
+          "thumbnailWidth": 106
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Boston National Historical Park - Wikipedia",
+        "htmlTitle": "<b>Boston</b> National Historical Park - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/b/b9/BostonFaneuilHall25June07C.jpg",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Boston National Historical Park - Wikipedia",
+        "htmlSnippet": "<b>Boston</b> National Historical Park - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Boston_National_Historical_Park",
+          "height": 2112,
+          "width": 2816,
+          "byteSize": 1822793,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfi34NTpaxxL-h1N4yddzwinhOOyuBMGvmMA8A_uwArNJi5hjw5P6Wgw&s",
+          "thumbnailHeight": 113,
+          "thumbnailWidth": 150
+        }
+      }
+    ]
+  }

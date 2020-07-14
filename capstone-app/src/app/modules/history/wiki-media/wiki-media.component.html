@@ -2,7 +2,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <div *ngIf="!loading" class="history">
-  <span class="border"></span>
   <mat-card class="history-body">
     <mat-card-title class="history-title">
       {{wikiResult.parse.title}}
@@ -14,4 +13,7 @@
       <a href="{{url.key}}" target="_blank">{{url.value}}</a>
     </p>
   </mat-card>
+</div>
+<div *ngIf="loading" class="history">
+  {{error}}
 </div>

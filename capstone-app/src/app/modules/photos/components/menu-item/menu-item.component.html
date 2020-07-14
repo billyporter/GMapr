@@ -1,0 +1,22 @@
+<mat-menu #childMenu="matMenu" [overlapTrigger]="false">
+  <span *ngFor="let child of items">
+    <span *ngIf="child.children && child.children.length > 0">
+      <button mat-menu-item [matMenuTriggerFor]="menu.childMenu || defaultMenu">
+        <mat-icon>filter_list</mat-icon>
+        {{ child.name }}
+      </button>
+      <app-menu-item
+        #menu
+        [items]="child.children"
+        (filterSelected)="updateFilterSelected($event)"
+      ></app-menu-item>
+    </span>
+    <span *ngIf="!child.children || child.children.length === 0">
+      <button mat-menu-item (click)="select(child.name)">
+        <mat-icon>explore</mat-icon>
+        <span>{{ child.name }}</span>
+      </button>
+    </span>
+  </span>
+</mat-menu>
+<mat-menu #defaultMenu="matMenu"> </mat-menu>

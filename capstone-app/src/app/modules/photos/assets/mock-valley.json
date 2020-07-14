@@ -1,0 +1,248 @@
+{
+    "kind": "customsearch#search",
+    "url": {
+      "type": "application/json",
+      "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+    },
+    "queries": {
+      "request": [
+        {
+          "title": "Google Custom Search - phoenixville pennsylvania valley forge",
+          "totalResults": "23100000",
+          "searchTerms": "phoenixville pennsylvania valley forge",
+          "count": 10,
+          "startIndex": 1,
+          "inputEncoding": "utf8",
+          "outputEncoding": "utf8",
+          "safe": "off",
+          "cx": "014012661603529902036:grbt2ttpety",
+          "searchType": "image"
+        }
+      ],
+      "nextPage": [
+        {
+          "title": "Google Custom Search - phoenixville pennsylvania valley forge",
+          "totalResults": "23100000",
+          "searchTerms": "phoenixville pennsylvania valley forge",
+          "count": 10,
+          "startIndex": 11,
+          "inputEncoding": "utf8",
+          "outputEncoding": "utf8",
+          "safe": "off",
+          "cx": "014012661603529902036:grbt2ttpety",
+          "searchType": "image"
+        }
+      ]
+    },
+    "context": {
+      "title": "Google"
+    },
+    "searchInformation": {
+      "searchTime": 0.496766,
+      "formattedSearchTime": "0.50",
+      "totalResults": "23100000",
+      "formattedTotalResults": "23,100,000"
+    },
+    "items": [
+      {
+        "kind": "customsearch#result",
+        "title": "Phoenixville, PA The old Valley Forge General Hospital | Flickr",
+        "htmlTitle": "<b>Phoenixville</b>, <b>PA</b> The <b>old Valley Forge</b> General Hospital | Flickr",
+        "link": "https://live.staticflickr.com/223/478662040_b8b503a931_b.jpg",
+        "displayLink": "www.flickr.com",
+        "snippet": "Phoenixville, PA The old Valley Forge General Hospital | Flickr",
+        "htmlSnippet": "<b>Phoenixville</b>, <b>PA</b> The <b>old Valley Forge</b> General Hospital | Flickr",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.flickr.com/photos/army_arch/478662040",
+          "height": 768,
+          "width": 1024,
+          "byteSize": 337515,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUnwPlKZKWLu3xxycLp0thcv0nbPNepCDHhdD6sb7uGkezaw2PW9DTQG0&s",
+          "thumbnailHeight": 113,
+          "thumbnailWidth": 150
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Valley Forge General Hospital - Wikipedia",
+        "htmlTitle": "<b>Valley Forge</b> General Hospital - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Valley_Forge_General_Hospital_Phoenixville_Pennsylvania.jpg",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Valley Forge General Hospital - Wikipedia",
+        "htmlSnippet": "<b>Valley Forge</b> General Hospital - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Valley_Forge_General_Hospital",
+          "height": 2265,
+          "width": 2899,
+          "byteSize": 1186279,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Fp5YSlMAfwgTERP6kSYhNaXfmIIPx151XnkKt-wPlZv9jmg4NKg1pWk&s",
+          "thumbnailHeight": 117,
+          "thumbnailWidth": 150
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "1155 Valley Forge Rd, Phoenixville, PA 19460 | MLS# PACT489814 ...",
+        "htmlTitle": "1155 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# PACT489814 ...",
+        "link": "https://ssl.cdn-redfin.com/photo/235/mbphoto/814/genMid.PACT489814_2.jpg",
+        "displayLink": "www.redfin.com",
+        "snippet": "1155 Valley Forge Rd, Phoenixville, PA 19460 | MLS# PACT489814 ...",
+        "htmlSnippet": "1155 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# PACT489814 ...",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.redfin.com/PA/Phoenixville/1155-Valley-Forge-Rd-19460/home/55287034",
+          "height": 414,
+          "width": 623,
+          "byteSize": 63901,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIjZ-qkujKMV_xmyHFAzWEfXZc_lug5GZ5MOjGdlIPrWjdqHGZcj5yKKI&s",
+          "thumbnailHeight": 90,
+          "thumbnailWidth": 136
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "1220 Valley Forge Rd, Phoenixville, PA 19460 - Office Property for ...",
+        "htmlTitle": "1220 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 - Office Property for ...",
+        "link": "https://images1.loopnet.com/i2/_AehJ41S1QafDbpYd9QfMUrRVre5i_aM8lzG5e9_hyQ/112/image.jpg",
+        "displayLink": "www.loopnet.com",
+        "snippet": "1220 Valley Forge Rd, Phoenixville, PA 19460 - Office Property for ...",
+        "htmlSnippet": "1220 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 - Office Property for ...",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.loopnet.com/listing/1228-valley-forge-rd-phoenixville-pa/7643438/",
+          "height": 246,
+          "width": 328,
+          "byteSize": 57661,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMSScgs7lEGn1igh0hCh0NhGcDdoIWBKN4FB8bM_hb4UXtGv6IP_6Ilg&s",
+          "thumbnailHeight": 89,
+          "thumbnailWidth": 118
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "918 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1004471801 | Redfin",
+        "htmlTitle": "918 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1004471801 | Redfin",
+        "link": "https://ssl.cdn-redfin.com/photo/235/mbphoto/801/genMid.1004471801_3.jpg",
+        "displayLink": "www.redfin.com",
+        "snippet": "918 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1004471801 | Redfin",
+        "htmlSnippet": "918 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1004471801 | Redfin",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.redfin.com/PA/Phoenixville/918-Valley-Forge-Rd-19460/home/38506618",
+          "height": 414,
+          "width": 623,
+          "byteSize": 27406,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLjcBESPVrLels4dxOc5I6EL5BVrB-QoSHekzjqUs3Hq5ZXpSO7C6OtsI&s",
+          "thumbnailHeight": 90,
+          "thumbnailWidth": 136
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "1497 Valley Forge Rd, Phoenixville, PA 19460 - realtor.com®",
+        "htmlTitle": "1497 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 - realtor.com®",
+        "link": "https://ap.rdcpix.com/1626223888/ede252965114582221cd0378f2eb3c67l-m0xd-w1020_h770_q80.jpg",
+        "displayLink": "www.realtor.com",
+        "snippet": "1497 Valley Forge Rd, Phoenixville, PA 19460 - realtor.com®",
+        "htmlSnippet": "1497 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 - realtor.com®",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.realtor.com/realestateandhomes-detail/1497-Valley-Forge-Rd_Phoenixville_PA_19460_M42313-41248",
+          "height": 765,
+          "width": 1020,
+          "byteSize": 167081,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMNybUuBkJTuaEDqi2PpEsvrTUAcYJGFMNzxmGXc907xn1NnrOb6dB_Qw&s",
+          "thumbnailHeight": 113,
+          "thumbnailWidth": 150
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "712 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1002147488 | Redfin",
+        "htmlTitle": "712 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1002147488 | Redfin",
+        "link": "https://ssl.cdn-redfin.com/photo/235/mbphoto/488/genMid.1002147488_3.jpg",
+        "displayLink": "www.redfin.com",
+        "snippet": "712 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1002147488 | Redfin",
+        "htmlSnippet": "712 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1002147488 | Redfin",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.redfin.com/PA/Phoenixville/712-Valley-Forge-Rd-19460/home/38506748",
+          "height": 414,
+          "width": 623,
+          "byteSize": 50219,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL1K0qRQe_9VNHiYts1-htJtFxDpD1SJ24XAYrh-oahY8j-sdPBVq1cl4&s",
+          "thumbnailHeight": 90,
+          "thumbnailWidth": 136
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "Valley Forge General Hospital - Wikipedia",
+        "htmlTitle": "<b>Valley Forge</b> General Hospital - Wikipedia",
+        "link": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Valley_Forge_General_Hospital_Phoenixville_Pennsylvania.jpg/290px-Valley_Forge_General_Hospital_Phoenixville_Pennsylvania.jpg",
+        "displayLink": "en.wikipedia.org",
+        "snippet": "Valley Forge General Hospital - Wikipedia",
+        "htmlSnippet": "<b>Valley Forge</b> General Hospital - Wikipedia",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://en.wikipedia.org/wiki/Valley_Forge_General_Hospital",
+          "height": 227,
+          "width": 290,
+          "byteSize": 28456,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxtNbZdLGdThtkiw94ytmyK1lPLhCukjVmSHVRHDyzPneYhDn1VHC3xA&s",
+          "thumbnailHeight": 90,
+          "thumbnailWidth": 115
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "856 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1003549560 | Redfin",
+        "htmlTitle": "856 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1003549560 | Redfin",
+        "link": "https://ssl.cdn-redfin.com/photo/235/mbphoto/560/genMid.1003549560_0.jpg",
+        "displayLink": "www.redfin.com",
+        "snippet": "856 Valley Forge Rd, Phoenixville, PA 19460 | MLS# 1003549560 | Redfin",
+        "htmlSnippet": "856 <b>Valley Forge</b> Rd, <b>Phoenixville</b>, <b>PA</b> 19460 | MLS# 1003549560 | Redfin",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://www.redfin.com/PA/Phoenixville/856-Valley-Forge-Rd-19460/home/38506768",
+          "height": 414,
+          "width": 623,
+          "byteSize": 46261,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9s5XE7Qwou9p-0L3DAAV4jA5CjYjaNkjLtTTU0K5Zn5rhJAMSWz5gEQ&s",
+          "thumbnailHeight": 90,
+          "thumbnailWidth": 136
+        }
+      },
+      {
+        "kind": "customsearch#result",
+        "title": "ExplorePAHistory.com - Image",
+        "htmlTitle": "ExplorePAHistory.com - Image",
+        "link": "http://explorepahistory.com/kora/files/1/2/1-2-EE5-25-ExplorePAHistory-a0k0r8-a_349.jpg",
+        "displayLink": "explorepahistory.com",
+        "snippet": "ExplorePAHistory.com - Image",
+        "htmlSnippet": "ExplorePAHistory.com - Image",
+        "mime": "image/jpeg",
+        "fileFormat": "image/jpeg",
+        "image": {
+          "contextLink": "https://explorepahistory.com/displayimage.php?imgId=1-2-EE5",
+          "height": 1942,
+          "width": 2438,
+          "byteSize": 1444098,
+          "thumbnailLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgGhvHkrkhHD9LB8EiOa9xNHPan1Mjf3z3vpYZKvaZ9nMpuViZzdAFbw&s",
+          "thumbnailHeight": 119,
+          "thumbnailWidth": 150
+        }
+      }
+    ]
+  }

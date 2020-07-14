@@ -6,6 +6,10 @@
   <span id='p'>p</span>
   <span id='r'>r</span>
 </h1>
-<app-map class="map"></app-map>
-<app-photos-section></app-photos-section>
-<app-wiki-media-history-section></app-wiki-media-history-section>
+<app-map
+  (activeMarkerOutput)="updateActiveMarker($event)"
+  (markerDataOutput)="updateMarkerData($event)"
+  (cityOutput)="cityUpdate($event)">
+</app-map>
+<app-photos-section [city]="city"></app-photos-section>
+<app-wiki-media-history-section [cityName]="city"></app-wiki-media-history-section>
