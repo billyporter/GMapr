@@ -1,19 +1,19 @@
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  font-family: Georgia;
-  letter-spacing: 1.5px;
-  margin-left: 43px;
-  margin-right: 43px;
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Georgia;
+    letter-spacing: 1.5px;
+    margin-left: 43px;
+    margin-right: 43px;
 
-  .picture {
-    border-radius: 3px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-    display: inline-block;
-    opacity: 0.99;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
+    .picture {
+      border-radius: 3px;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+      display: inline-block;
+      opacity: 0.99;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
 
     img {
       backface-visibility: hidden;

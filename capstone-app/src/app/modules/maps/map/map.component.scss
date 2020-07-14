@@ -25,12 +25,12 @@
 }
 
 .button-delete.mat-raised-button {
- margin-right: 43px;
- margin-bottom: 25px;
+  margin-bottom: 25px;
+  margin-right: 43px;
 }
 
 .button-delete ::ng-deep .mat-button-wrapper {
   //Had to override ang material style bc it wouldn't act the way we needed it to.
- white-space: normal;
- line-height: 14px;
+  line-height: 14px;
+  white-space: normal;
 }

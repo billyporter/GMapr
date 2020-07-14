@@ -1,14 +1,14 @@
 
 .history-title.mat-card-title {
   color: black;
+  display: flex;
   font-family: 'Open Sans', sans-serif;
   font-size: 45px;
   font-weight: 590;
+  justify-content: center;
+  line-height: 45px;
   padding-bottom: 30px;
   text-align: center;
-  line-height: 45px;
-  display: flex;
-  justify-content: center;
 }
 
 .history-body.mat-card {
@@ -35,22 +35,22 @@
 }
 
 .more-reading {
+  align-items: center;
   color: white;
+  display: flex;
   display: inline-flex;
+  flex-wrap: wrap;
   font-family: 'Roboto', sans-serif;
   font-size: 10px;
-  display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  align-items: center;
   margin: 20px 10px;
 }
 
 p {
   align-items: center;
-  margin-top: 0;
   margin-bottom: 0;
   margin-right: 8px;
+  margin-top: 0;
 }
 
 a {
