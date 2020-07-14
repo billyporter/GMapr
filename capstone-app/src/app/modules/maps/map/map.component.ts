@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { Component,  ViewChild, ElementRef, AfterViewInit, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -8,10 +8,11 @@ import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
   styleUrls: ['./map.component.scss']
 })
 
-export class MapComponent implements AfterViewInit, OnInit{
-  @ViewChild('searchBar') searchBar: ElementRef;
+export class MapComponent implements OnInit{
+  @ViewChild('searchBar', {static: true}) searchBar: ElementRef;
+  @ViewChild('customWindow', {read: MapInfoWindow}) customWindow: MapInfoWindow;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
-  @ViewChild(GoogleMap) mapComponent: GoogleMap;
+  @ViewChild(GoogleMap, {static: true}) mapComponent: GoogleMap;
 
   @Output() activeMarkerOutput = new EventEmitter<string>();
   @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
@@ -38,16 +39,13 @@ export class MapComponent implements AfterViewInit, OnInit{
     type: 'tourist_attraction'
   }
 
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+
   ngOnInit() {
     this.getCurrentOrSetLocation();
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.placesRequestFunc(this.location);
-      this.locationSearch();
-    });
-    this.nearSearch = new google.maps.places.PlacesService(this.mapComponent._googleMap);
+    this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
+    this.placesRequestFunc(this.location);
+    this.locationSearch();
   }
 
   locationSearch() {
@@ -75,7 +73,9 @@ export class MapComponent implements AfterViewInit, OnInit{
         this.locationNameArray.push(result.name);
         this.markerData.set(result.name, result.types);
       }
+      this.changeDetector.markForCheck();
       this.markerDataOutput.emit(this.markerData);
+      
     });
   }
 
@@ -115,7 +115,7 @@ export class MapComponent implements AfterViewInit, OnInit{
   }
 
   clickMarker(marker: MapMarker) {
-    this.infoWindow.open(marker);
+    this.customWindow.open(marker);
   }
 
   deleteAllCustomMark() {
