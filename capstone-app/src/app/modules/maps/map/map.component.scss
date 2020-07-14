@@ -1,17 +1,20 @@
-.mapContainer {
-  margin-left: 3%;
-  margin-right: 3%;
+.map-container {
+  margin-left: 43px;
+  margin-right: 43px;
 }
 
 .search-bar {
-  margin-left: 3%;
   padding-bottom: 0;
   text-align: center;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 43px;
+}
 
 .buttonDelete.mat-raised-button {
- float: right;
- margin-bottom: 20px;
- margin-right: 3%;
+ margin-right: 43px;
+ margin-bottom: 25px;
 }
