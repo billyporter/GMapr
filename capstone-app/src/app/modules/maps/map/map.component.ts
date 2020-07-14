@@ -12,7 +12,6 @@ export class MapComponent implements OnInit{
   @ViewChild('searchBar', {static: true}) searchBar: ElementRef;
   @ViewChild('customWindow', {read: MapInfoWindow}) customWindow: MapInfoWindow;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
-  @ViewChild(GoogleMap, {static: true}) mapComponent: GoogleMap;
 
   @Output() activeMarkerOutput = new EventEmitter<string>();
   @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
@@ -71,7 +70,6 @@ export class MapComponent implements OnInit{
       }
       this.changeDetector.markForCheck();
       this.markerDataOutput.emit(this.markerData);
-      
     });
   }
 
