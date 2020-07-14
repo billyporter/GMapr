@@ -1,60 +1,57 @@
 
 .history-title.mat-card-title {
+  color: black;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 590;
   font-size: 45px;
-  text-align: center;
+  font-weight: 590;
   margin-left: 3%;
   margin-right: 3%;
   padding-bottom: 30px;
-  color: black;
+  text-align: center;
 }
 
 .history-body.mat-card {
-  padding: 5%;
-  line-height: 30px;
   background-color: #F8F8F8;
-  height: auto;
-  width: auto;
+  color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 21px;
-  color: black;
-  margin-top: 3%;
-  margin-left: 20%;
-  margin-right: 20%;
+  height: auto;
+  line-height: 30px;
   margin-bottom: 2%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 3%;
+  padding: 5%;
   text-align: left;
+  width: auto;
 }
 
 .more-reading-card.mat-card {
+  align-self: center;
   background-color: #F8F8F8;
 }
 
 .more-reading {
-  font-family: 'Roboto', sans-serif;
+  align-items: center;
+  color: grey;
   display: inline-flex;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 3%;
   margin-left: 3%;
   margin-right: 3%;
-  margin-bottom: 3%;
-  color: grey;
+  width: 93%;
 }
 
 p {
-  margin-right: 15px;
+  align-items: center;
+  padding-left: 2%;
 }
 
 a {
-  font-style: italic;
   color: #425866;
+  font-style: italic;
 }
 
 .history-body-text {
   margin-left: 5%;
-}
-
-.more-reading-title {
-  font-family: 'Open Sans', sans-serif;
-  margin-left: 3%;
-  margin-right: 3%;
-  color: black;
 }
