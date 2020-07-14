@@ -47,7 +47,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     }
     this.query = this.filter
       ? `${this.city} ${this.filter}`
-      : `downtown ${this.city} 1910`;
+      : `${this.city} early 1900s`;
     if (changes.city || changes.filter || changes.activeMarker) {
       this.getPhotos();
     }
