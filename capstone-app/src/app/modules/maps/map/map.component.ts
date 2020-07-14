@@ -27,9 +27,7 @@ export class MapComponent implements OnInit{
   autoMark: google.maps.Marker;
   position?: google.maps.LatLngLiteral;
   markers: google.maps.MarkerOptions[] = [];
-  locationNameArray: String[] = [];
   cityLocation: string;
-  cityName: string;
   geocoder = new google.maps.Geocoder();
   activeMark: string;
   testlocation: google.maps.LatLng = new google.maps.LatLng(26.011760, -80.139050);
@@ -67,10 +65,8 @@ export class MapComponent implements OnInit{
       // resetting data
       this.searchMarkers = [];
       this.markerData.clear();
-      this.locationNameArray = [];
       for (const result of results) {
         this.searchMarkers.push(this.createMarker(result));
-        this.locationNameArray.push(result.name);
         this.markerData.set(result.name, result.types);
       }
       this.changeDetector.markForCheck();
