@@ -1,8 +1,15 @@
 .flex-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 20px;
+  margin-left: 43px;
+  margin-right: 43px;
+  text-align: left;
+}
+
+.mat-raised-button {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.count {
+  margin-bottom: 20px;
+  text-align: left;
 }
