@@ -1,9 +1,17 @@
-.mapContainer{
+.mapContainer {
   margin-left: 3%;
   margin-right: 3%;
 }
 
-.search-bar{
+.search-bar {
   margin-left: 3%;
+  padding-bottom: 0;
   text-align: center;
+}
+
+
+.buttonDelete.mat-raised-button {
+ float: right;
+ margin-bottom: 20px;
+ margin-right: 3%;
 }

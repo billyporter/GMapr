@@ -1,4 +1,5 @@
-<h1>Map</h1>
+
+
 <mat-form-field class="search-bar">
     <mat-label>Search for a city</mat-label>
     <input matInput type="text"  #searchBar>
@@ -12,7 +13,7 @@
 <button mat-icon-button color="primary" (click)="locationSearch()" >
     <mat-icon>search</mat-icon>
 </button>
-
+<button class="buttonDelete" mat-raised-button color="grey" (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
 <div class="mapContainer">
     <google-map class="map"
                 [center]="location"
@@ -34,7 +35,4 @@
       </map-marker>
       <map-info-window><strong>{{ activeMark }}</strong></map-info-window>
     </google-map>
-</div>
-<div class="example-button-row">
-    <button class="buttonDelete" mat-raised-button color="primary" (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
 </div>

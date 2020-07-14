@@ -8,7 +8,7 @@ import { MaterialModule } from './../material/material.module';
 
 @NgModule({
   declarations: [ WikiMediaComponent ],
-  imports: [ CommonModule, FormsModule, HttpClientModule, MatCardModule, MatCardModule ],
+  imports: [ CommonModule, FormsModule, HttpClientModule, MatCardModule ],
   exports: [ WikiMediaComponent ]
 })
 export class HistoryModule { }
