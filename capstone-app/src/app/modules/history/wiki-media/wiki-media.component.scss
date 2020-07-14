@@ -4,11 +4,9 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 45px;
   font-weight: 590;
-  margin-left: 43px;
-  margin-right: 43px;
   padding-bottom: 30px;
   text-align: center;
-  line-height: 30px;
+  line-height: 45px;
   display: flex;
   justify-content: center;
 }
@@ -20,13 +18,15 @@
   font-size: 21px;
   height: auto;
   line-height: 30px;
-  margin-bottom: 35px;
-  margin-left: 220px;
-  margin-right: 220px;
-  margin-top: 43px;
   padding: 100px;
   text-align: left;
-  width: auto;
+  width: 50%;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  margin: 20px 10px;
 }
 
 .more-reading-card.mat-card {
@@ -35,20 +35,22 @@
 }
 
 .more-reading {
-  align-items: center;
   color: white;
   display: inline-flex;
   font-family: 'Roboto', sans-serif;
   font-size: 10px;
-  margin-bottom: 43px;
-  margin-left: 43px;
-  margin-right: 43px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 20px 10px;
 }
 
 p {
   align-items: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 8px;
 }
 
 a {

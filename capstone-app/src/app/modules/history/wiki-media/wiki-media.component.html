@@ -2,12 +2,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <div *ngIf="!loading" class="history">
-  <mat-card class="history-body">
-    <mat-card-title class="history-title">
-      {{title}}
-    </mat-card-title>
-    {{body}}
-  </mat-card>
+  <div class="body">
+    <mat-card class="history-body">
+      <mat-card-title class="history-title">
+        {{title}}
+      </mat-card-title>
+      {{body}}
+    </mat-card>
+  </div>
   <mat-card class="more-reading">
     <p *ngFor="let url of urls | keyvalue">
       <a href="{{url.key}}" target="_blank">{{url.value}}</a>

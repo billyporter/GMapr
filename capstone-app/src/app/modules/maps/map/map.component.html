@@ -1,6 +1,6 @@
 
 <span class="buttons">
-  <div>
+  <div class ="search-box">
     <mat-form-field class="search-bar">
         <mat-label>Search for a city</mat-label>
         <input matInput type="text" #searchBar>
@@ -11,11 +11,11 @@
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
-    <button mat-icon-button color="primary" (click)="locationSearch()" >
-        <mat-icon>search</mat-icon>
+    <button class="search-icon" mat-icon-button color="primary" (click)="locationSearch()" >
+      <mat-icon>search</mat-icon>
     </button>
   </div>
-  <button class="buttonDelete" mat-raised-button (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
+  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
 </span>
 <div class="map-container">
     <google-map class="map"

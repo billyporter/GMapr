@@ -8,13 +8,29 @@
   text-align: center;
 }
 
+.search-icon {
+  align-self: flex-start;
+}
+
+.search-box {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;
   margin-left: 43px;
+  white-space: normal;
 }
 
-.buttonDelete.mat-raised-button {
+.button-delete.mat-raised-button {
  margin-right: 43px;
  margin-bottom: 25px;
+}
+
+.button-delete ::ng-deep .mat-button-wrapper {
+  //Had to override ang material style bc it wouldn't act the way we needed it to.
+ white-space: normal;
+ line-height: 14px;
 }
