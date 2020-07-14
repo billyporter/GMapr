@@ -4,5 +4,9 @@
   (markerDataOutput)="updateMarkerData($event)"
   (cityOutput)="cityUpdate($event)">
 </app-map>
-<app-photos-section [city]="city"></app-photos-section>
+<app-photos-section 
+  [city]="city" 
+  [markerPlaces]="markerData"
+  [activeMarker]="activeMarker">
+</app-photos-section>
 <app-wiki-media-history-section [cityName]="city"></app-wiki-media-history-section>

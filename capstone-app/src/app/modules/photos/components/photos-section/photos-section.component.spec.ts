@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { PhotosSectionComponent } from './photos-section.component';
 import { PhotoFetcher } from '../../services/photo-fetcher.service';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges, SimpleChange } from '@angular/core';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { NavItem } from '../../nav-item';
 import { MatMenuHarness } from '@angular/material/menu/testing';
@@ -20,6 +20,7 @@ describe('PhotosSectionComponent', () => {
   let loader: HarnessLoader;
   let getPhotosSpy: jasmine.Spy;
   let testItems: NavItem[];
+  const testMarkerPlaces = new Map<string, string[]>();
 
   beforeEach(async(() => {
     testItems = [
@@ -49,6 +50,10 @@ describe('PhotosSectionComponent', () => {
       },
     ];
 
+    testMarkerPlaces.set('Pjs Wings', ['Restaurant']);
+    testMarkerPlaces.set('Colonial Theater', ['History', 'Entertainment']);
+    testMarkerPlaces.set('Valley Forge', ['History', 'Landmark']);
+
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
     getPhotosSpy = photosService.getPhotos.and.returnValue(of(MockTestImages));
 
@@ -64,6 +69,27 @@ describe('PhotosSectionComponent', () => {
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
+  });
+
+  it('should convert marker types to unique types', () => {
+    component.markerPlaces = testMarkerPlaces;
+    const changesObj: SimpleChanges = {
+      city: new SimpleChange('Boston', 'Philly', false)
+    };
+    const expectedUniqueTypes = ['Restaurant', 'Entertainment', 'History', 'Landmark'];
+    component.ngOnChanges(changesObj);
+    expect(component.uniqueTypes).toEqual(expectedUniqueTypes);
+  });
+
+  it('active marker should be blank if city or filter changes', () => {
+    component.city = 'Boston';
+    component.markerPlaces = testMarkerPlaces;
+    component.activeMarker = 'Aquarium';
+    const changesObjNonActive: SimpleChanges = {
+      city: new SimpleChange('Boston', 'Philly', false)
+    };
+    component.ngOnChanges(changesObjNonActive);
+    expect(component.activeMarker).toEqual('');
   });
 
   it('should ouput the value of the limit', async () => {
