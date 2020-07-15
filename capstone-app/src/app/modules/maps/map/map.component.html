@@ -1,18 +1,23 @@
-<mat-form-field>
-    <mat-label>Search for a city</mat-label>
-    <input matInput type="text" #searchBar>
-    <button mat-button 
-    *ngIf="searchBar.value" 
-    matSuffix mat-icon-button aria-label="Clear" 
-    (click)="searchBar.value=''">
-      <mat-icon>close</mat-icon>
-    </button>
-</mat-form-field>
-<button mat-icon-button color="primary" (click)="locationSearch()" >
-    <mat-icon>search</mat-icon>
-</button>
 
-<div #mapContainer>
+<span class="buttons">
+  <div class ="search-box">
+    <mat-form-field class="search-bar">
+        <mat-label>Search for a city</mat-label>
+        <input matInput type="text" #searchBar>
+        <button mat-button
+          *ngIf="searchBar.value"
+          matSuffix mat-icon-button aria-label="Clear"
+          (click)="searchBar.value=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button class="search-icon" mat-icon-button color="primary" (click)="locationSearch()" >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
+</span>
+<div class="map-container">
     <google-map class="map"
                 [center]="location"
                 height="750px"
@@ -35,8 +40,4 @@
       <map-info-window #infoWindow><strong>{{ activeMark }}</strong></map-info-window>
       <map-info-window #customWindow><strong>Custom Marker</strong></map-info-window>
     </google-map>
-</div>
-
-<div class="example-button-row">
-    <button class="buttonDelete" mat-raised-button color="primary" (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
 </div>

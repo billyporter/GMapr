@@ -1,0 +1,36 @@
+.map-container {
+  margin-left: 43px;
+  margin-right: 43px;
+}
+
+.search-bar {
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.search-icon {
+  align-self: flex-start;
+}
+
+.search-box {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 43px;
+  white-space: normal;
+}
+
+.button-delete.mat-raised-button {
+  margin-bottom: 25px;
+  margin-right: 43px;
+}
+
+.button-delete ::ng-deep .mat-button-wrapper {
+  //Had to override ang material style bc it wouldn't act the way we needed it to.
+  line-height: 14px;
+  white-space: normal;
+}

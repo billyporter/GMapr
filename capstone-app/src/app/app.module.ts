@@ -21,10 +21,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [
-    { provide: PhotoFetcher, useExisting: MockPhotoFetcher },
-    { provide: WikiSearchHandler, useExisting: MockWikiHandlerService}
-  ],
+  // providers: [
+  //   { provide: PhotoFetcher, useExisting: MockPhotoFetcher },
+  //   { provide: WikiSearchHandler, useExisting: MockWikiHandlerService}
+  // ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -2,10 +2,10 @@ import {
   Component,
   Input,
   OnChanges,
+  SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import MockPlacesPa from 'src/app/modules/photos/assets/mock-places-phoenixville.json';
-import MockPlacesBos from 'src/app/modules/photos/assets/mock-places-boston.json';
 import { NavItem } from '../../nav-item';
 
 @Component({
@@ -13,32 +13,42 @@ import { NavItem } from '../../nav-item';
   templateUrl: './photos-section.component.html',
   styleUrls: ['./photos-section.component.scss'],
 })
-export class PhotosSectionComponent implements OnChanges {
+export class PhotosSectionComponent implements OnInit, OnChanges {
   @Input() city: string;
+  @Input() markerPlaces: Map<string, string[]>;
+  @Input() activeMarker: string;
+  previousCity: string;
   limitControl = new FormControl(10, [Validators.min(1), Validators.max(10)]);
   maxPhotos = 10;
-  mockPlacesPa: any = (MockPlacesPa as any).places;
-  mockPlacesBos: any = (MockPlacesBos as any).places;
-  mockPlaces: any;
+  mockPlaces = new Map<string, string[]>();
   /**
    * These variables are meant to detect the categories markers belong to.
    * uniqueTypes: Some markers belong to more than one category.
    * allTypes: The types before extracting the unique ones
    */
   uniqueTypes: string[];
-  allTypes: string[];
+  allTypes: string[] = [];
   navItems: NavItem[] = [];
   markerFilter = '';
 
-  constructor() {}
+  ngOnInit() {
+    this.mockPlaces.set('Pjs Wings', ['Restuarant']);
+    this.mockPlaces.set('Colonial Theater', ['History', 'Entertainment']);
+    this.mockPlaces.set('Valley Forge', ['History', 'Landmark']);
+  }
 
   // Until the photos section is connected to the maps, only mocks are supported
-  ngOnChanges() {
-    if (this.city.includes('Boston')) {
-      this.mockPlaces = this.mockPlacesBos;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.city && this.city === '') {
+      this.city = this.previousCity;
     } else {
-      this.mockPlaces = this.mockPlacesPa;
+      this.previousCity = this.city;
     }
+
+    if (!changes.activeMarker) {
+      this.activeMarker = '';
+    }
+
     this.extractUniqueTypes();
     this.populateNavItems();
   }
@@ -51,14 +61,22 @@ export class PhotosSectionComponent implements OnChanges {
     const tempItem: NavItem[] = [];
     tempItem.push({ name: this.city });
     let menuTypes: NavItem[] = [];
+    let tempType: string;
     for (const type of this.uniqueTypes) {
       menuTypes = [];
-      for (const place of this.mockPlaces) {
-        if (place.types.includes(type)) {
-          menuTypes.push({ name: place.name });
+      for (const [key, value] of this.markerPlaces) {
+        if (value.includes(type)) {
+          menuTypes.push({ name: key });
         }
       }
-      tempItem.push({ name: type, children: menuTypes });
+      tempType = type
+        .split('_')
+        .join(' ')
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+
+      tempItem.push({ name: tempType, children: menuTypes });
     }
     this.navItems.push({ name: 'Tourist Attraction', children: tempItem });
   }
@@ -74,12 +92,10 @@ export class PhotosSectionComponent implements OnChanges {
     if (this.limitControl.value === this.maxPhotos && this.maxPhotos < newLimit) {
       this.maxPhotos = newLimit;
       this.limitControl = new FormControl(newLimit);
-    }
-    else if (wasRemoved === 1 && this.limitControl.value >= newLimit) {
+    } else if (wasRemoved === 1 && this.limitControl.value >= newLimit) {
       this.maxPhotos = newLimit;
       this.limitControl = new FormControl(newLimit);
-    }
-    else {
+    } else {
       this.maxPhotos = newLimit;
     }
   }
@@ -93,11 +109,14 @@ export class PhotosSectionComponent implements OnChanges {
   }
 
   extractUniqueTypes() {
-    this.allTypes = Object.keys(this.mockPlaces)
-      .map((key) => this.mockPlaces[key].types)
-      .flat();
+    this.allTypes = [];
+    const tempTypes: string[][] = [];
+    for (const [key, value] of this.markerPlaces) {
+      tempTypes.push(value);
+    }
+    this.allTypes = tempTypes.flat();
     const copyForSplicing = this.allTypes.slice();
-    this.uniqueTypes = this.allTypes = this.allTypes.filter((category) => {
+    this.uniqueTypes = this.allTypes.filter((category) => {
       copyForSplicing.splice(copyForSplicing.indexOf(category), 1);
       return !copyForSplicing.includes(category);
     });

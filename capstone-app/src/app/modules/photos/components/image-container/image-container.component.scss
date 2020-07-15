@@ -1,20 +1,19 @@
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  font-family: Georgia;
-  letter-spacing: 1.5px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Georgia;
+    letter-spacing: 1.5px;
+    margin-left: 43px;
+    margin-right: 43px;
 
-  .picture {
-    border-radius: 3px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-    display: inline-block;
-    opacity: 0.99;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
+    .picture {
+      border-radius: 3px;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+      display: inline-block;
+      opacity: 0.99;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
 
     img {
       backface-visibility: hidden;
@@ -41,7 +40,7 @@
         line-height: 1;
       }
     }
-    
+
   }
 
   .picture:before {
@@ -71,7 +70,7 @@
   }
 
   .picture:hover {
-    .details { 
+    .details {
       span {
         bottom: 20px;
         opacity: 1;
@@ -84,7 +83,7 @@
       }
     }
   }
-    
+
 
   .picture:focus:before,
   .picture:hover:before {
@@ -96,7 +95,7 @@
     transition-delay: 0.15s;
     -webkit-transition-delay: 0.15s;
   }
-  
+
   .picture:focus .info,
   .picture:hover .info {
     -webkit-transition-delay: 0.25s;
