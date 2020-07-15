@@ -39,9 +39,9 @@ export class MapComponent implements OnInit{
   constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.getCurrentOrSetLocation();
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
-    this.placesRequestFunc(this.location);
+    this.getCurrentOrSetLocation();
+    // this.placesRequestFunc(this.location);
     this.locationSearch();
   }
 
@@ -126,37 +126,6 @@ export class MapComponent implements OnInit{
         this.cityOutput.emit(this.cityLocation);
       });
       this.placesRequestFunc(this.location);
-    }, () => {
-      // default position
-      this.position = {lat: 34.0522, lng: -118.2437};
-      this.getCurrentOrSetLocation();
-      this.geocoder.geocode({'location': this.position}, (results, status) => {
-        if (status === 'OK') {
-          for (let result of results) {
-            filterResult = result.formatted_address;
-            if (filterResult.match(/[1-1000]/)) {
-              continue;
-            }
-            if (filterResult.includes('County')){
-              continue;
-            }
-            if (!filterResult.includes(',')) {
-              continue;
-            }
-            if (filterResult.split(',').length > 3) {
-              continue;
-            }
-            if (filterResult.split(',').length > prevResult.split(',').length) {
-              this.cityLocation = filterResult;
-            }
-            else {
-              this.cityLocation = prevResult;
-            }
-          }
-        }
-      });
-      this.cityLocation = 'Los Angles, CA, USA';
-      this.placesRequestFunc(this.location);
     });
     
     return this.position;
@@ -171,6 +140,7 @@ export class MapComponent implements OnInit{
       } else {
         this.cityLocation = "Los Angeles, CA, USA"
         this.location = new google.maps.LatLng(34.0522, -118.2437);
+        this.placesRequestFunc(this.location);
         this.cityOutput.emit(this.cityLocation);
       }
       
