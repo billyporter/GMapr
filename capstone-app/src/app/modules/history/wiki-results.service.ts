@@ -24,11 +24,14 @@ export class WikiResultsService {
     return this.searchHandler
       .getQueryString(query)
       .pipe(
-        switchMap((result) =>
-          this.http.get<WikiSearchResult>(
+        switchMap((result) => {
+          return this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${result}${WikiResultsService.URL_END}`
-          )
-        ),map(history => {
+          );
+
+        }
+        ),
+        map(history => {
           if (history.parse.text) {
             const historyResult = this.fixString(history.parse.text['*']);
             const title = history.parse.title;
@@ -46,6 +49,10 @@ export class WikiResultsService {
   }
 
   fixString(text: string): {history: string, furtherReading?: Map<string, string>} {
+    console.log(text);
+    const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
+    const regexParsing = /\.mw.*?}}/gi;
+    text = text.replace(regexCaptions, '').replace(regexParsing, '');
     const firstIndex = text.indexOf('<span class="mw-headline" id="History">History</span>', 0);
     if (firstIndex !== -1){
       const firstPartOfString = text.substring(firstIndex, text.length);
