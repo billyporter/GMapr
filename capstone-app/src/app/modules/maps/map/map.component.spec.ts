@@ -63,7 +63,7 @@ describe('MapComponent', () => {
     }
     fixture.detectChanges();
 
-    const deleteButton = fixture.debugElement.query(By.css('.buttonDelete'));
+    const deleteButton = fixture.debugElement.query(By.css('.button-delete'));
     deleteButton.nativeElement.click();
     fixture.detectChanges();
 

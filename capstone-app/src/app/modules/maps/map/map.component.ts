@@ -41,7 +41,6 @@ export class MapComponent implements OnInit{
   ngOnInit() {
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
     this.getCurrentOrSetLocation();
-    // this.placesRequestFunc(this.location);
     this.locationSearch();
   }
 
@@ -100,28 +99,12 @@ export class MapComponent implements OnInit{
       this.location = new google.maps.LatLng(this.position);
       this.geocoder.geocode({'location': this.position}, (results, status) => {
         if (status === 'OK') {
-          for (let result of results) {
-            filterResult = result.formatted_address;
-            if (filterResult.match(/[1-1000]/)) {
-              continue;
-            }
-            if (filterResult.includes('County')){
-              continue;
-            }
-            if (!filterResult.includes(',')) {
-              continue;
-            }
-            if (filterResult.split(',').length > 3) {
-              continue;
-            }
-            if (filterResult.split(',').length > prevResult.split(',').length) {
-              this.cityLocation = filterResult;
-            }
-            else {
-              this.cityLocation = prevResult;
-            }
-            prevResult = filterResult;
+          results.filter(result => {
+          const addressSizeCount = result.formatted_address.split(',').length;
+          if (addressSizeCount == 3 && !result.formatted_address.includes('County') && !result.formatted_address.match(/\d+/g)) {
+            this.cityLocation = result.formatted_address;
           }
+          });
         }
         this.cityOutput.emit(this.cityLocation);
       });
