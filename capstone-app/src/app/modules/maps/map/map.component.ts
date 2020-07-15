@@ -89,12 +89,91 @@ export class MapComponent implements OnInit{
     this.activeMarkerOutput.emit(this.activeMark);
   }
 
+  getCurrentLocation () {
+    let filterResult: string;
+    let prevResult: string = 'blank';
+    navigator.geolocation.getCurrentPosition(position => {
+      this.position = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+      this.location = new google.maps.LatLng(this.position);
+      this.geocoder.geocode({'location': this.position}, (results, status) => {
+        if (status === 'OK') {
+          for (let result of results) {
+            filterResult = result.formatted_address;
+            if (filterResult.match(/[1-1000]/)) {
+              continue;
+            }
+            if (filterResult.includes('County')){
+              continue;
+            }
+            if (!filterResult.includes(',')) {
+              continue;
+            }
+            if (filterResult.split(',').length > 3) {
+              continue;
+            }
+            if (filterResult.split(',').length > prevResult.split(',').length) {
+              this.cityLocation = filterResult;
+            }
+            else {
+              this.cityLocation = prevResult;
+            }
+            prevResult = filterResult;
+          }
+        }
+        this.cityOutput.emit(this.cityLocation);
+      });
+      this.placesRequestFunc(this.location);
+    }, () => {
+      // default position
+      this.position = {lat: 34.0522, lng: -118.2437};
+      this.getCurrentOrSetLocation();
+      this.geocoder.geocode({'location': this.position}, (results, status) => {
+        if (status === 'OK') {
+          for (let result of results) {
+            filterResult = result.formatted_address;
+            if (filterResult.match(/[1-1000]/)) {
+              continue;
+            }
+            if (filterResult.includes('County')){
+              continue;
+            }
+            if (!filterResult.includes(',')) {
+              continue;
+            }
+            if (filterResult.split(',').length > 3) {
+              continue;
+            }
+            if (filterResult.split(',').length > prevResult.split(',').length) {
+              this.cityLocation = filterResult;
+            }
+            else {
+              this.cityLocation = prevResult;
+            }
+          }
+        }
+      });
+      this.cityLocation = 'Los Angles, CA, USA';
+      this.placesRequestFunc(this.location);
+    });
+    
+    return this.position;
+  }
+
   // gets our default location
   getCurrentOrSetLocation() {
+    this.getCurrentLocation();
     if (!this.location) {
-      this.cityLocation = "Los Angeles, CA, USA"
-      this.location = new google.maps.LatLng(34.0522, -118.2437);
-      this.cityOutput.emit(this.cityLocation);
+      if (this.position) {
+        this.location = new google.maps.LatLng(this.position);
+      } else {
+        this.cityLocation = "Los Angeles, CA, USA"
+        this.location = new google.maps.LatLng(34.0522, -118.2437);
+        this.cityOutput.emit(this.cityLocation);
+      }
+      
     }
   }
 
