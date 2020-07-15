@@ -15,6 +15,11 @@
       <a href="{{url.key}}" target="_blank">{{url.value}}</a>
     </p>
   </mat-card>
+  <mat-card class="languages">
+    <ul *ngFor="let lang of languages | keyvalue">
+      <button (click)="onClickMe()">{{lang.key}}</button>
+    </ul>
+  </mat-card>
 </div>
 <div *ngIf="loading" class="history">
   {{error}}
