@@ -4,7 +4,7 @@ import MockWikiResponse from 'testing/mock-wiki-service-response.json';
 import { asyncData } from 'testing/async-observable-helpers';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { WikiResultsService } from '../wiki-results.service';
 import { WikiSearchResult } from '../WikiSearchTemplate';
 
@@ -59,6 +59,14 @@ describe('WikiMediaComponent', () => {
     it('displays correct location title', () => {
       component.getResults('Stillwater, Oklahoma');
       expect(component.title).toEqual("Stillwater, Oklahoma");
+    });
+
+    it('info changes with new city input', () => {
+      spyOn(component, 'getResults');
+      component.cityName = 'Stillwater, Oklahoma';
+      const changes: SimpleChanges = {cityName: new SimpleChange('Los Angeles, California', 'Stillwater, Oklahoma', false)};
+      component.ngOnChanges(changes);
+      expect(component.getResults).toHaveBeenCalled();
     });
   });
 });
