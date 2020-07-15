@@ -24,12 +24,10 @@ export class WikiResultsService {
     return this.searchHandler
       .getQueryString(query)
       .pipe(
-        switchMap((result) => {
-          return this.http.get<WikiSearchResult>(
+        switchMap((result) =>
+          this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${result}${WikiResultsService.URL_END}`
-          );
-
-        }
+          )
         ),
         map(history => {
           if (history.parse.text) {
@@ -49,7 +47,6 @@ export class WikiResultsService {
   }
 
   fixString(text: string): {history: string, furtherReading?: Map<string, string>} {
-    console.log(text);
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
     const regexParsing = /\.mw.*?}}/gi;
     text = text.replace(regexCaptions, '').replace(regexParsing, '');
