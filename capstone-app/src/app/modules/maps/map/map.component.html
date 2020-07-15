@@ -28,6 +28,7 @@
                   class="custom-marker"
                   *ngFor="let marker of markers"
                   [options]="marker"
+                  (mapClick)="clickMarker(customMarker)"
                   (mapRightclick)="removeMarker(customMarker)"
       ></map-marker>
       <map-marker *ngFor= "let marker of searchMarkers"
@@ -36,6 +37,7 @@
                   [options]="marker"
                   (mapClick)="openInfoWindow(searchMarker)">
       </map-marker>
-      <map-info-window><strong>{{ activeMark }}</strong></map-info-window>
+      <map-info-window #infoWindow><strong>{{ activeMark }}</strong></map-info-window>
+      <map-info-window #customWindow><strong>Custom Marker</strong></map-info-window>
     </google-map>
 </div>
