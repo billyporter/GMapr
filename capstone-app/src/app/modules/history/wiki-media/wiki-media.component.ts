@@ -5,7 +5,7 @@ import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { HttpClientModule } from '@angular/common/http';
 import Languages from '../languages-word-for-history.json';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-wiki-media-history-section',
@@ -50,14 +50,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           this.langLinks = result.langLinks;
-
-          let prefix = "fr";
-          const language = this.langLinks.get(prefix);
-          const query = language.get("searchQuery");
-          const wordForHistory = this.languages[prefix];
-          console.log("Language Changed!");
-          console.log(language, query, wordForHistory);
-          this.changeLanguage(query, prefix, wordForHistory);
         }
         else {
           this.error = 'API did not return a valid response.';
@@ -81,5 +73,12 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           console.log('API did not return a valid response.');
         }
     });
+  }
+
+  onChangeLanguage(prefix: string){
+    const language = this.langLinks.get(prefix);
+    const query = language.get("searchQuery");
+    const wordForHistory = this.languages[prefix];
+    this.changeLanguage(query, prefix, wordForHistory);
   }
 }

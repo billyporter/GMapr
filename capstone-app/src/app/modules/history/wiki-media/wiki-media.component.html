@@ -1,3 +1,4 @@
+
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -15,11 +16,15 @@
       <a href="{{url.key}}" target="_blank">{{url.value}}</a>
     </p>
   </mat-card>
-  <mat-card class="languages">
-    <ul *ngFor="let lang of languages | keyvalue">
-      <button (click)="onClickMe()">{{lang.key}}</button>
-    </ul>
-  </mat-card>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>language</mat-icon>
+    <span>Languages</span>
+  </button>
+  <mat-menu #menu="matMenu" class="languages">
+    <button *ngFor="let lang of languages | keyvalue" mat-menu-item (click)="onChangeLanguage(lang.key)">
+      {{lang.key}}
+    </button>
+  </mat-menu>
 </div>
 <div *ngIf="loading" class="history">
   {{error}}
