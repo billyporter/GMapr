@@ -5,7 +5,7 @@ import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { HttpClientModule } from '@angular/common/http';
 import Languages from '../languages-word-for-history.json';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-wiki-media-history-section',
@@ -42,7 +42,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
 
   getResults(queryString: string) {
     this.wikiService.search(queryString, 'en', 'History')
-      .subscribe((result: Observable<WikiServiceResult>) => {
+      .subscribe((result: WikiServiceResult) => {
         if (result.history) {
           this.body = result.history;
           this.history = result.history;
@@ -68,8 +68,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
 
   changeLanguage(queryString: string, languagePrefix: string, wordForHistory: string) {
     this.wikiService.search(queryString, languagePrefix, wordForHistory)
-      .pipe()
-      .subscribe((result: Observable<WikiServiceResult>) => {
+      .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
         this.urls = result.furtherReading
         this.title = result.title;
