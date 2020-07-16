@@ -64,9 +64,11 @@ describe('WikiMediaComponent', () => {
     it('info changes with new city input', () => {
       spyOn(component, 'getResults');
       component.cityName = 'Stillwater, Oklahoma';
-      const changes: SimpleChanges = {cityName: new SimpleChange('Los Angeles, California', 'Stillwater, Oklahoma', false)};
+      const changes: SimpleChanges = {cityName: new SimpleChange('Stillwater, Oklahoma', 'Los Angeles, California', false)};
+      component.cityName = 'Los Angeles, California';
       component.ngOnChanges(changes);
-      expect(component.getResults).toHaveBeenCalled();
+      expect(component.getResults).toHaveBeenCalledWith('Los Angeles, California');
     });
+
   });
 });
