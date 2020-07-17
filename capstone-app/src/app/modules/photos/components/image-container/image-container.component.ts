@@ -24,7 +24,6 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   @Input() city!: string;
   @Input() filter?: string;
   @Input() limit = 10;
-  @Input() activeMarker?: string;
   @Output() limitChange = new EventEmitter<LimitChange>();
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
@@ -42,13 +41,10 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     if (changes.city) {
       this.filter = '';
     }
-    else if (changes.activeMarker) {
-      this.filter = this.activeMarker;
-    }
     this.query = this.filter
       ? `${this.city} ${this.filter}`
       : `${this.city} early 1900s`;
-    if (changes.city || changes.filter || changes.activeMarker) {
+    if (changes.city || changes.filter) {
       this.getPhotos();
     }
     this.limitPhotos(this.limit);
