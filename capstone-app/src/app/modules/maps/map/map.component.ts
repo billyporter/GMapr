@@ -1,6 +1,10 @@
 /// <reference types="googlemaps" />
-import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-map',
@@ -35,13 +39,33 @@ export class MapComponent implements OnInit{
     radius: 5000,
     type: 'tourist_attraction'
   }
-
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+  myControl = new FormControl();
+  optionsTypes: string[] = ['amusement_park', 'aquarium', 'campground', 'casino', 'church',
+    'embassy', 'hindu_temple', 'library', 'lodging', 'mosque', 'movie_theater', 'museum',
+    'night_club', 'park', 'police', 'restaurant', 'shopping_mall', 'stadium', 'synagogue', 
+    'tourist_attraction', 'train_station', 'university', 'zoo'];
+  filteredOptions: Observable<string[]>;
 
   ngOnInit() {
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
+    this.getCurrentLocation();
     this.getCurrentOrSetLocation();
     this.locationSearch();
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+  }
+
+  changeType(newType: string) {
+    this.placesRequest.type = newType;
+    this.placesRequestFunc(this.location);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.optionsTypes.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   locationSearch() {
@@ -52,6 +76,7 @@ export class MapComponent implements OnInit{
     autoComplete.addListener('place_changed', () => {
       this.location = autoComplete.getPlace().geometry.location;
       this.cityLocation = autoComplete.getPlace().formatted_address;
+      this.placesRequest.type = 'tourist_attraction';
       this.placesRequestFunc(this.location);
       this.cityOutput.emit(this.cityLocation);
     });
@@ -67,7 +92,6 @@ export class MapComponent implements OnInit{
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.changeDetector.markForCheck();
       this.markerDataOutput.emit(this.markerData);
     });
   }
@@ -89,26 +113,30 @@ export class MapComponent implements OnInit{
   }
 
   getCurrentLocation () {
-    let filterResult: string;
-    let prevResult: string = 'blank';
     navigator.geolocation.getCurrentPosition(position => {
       this.position = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
       this.location = new google.maps.LatLng(this.position);
-      this.geocoder.geocode({'location': this.position}, (results, status) => {
+      this.geocoder.geocode({'location': this.position,}, (results, status) => {
         if (status === 'OK') {
           results.filter(result => {
-          const addressSizeCount = result.formatted_address.split(',').length;
-          if (addressSizeCount == 3 && !result.formatted_address.includes('County') && !result.formatted_address.match(/\d+/g)) {
-            this.cityLocation = result.formatted_address;
-          }
+            result.types.forEach(type => {
+              if (type == "locality") {
+                this.cityLocation = result.formatted_address;
+              }
+            });
           });
         }
         this.cityOutput.emit(this.cityLocation);
       });
       this.placesRequestFunc(this.location);
+    }, () => {
+      this.cityLocation = "Los Angeles, CA, USA"
+        this.location = new google.maps.LatLng(34.0522, -118.2437);
+        this.placesRequestFunc(this.location);
+        this.cityOutput.emit(this.cityLocation);
     });
     
     return this.position;
@@ -116,7 +144,6 @@ export class MapComponent implements OnInit{
 
   // gets our default location
   getCurrentOrSetLocation() {
-    this.getCurrentLocation();
     if (!this.location) {
       if (this.position) {
         this.location = new google.maps.LatLng(this.position);
@@ -126,7 +153,6 @@ export class MapComponent implements OnInit{
         this.placesRequestFunc(this.location);
         this.cityOutput.emit(this.cityLocation);
       }
-      
     }
   }
 

@@ -15,8 +15,35 @@
       <mat-icon>search</mat-icon>
     </button>
   </div>
-  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
+
+  <form>
+    <mat-form-field class="example-full-width">
+      <input type="text" #typesInput
+            placeholder="Pick Type"
+            aria-label="String"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto">
+            <button mat-button 
+              *ngIf="typesInput.value" 
+              matSuffix mat-icon-button aria-label="Clear" 
+              (click)="typesInput.value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="changeType(typesInput.value)" >
+      Submit
+    </button>  
+  </form>
+
+  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Clear</button>
 </span>
+
 <div class="map-container">
     <google-map class="map"
                 [center]="location"
