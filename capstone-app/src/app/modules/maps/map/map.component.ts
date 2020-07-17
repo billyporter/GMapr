@@ -119,7 +119,7 @@ export class MapComponent implements OnInit{
         lng: position.coords.longitude,
       };
       this.location = new google.maps.LatLng(this.position);
-      this.geocoder.geocode({'location': this.position,}, (results, status) => {
+      this.geocoder.geocode({'location': this.position}, (results, status) => {
         if (status === 'OK') {
           results.filter(result => {
             result.types.forEach(type => {
