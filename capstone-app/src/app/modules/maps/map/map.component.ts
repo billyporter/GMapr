@@ -1,3 +1,4 @@
+import { OnChanges, SimpleChanges, Input, ViewChildren } from '@angular/core';
 /// <reference types="googlemaps" />
 import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
@@ -8,18 +9,22 @@ import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
   styleUrls: ['./map.component.scss']
 })
 
-export class MapComponent implements OnInit{
+export class MapComponent implements OnInit, OnChanges {
   @ViewChild('searchBar', {static: true}) searchBar: ElementRef;
   @ViewChild('customWindow', {read: MapInfoWindow}) customWindow: MapInfoWindow;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+  @ViewChildren(MapMarker) allMarkers !: MapMarker[];
 
+  @Input() activeMark: string;
   @Output() activeMarkerOutput = new EventEmitter<string>();
   @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
   @Output() cityOutput = new EventEmitter<string>();
 
+  // allMarkers: MapMarker[] = [];
+  infoWindowMarker: MapMarker;
   nearSearch?: google.maps.places.PlacesService;
   location?: google.maps.LatLng;
-  city: String = "Enter a city";
+  city: string;
   zoom = 13;
   markerData = new Map<string, string[]>();
   searchMarkers: google.maps.MarkerOptions[] = [];
@@ -28,13 +33,12 @@ export class MapComponent implements OnInit{
   markers: google.maps.MarkerOptions[] = [];
   cityLocation: string;
   geocoder = new google.maps.Geocoder();
-  activeMark: string;
   testlocation: google.maps.LatLng = new google.maps.LatLng(26.011760, -80.139050);
   placesRequest = {
     location: this.testlocation,
     radius: 5000,
     type: 'tourist_attraction'
-  }
+  };
 
   constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
@@ -43,6 +47,25 @@ export class MapComponent implements OnInit{
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
     this.placesRequestFunc(this.location);
     this.locationSearch();
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    if (change.activeMark) {
+      if (change.activeMark.currentValue === '') {
+        this.infoWindow.close();
+      }
+      else {
+        if (this.allMarkers) {
+          this.infoWindowMarker = this.getMarkerFromTitle(this.activeMark);
+          if (this.infoWindowMarker) {
+            this.openInfoWindow(this.infoWindowMarker);
+          }
+          else {
+            this.infoWindow.close();
+          }
+        }
+      }
+    }
   }
 
   locationSearch() {
@@ -122,6 +145,14 @@ export class MapComponent implements OnInit{
       .indexOf(marker.getPosition());
     if (markerIndex > -1) {
       this.markers.splice(markerIndex, 1);
+    }
+  }
+
+  getMarkerFromTitle(markerTitle: string) {
+    for (const marker of this.allMarkers) {
+      if (marker && marker._marker.getTitle() === markerTitle) {
+        return marker;
+      }
     }
   }
 }
