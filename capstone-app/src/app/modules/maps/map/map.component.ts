@@ -5,7 +5,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -40,10 +39,14 @@ export class MapComponent implements OnInit{
     type: 'tourist_attraction'
   }
   myControl = new FormControl();
-  optionsTypes: string[] = ['amusement_park', 'aquarium', 'campground', 'casino', 'church',
-    'embassy', 'hindu_temple', 'library', 'lodging', 'mosque', 'movie_theater', 'museum',
-    'night_club', 'park', 'police', 'restaurant', 'shopping_mall', 'stadium', 'synagogue', 
-    'tourist_attraction', 'train_station', 'university', 'zoo'];
+  optionsTypes: string[] = ['Airport', 'Amusement Park', 'Aquarium', 'Art Gallery', 'Atm', 
+    'Bar', 'Book Store', 'Bowling Alley', 'Bus Station', 'Cafe', 'Campground', 
+    'Casino', 'Cemetery', 'Church', 'City Hall', 'Clothing Store', 'Convenience Store',
+    'Courthouse', 'Department Store', 'Electronics Store', 'Embassy', 'Gym',
+    'Hindu Temple', 'Jewelry Store', 'Library', 'Lodging', 'Meal Delivery',
+    'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
+    'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
+    'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
   filteredOptions: Observable<string[]>;
 
   ngOnInit() {
@@ -59,13 +62,16 @@ export class MapComponent implements OnInit{
   }
 
   changeType(newType: string) {
-    this.placesRequest.type = newType;
+    let title = newType.split(' ')
+    .join('_')
+    .toLowerCase()
+    this.placesRequest.type = title;
     this.placesRequestFunc(this.location);
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.optionsTypes.filter(option => option.toLowerCase().includes(filterValue));
+    const filterValue = value.toLowerCase()
+    return this.optionsTypes.filter(option => option.includes(filterValue));
   }
 
   locationSearch() {
@@ -97,13 +103,13 @@ export class MapComponent implements OnInit{
   }
 
   createMarker(result: google.maps.places.PlaceResult) {
-   return {
-    position: result.geometry.location,
-    title: result.name,
-    icon: {
-        url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
-    }
-   };
+    return {
+      position: result.geometry.location,
+      title: result.name,
+      icon: {
+          url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
+      }
+    };
   }
 
   openInfoWindow(marker: MapMarker) {

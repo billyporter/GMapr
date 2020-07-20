@@ -120,6 +120,48 @@ describe('MapComponent', () => {
 
     expect(searchMarkers).toEqual(coordinates);
   });
+
+  it('test geocoder', () => {
+    const fixture = TestBed.createComponent(MapComponent);
+    fixture.detectChanges();
+    //search Miami Gardens
+    const searchLocation = new google.maps.LatLng(26.011761, -80.139053);
+    const addresses = [
+      '1405 N 12th Ct, Hollywood, FL 33019, USA', 
+      '1402 N 12th Ct, Hollywood, FL 33019, USA',
+      '1598-1300 N 12th Ct, Hollywood, FL 33019, USA',
+      'Hollywood Lakes, Hollywood, FL, USA',
+      'Hollywood, FL 33019, USA',
+      'Hollywood, FL, USA',
+      'Broward County, FL, USA',
+      'Florida, USA',
+      'United States'
+    ];
+    let status: google.maps.GeocoderStatus;
+    let setAddress= [];
+    spyOn(fixture.componentInstance.geocoder, 'geocode').and.callFake(({location: searchLocation}, callback) => {
+      const results: google.maps.GeocoderResult[] = addresses.map(address => {
+        return {
+          formatted_address: address,
+          types: [],
+          partial_match: undefined,
+          place_id: undefined,
+          postcode_localities: undefined,
+          address_components: undefined,
+          geometry: {
+            location: searchLocation,
+            viewport: undefined,
+            location_type: undefined,
+            bounds: undefined,
+          },
+        };
+      });
+      callback(results, status)
+    });
+
+    console.log(fixture.componentInstance.cityLocation);
+    console.log(addresses[5]);
+  });
   
   // TODO: fix flaky testing issue
   // sometimes will fail do to an undefined map center just refresh until it passs
