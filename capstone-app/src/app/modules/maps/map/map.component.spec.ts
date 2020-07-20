@@ -1,12 +1,14 @@
 /// <reference types="googlemaps" />
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapComponent } from './map.component';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule, MapMarker } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
+import { SimpleChange, SimpleChanges } from '@angular/core';
 
 // due to flaky testing sometimes these tests will fail due to undefined markers or map centers
 describe('MapComponent', () => {
   let fixture: ComponentFixture<MapComponent>;
+  let component: MapComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,6 +20,7 @@ describe('MapComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MapComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -43,6 +46,19 @@ describe('MapComponent', () => {
     const markerComponent = markerDebug.map(marker => marker.componentInstance.getPosition());
 
     expect(markerComponent).toEqual(fixture.componentInstance.markers.map(marker => marker.position));
+  });
+
+
+  it('opens new info window when receives new active marker', () => {
+    spyOn(component, 'getMarkerFromTitle');
+    let holder: MapMarker;
+    component.allMarkers = [holder, holder];
+    const changesObj: SimpleChanges = {
+      activeMark: new SimpleChange('', 'State House', false)
+    };
+    component.activeMark = 'State House';
+    component.ngOnChanges(changesObj);
+    expect(component.getMarkerFromTitle).toHaveBeenCalledWith(component.activeMark);
   });
 
   // TODO: fix flaky testing issue
@@ -120,7 +136,6 @@ describe('MapComponent', () => {
 
     expect(searchMarkers).toEqual(coordinates);
   });
-  
   // TODO: fix flaky testing issue
   // sometimes will fail do to an undefined map center just refresh until it passs
   it('sets center and zoom of the map', () => {

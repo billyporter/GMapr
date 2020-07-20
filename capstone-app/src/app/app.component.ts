@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'capstone-app';
+  title = 'GMapr';
   activeMarker: string;
   city: string;
   markerData = new Map<string, string[]>();

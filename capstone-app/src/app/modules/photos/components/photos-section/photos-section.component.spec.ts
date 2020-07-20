@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { PhotosSectionComponent } from './photos-section.component';
 import { PhotoFetcher } from '../../services/photo-fetcher.service';
 import { By } from '@angular/platform-browser';
-import { DebugElement, SimpleChanges, SimpleChange } from '@angular/core';
+import { SimpleChanges, SimpleChange } from '@angular/core';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { NavItem } from '../../nav-item';
 import { MatMenuHarness } from '@angular/material/menu/testing';
@@ -81,15 +81,26 @@ describe('PhotosSectionComponent', () => {
     expect(component.uniqueTypes).toEqual(expectedUniqueTypes);
   });
 
-  it('active marker should be blank if city or filter changes', () => {
+  it('active marker should reset if city or filter changes', () => {
+    spyOn(component.activeMarkerUpdate, 'emit');
     component.city = 'Boston';
     component.markerPlaces = testMarkerPlaces;
     component.activeMarker = 'Aquarium';
-    const changesObjNonActive: SimpleChanges = {
-      city: new SimpleChange('Boston', 'Philly', false)
+    component.updateFilterSelected('State House');
+    expect(component.activeMarkerUpdate.emit).toHaveBeenCalled();
+  });
+
+  it('filter should be active marker if active marker selected', () => {
+    component.city = 'Boston';
+    component.markerPlaces = testMarkerPlaces;
+    component.updateFilterSelected('Aquarium');
+    expect(component.markerFilter).toBe('Aquarium');
+    component.activeMarker = 'State House';
+    const changesObj: SimpleChanges = {
+      activeMarker: new SimpleChange('Aquarium', 'State House', false)
     };
-    component.ngOnChanges(changesObjNonActive);
-    expect(component.activeMarker).toEqual('');
+    component.ngOnChanges(changesObj);
+    expect(component.markerFilter).toBe('State House');
   });
 
   it('should ouput the value of the limit', async () => {
