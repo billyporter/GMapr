@@ -55,13 +55,13 @@ export class MapComponent implements OnInit, OnChanges {
         this.infoWindow.close();
       }
       else if (this.allMarkers) {
-          this.infoWindowMarker = this.getMarkerFromTitle(this.activeMark);
-          if (this.infoWindowMarker) {
-            this.openInfoWindow(this.infoWindowMarker);
-          }
-          else {
-            this.infoWindow.close();
-          }
+        this.infoWindowMarker = this.getMarkerFromTitle(this.activeMark);
+        if (this.infoWindowMarker) {
+          this.openInfoWindow(this.infoWindowMarker);
+        }
+        else {
+          this.infoWindow.close();
+        }
       }
     }
   }
