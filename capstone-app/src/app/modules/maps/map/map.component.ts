@@ -54,8 +54,7 @@ export class MapComponent implements OnInit, OnChanges {
       if (change.activeMark.currentValue === '') {
         this.infoWindow.close();
       }
-      else {
-        if (this.allMarkers) {
+      else if (this.allMarkers) {
           this.infoWindowMarker = this.getMarkerFromTitle(this.activeMark);
           if (this.infoWindowMarker) {
             this.openInfoWindow(this.infoWindowMarker);
@@ -63,7 +62,6 @@ export class MapComponent implements OnInit, OnChanges {
           else {
             this.infoWindow.close();
           }
-        }
       }
     }
   }
