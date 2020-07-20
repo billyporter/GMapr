@@ -23,6 +23,12 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   urls = new Map();
   langLinks = new Map();
   languages: any = Languages as any;
+  language: string;
+  query: string;
+  prevQuery: string;
+  prevWordForHistory: string;
+  prevPreFix: string;
+
 
   @Input() cityName!: string;
 
@@ -50,6 +56,10 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           this.langLinks = result.langLinks;
+          const language = this.langLinks.get("ca");
+          this.prevQuery = language.get("searchQuery");
+          this.prevWordForHistory = 'History';
+          this.prevPreFix = 'en';
         }
         else {
           this.error = 'API did not return a valid response.';
@@ -59,26 +69,47 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   changeLanguage(queryString: string, languagePrefix: string, wordForHistory: string) {
-    this.wikiService.search(queryString, languagePrefix, wordForHistory)
+    this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
-        this.urls = result.furtherReading
-        this.title = result.title;
-        this.langLinks = result.langLinks;
-        if (this.history) {
-          this.body = this.history;
-          this.loading = false;
+        if (!(this.history) || (this.history.includes("CPU time usage:"))){
+          this.loading = true;
+          this.error = "Unfortunately, the language you requested does not have an available tranlation for this page. Please select a different language.";
         }
         else {
-          console.log('API did not return a valid response.');
+          this.body = this.history;
+          this.loading = false;
+          this.title = result.title;
+          this.urls = result.furtherReading;
+          if(result.langLinks && result.langLinks.size > 0) {
+              this.langLinks = result.langLinks;
+          }
         }
     });
   }
 
-  onChangeLanguage(prefix: string){
-    const language = this.langLinks.get(prefix);
-    const query = language.get("searchQuery");
-    const wordForHistory = this.languages[prefix];
-    this.changeLanguage(query, prefix, wordForHistory);
+  onChangeLanguage(prefix: string) {
+    if (prefix == this.prevPreFix) {
+      this.changeLanguage(this.prevQuery, this.prevPreFix, this.prevWordForHistory);
+    }
+    else if (prefix == 'en' && !(this.langLinks.get('en'))) {
+      this.prevPreFix = prefix;
+      const language = this.langLinks.get('ca');
+      this.query = language.get("searchQuery");
+      this.prevQuery = this.query;
+      this.language = 'English';
+      this.prevWordForHistory = 'History';
+      this.changeLanguage(this.query, 'en', 'History');
+    }
+    else {
+      const language = this.langLinks.get(prefix);
+      this.prevPreFix = prefix;
+      this.query = language.get("searchQuery");
+      this.prevQuery = this.query;
+      this.language = language.get("langName");
+      const wordForHistory = this.languages[prefix];
+      this.prevWordForHistory = wordForHistory;
+      this.changeLanguage(this.query, prefix, wordForHistory);
+    }
   }
 }

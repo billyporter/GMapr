@@ -27,5 +27,15 @@
   </mat-menu>
 </div>
 <div *ngIf="loading" class="history">
+  <h1> The {{language}} translation for {{query}} is unavailable. </h1>
   {{error}}
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>language</mat-icon>
+    <span>Languages</span>
+  </button>
+  <mat-menu #menu="matMenu" class="languages">
+    <button *ngFor="let lang of languages | keyvalue" mat-menu-item (click)="onChangeLanguage(lang.key)">
+      {{lang.key}}
+    </button>
+  </mat-menu>
 </div>

@@ -53,6 +53,40 @@ export class WikiResultsService {
       );
   }
 
+  searchNewLang(query: string, language: string, wordForHistory: string): Observable<WikiServiceResult> {
+    return this.searchHandler
+      .getQueryString(query)
+      .pipe(
+        switchMap((result) =>
+          this.http.get<WikiSearchResult>(
+            `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${query}${WikiResultsService.URL_END}`
+          )
+        ),map(history => {
+          if (history.parse.text) {
+            const langLinks = new Map<string, Map<string, string>>();
+            for (let link of history.parse.langlinks) {
+                let links = new Map<string, string>();
+                links.set("langName", link.langname);
+                links.set("url", link.url);
+                links.set("searchQuery", link["*"]);
+                langLinks.set(link.lang, links);
+            }
+            const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
+            const title = history.parse.title;
+            return {title, ...historyResult, langLinks};
+          }
+          else {
+            throw new Error("API did not return a valid response");
+          }
+        }),
+        catchError(() => {
+          console.error('API did not return a valid response.');
+          return of({title: '', history: ''});
+        })
+      );
+  }
+
+
   fixString(text: string, wordForHistory: string, language: string): {history: string, furtherReading: Map<string, string>} {
     const firstIndex = text.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
     let middleOfString = text;
