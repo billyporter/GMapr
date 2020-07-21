@@ -1,25 +1,28 @@
 import { PhotosModule } from './../../photos.module';
 import { ImageContainerComponent } from './../image-container/image-container.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import MockTestImages from 'testing/mock-image-response.json';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { of } from 'rxjs';
-import { PhotosSectionComponent } from './photos-section.component';
 import { PhotoFetcher } from '../../services/photo-fetcher.service';
+import { PhotosSectionComponent } from './photos-section.component';
 import { By } from '@angular/platform-browser';
 import { SimpleChanges, SimpleChange } from '@angular/core';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { NavItem } from '../../nav-item';
 import { MatMenuHarness } from '@angular/material/menu/testing';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 describe('PhotosSectionComponent', () => {
   let component: PhotosSectionComponent;
   let fixture: ComponentFixture<PhotosSectionComponent>;
   let loader: HarnessLoader;
-  let getPhotosSpy: jasmine.Spy;
   let testItems: NavItem[];
+  let citySpy: jasmine.Spy;
+  let placesSpy: jasmine.Spy;
+  let getPhotosSpy: jasmine.Spy;
   const testMarkerPlaces = new Map<string, string[]>();
 
   beforeEach(async(() => {
@@ -54,13 +57,17 @@ describe('PhotosSectionComponent', () => {
     testMarkerPlaces.set('Colonial Theater', ['History', 'Entertainment']);
     testMarkerPlaces.set('Valley Forge', ['History', 'Landmark']);
 
+
+    const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
+    citySpy = placesService.getCityName.and.returnValue(of('Boston'));
+    placesSpy = placesService.getPlacesSource.and.returnValue(of(testMarkerPlaces));
     getPhotosSpy = photosService.getPhotos.and.returnValue(of(MockTestImages));
 
     TestBed.configureTestingModule({
       declarations: [PhotosSectionComponent, ImageContainerComponent],
       imports: [PhotosModule],
-      providers: [{ provide: PhotoFetcher, useValue: photosService }],
+      providers: [{provide: SharedPlacesCityService, useValue: placesService }, { provide: PhotoFetcher, useValue: photosService }],
     }).compileComponents();
   }));
 
@@ -71,13 +78,15 @@ describe('PhotosSectionComponent', () => {
     fixture.detectChanges();
   });
 
+  it('receives marker places and city from service', () => {
+    expect(component.city).toEqual('Boston');
+    expect(component.markerPlaces).toEqual(testMarkerPlaces);
+  });
+
   it('should convert marker types to unique types', () => {
     component.markerPlaces = testMarkerPlaces;
-    const changesObj: SimpleChanges = {
-      city: new SimpleChange('Boston', 'Philly', false)
-    };
     const expectedUniqueTypes = ['Restaurant', 'Entertainment', 'History', 'Landmark'];
-    component.ngOnChanges(changesObj);
+    component.extractUniqueTypes();
     expect(component.uniqueTypes).toEqual(expectedUniqueTypes);
   });
 
