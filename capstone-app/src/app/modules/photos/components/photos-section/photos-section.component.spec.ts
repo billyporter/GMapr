@@ -1,6 +1,6 @@
 import { PhotosModule } from './../../photos.module';
 import { ImageContainerComponent } from './../image-container/image-container.component';
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import MockTestImages from 'testing/mock-image-response.json';
