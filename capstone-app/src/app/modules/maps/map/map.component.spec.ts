@@ -1,25 +1,30 @@
 /// <reference types="googlemaps" />
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapComponent } from './map.component';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule, MapMarker } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
+import { SimpleChange, SimpleChanges } from '@angular/core';
+import {MatSelectHarness} from '@angular/material/select/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MapsModule } from '../maps.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 
 // due to flaky testing sometimes these tests will fail due to undefined markers or map centers
 describe('MapComponent', () => {
   let fixture: ComponentFixture<MapComponent>;
+  let component: MapComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapComponent ],
-      imports: [ GoogleMapsModule ]
+      imports: [ GoogleMapsModule, MapsModule, NoopAnimationsModule ]
     })
     .compileComponents();
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MapComponent);
-    fixture.detectChanges();
-  });
 
   // TODO: fix flaky testing issue
   // sometimes will fail due to undefined marker just refresh until it passes
@@ -43,6 +48,19 @@ describe('MapComponent', () => {
     const markerComponent = markerDebug.map(marker => marker.componentInstance.getPosition());
 
     expect(markerComponent).toEqual(fixture.componentInstance.markers.map(marker => marker.position));
+  });
+
+
+  it('opens new info window when receives new active marker', () => {
+    spyOn(component, 'getMarkerFromTitle');
+    let holder: MapMarker;
+    component.allMarkers = [holder, holder];
+    const changesObj: SimpleChanges = {
+      activeMark: new SimpleChange('', 'State House', false)
+    };
+    component.activeMark = 'State House';
+    component.ngOnChanges(changesObj);
+    expect(component.getMarkerFromTitle).toHaveBeenCalledWith(component.activeMark);
   });
 
   // TODO: fix flaky testing issue
@@ -121,11 +139,24 @@ describe('MapComponent', () => {
     expect(searchMarkers).toEqual(coordinates);
   });
 
-  it('test geocoder', () => {
+  fit('test geocoder', () => {
     const fixture = TestBed.createComponent(MapComponent);
-    fixture.detectChanges();
-    //search Miami Gardens
-    const searchLocation = new google.maps.LatLng(26.011761, -80.139053);
+    let coordinates: Coordinates = {
+      latitude: 26.011761,
+      longitude: -80.139053,
+      accuracy: undefined,
+      altitude: undefined,
+      altitudeAccuracy: undefined, 
+      heading: undefined,
+      speed: undefined,
+    }
+    let pos: Position = {
+      coords: coordinates,
+      timestamp: undefined,
+    }
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake(callback => {
+      fixture.componentInstance.locationCallbackSuccess(pos);
+    });
     const addresses = [
       '1405 N 12th Ct, Hollywood, FL 33019, USA', 
       '1402 N 12th Ct, Hollywood, FL 33019, USA',
@@ -137,19 +168,20 @@ describe('MapComponent', () => {
       'Florida, USA',
       'United States'
     ];
-    let status: google.maps.GeocoderStatus;
-    let setAddress= [];
+    const searchLocation = new google.maps.LatLng(26.011761, -80.139053);
+    // let status: google.maps.GeocoderStatus;
     spyOn(fixture.componentInstance.geocoder, 'geocode').and.callFake(({location: searchLocation}, callback) => {
-      const results: google.maps.GeocoderResult[] = addresses.map(address => {
+      let status: google.maps.GeocoderStatus = 'OK' as google.maps.GeocoderStatus;
+      const results: google.maps.GeocoderResult[] = addresses.map((address, index) => {
         return {
           formatted_address: address,
-          types: [],
+          types: index === 5 ? ['locality'] : [],
           partial_match: undefined,
           place_id: undefined,
           postcode_localities: undefined,
           address_components: undefined,
           geometry: {
-            location: searchLocation,
+            location: new google.maps.LatLng(26.011761, -80.139053),
             viewport: undefined,
             location_type: undefined,
             bounds: undefined,
@@ -158,9 +190,28 @@ describe('MapComponent', () => {
       });
       callback(results, status)
     });
+    spyOn(fixture.componentInstance.cityOutput, 'emit').and.callThrough();
+    fixture.detectChanges();
 
-    console.log(fixture.componentInstance.cityLocation);
-    console.log(addresses[5]);
+    expect(fixture.componentInstance.cityOutput.emit).toHaveBeenCalledWith(addresses[5]);
+  });
+
+  it('test types select button', async () => {
+    const fixture = TestBed.createComponent(MapComponent);
+    fixture.detectChanges();
+    let loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
+    fixture.detectChanges();
+    
+    const selectHarrness = await loader.getHarness(MatSelectHarness.with({selector: '#type-select'}));
+    
+    await selectHarrness.open();
+    const options = await selectHarrness.getOptions();
+    await options[0].click();
+    let type = await options[0].getText();
+    type = type.split(' ')
+          .join('_')
+          .toLowerCase();
+    expect(type).toEqual(fixture.componentInstance.placesRequest.type);
   });
   
   // TODO: fix flaky testing issue

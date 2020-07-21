@@ -87,18 +87,4 @@ describe('ImageContainerComponent', () => {
     component.ngOnChanges(changesObj);
     expect(component.filter).toBe('');
   });
-
-  it('filter should be active marker when there exists a current active marker', () => {
-    component.city = 'Boston';
-    component.ngOnChanges({});
-    expect(component.query).toBe('Boston early 1900s');
-    component.filter = 'Aquarium';
-    component.ngOnChanges({});
-    expect(component.query).toBe('Boston Aquarium');
-    component.activeMarker = 'Tea Party';
-    component.ngOnChanges({
-      activeMarker: new SimpleChange('Tea Party', '', false)
-    });
-    expect(component.query).toBe('Boston Tea Party');
-  });
 });

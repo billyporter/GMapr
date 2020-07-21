@@ -1,0 +1,87 @@
+{
+    "kind": "customsearch#search",
+    "url": {
+        "type": "application/json",
+        "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+    },
+    "queries": {
+        "request": [
+            {
+                "title": "Google Custom Search - Stillwater, Oklahoma",
+                "totalResults": "5130",
+                "searchTerms": "Stillwater, Oklahoma",
+                "count": 1,
+                "startIndex": 1,
+                "inputEncoding": "utf8",
+                "outputEncoding": "utf8",
+                "safe": "off",
+                "cx": "015569016282384541059:opag6em0spe"
+            }
+        ],
+        "nextPage": [
+            {
+                "title": "Google Custom Search - Stillwater, Oklahoma",
+                "totalResults": "5130",
+                "searchTerms": "Stillwater, Oklahoma",
+                "count": 1,
+                "startIndex": 2,
+                "inputEncoding": "utf8",
+                "outputEncoding": "utf8",
+                "safe": "off",
+                "cx": "015569016282384541059:opag6em0spe"
+            }
+        ]
+    },
+    "context": {
+        "title": "Wikipedia"
+    },
+    "searchInformation": {
+        "searchTime": 0.405033,
+        "formattedSearchTime": "0.41",
+        "totalResults": "5130",
+        "formattedTotalResults": "5,130"
+    },
+    "items": [
+        {
+            "kind": "customsearch#result",
+            "title": "Stillwater, Oklahoma - Wikipedia",
+            "htmlTitle": "<b>Stillwater</b>, <b>Oklahoma</b> - Wikipedia",
+            "link": "https://en.wikipedia.org/wiki/Boston",
+            "displayLink": "en.wikipedia.org",
+            "snippet": "Stillwater is a city and county seat of Payne County, Oklahoma, United States. It is \nlocated in north-central Oklahoma at the intersection of U.S. Route 177 and ...",
+            "htmlSnippet": "<b>Stillwater</b> is a city and county seat of Payne County, <b>Oklahoma</b>, United States. It is <br>\nlocated in north-central <b>Oklahoma</b> at the intersection of U.S. Route 177 and&nbsp;...",
+            "cacheId": "77fJ2oy3yeoJ",
+            "formattedUrl": "https://en.wikipedia.org/wiki/Chicago",
+            "htmlFormattedUrl": "https://en.wikipedia.org/wiki/<b>Stillwater</b>,_<b>Oklahoma</b>",
+            "pagemap": {
+                "hcard": [
+                    {
+                        "url_text": "stillwater.org",
+                        "fn": "Stillwater, Oklahoma",
+                        "nickname": "Stilly",
+                        "category": "City",
+                        "url": "stillwater.org"
+                    }
+                ],
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS7916GwkTXsmDV6PIkzGRB7O9rbOsz6maCC3QY68rQf8GuBoN7FrcFtzE1",
+                        "width": "275",
+                        "height": "183"
+                    }
+                ],
+                "metatags": [
+                    {
+                        "referrer": "origin",
+                        "og:image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Downtown_Stillwater.JPG"
+                    }
+                ],
+                "cse_image": [
+                    {
+                        "src": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Downtown_Stillwater.JPG"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 /// <reference types="googlemaps" />
-import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component,  ViewChild, ElementRef, OnInit, Output, Input, 
+  EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -11,18 +12,22 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./map.component.scss']
 })
 
-export class MapComponent implements OnInit{
+export class MapComponent implements OnInit, OnChanges {
   @ViewChild('searchBar', {static: true}) searchBar: ElementRef;
   @ViewChild('customWindow', {read: MapInfoWindow}) customWindow: MapInfoWindow;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+  @ViewChildren(MapMarker) allMarkers !: MapMarker[];
 
+  @Input() activeMark: string;
   @Output() activeMarkerOutput = new EventEmitter<string>();
   @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
   @Output() cityOutput = new EventEmitter<string>();
 
+  // allMarkers: MapMarker[] = [];
+  infoWindowMarker: MapMarker;
   nearSearch?: google.maps.places.PlacesService;
   location?: google.maps.LatLng;
-  city: String = "Enter a city";
+  city: string;
   zoom = 13;
   markerData = new Map<string, string[]>();
   searchMarkers: google.maps.MarkerOptions[] = [];
@@ -31,7 +36,6 @@ export class MapComponent implements OnInit{
   markers: google.maps.MarkerOptions[] = [];
   cityLocation: string;
   geocoder = new google.maps.Geocoder();
-  activeMark: string;
   testlocation: google.maps.LatLng = new google.maps.LatLng(26.011760, -80.139050);
   placesRequest = {
     location: this.testlocation,
@@ -49,6 +53,8 @@ export class MapComponent implements OnInit{
     'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
   filteredOptions: Observable<string[]>;
 
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+
   ngOnInit() {
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
     this.getCurrentLocation();
@@ -61,10 +67,27 @@ export class MapComponent implements OnInit{
       );
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    if (change.activeMark) {
+      if (change.activeMark.currentValue === '') {
+        this.infoWindow.close();
+      }
+      else if (this.allMarkers) {
+        this.infoWindowMarker = this.getMarkerFromTitle(this.activeMark);
+        if (this.infoWindowMarker) {
+          this.openInfoWindow(this.infoWindowMarker);
+        }
+        else {
+          this.infoWindow.close();
+        }
+      }
+    }
+  }
+
   changeType(newType: string) {
     let title = newType.split(' ')
-    .join('_')
-    .toLowerCase()
+                .join('_')
+                .toLowerCase();
     this.placesRequest.type = title;
     this.placesRequestFunc(this.location);
   }
@@ -118,33 +141,33 @@ export class MapComponent implements OnInit{
     this.activeMarkerOutput.emit(this.activeMark);
   }
 
-  getCurrentLocation () {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.position = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-      this.location = new google.maps.LatLng(this.position);
-      this.geocoder.geocode({'location': this.position}, (results, status) => {
-        if (status === 'OK') {
-          results.filter(result => {
-            result.types.forEach(type => {
-              if (type == "locality") {
-                this.cityLocation = result.formatted_address;
-              }
-            });
-          });
-        }
-        this.cityOutput.emit(this.cityLocation);
-      });
+  private locationCallbackFail() {
+    this.cityLocation = "Los Angeles, CA, USA"
+      this.location = new google.maps.LatLng(34.0522, -118.2437);
       this.placesRequestFunc(this.location);
-    }, () => {
-      this.cityLocation = "Los Angeles, CA, USA"
-        this.location = new google.maps.LatLng(34.0522, -118.2437);
+      this.cityOutput.emit(this.cityLocation);
+  }
+
+  locationCallbackSuccess(position: Position) {
+    this.position = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        this.location = new google.maps.LatLng(this.position);
+        this.geocoder.geocode({'location': this.position}, (results, status) => {
+          if (status === 'OK') {
+            const resultArr = results.filter(result => result.types.includes('locality'));
+            this.cityLocation = resultArr[0].formatted_address;
+          }
+          console.log(this.cityLocation);
+          this.cityOutput.emit(this.cityLocation);
+        });
         this.placesRequestFunc(this.location);
-        this.cityOutput.emit(this.cityLocation);
-    });
-    
+  }
+
+  getCurrentLocation () {
+    navigator.geolocation.getCurrentPosition(position =>  this.locationCallbackSuccess(position), this.locationCallbackFail);
+    console.log(this.cityLocation);
     return this.position;
   }
 
@@ -186,6 +209,14 @@ export class MapComponent implements OnInit{
       .indexOf(marker.getPosition());
     if (markerIndex > -1) {
       this.markers.splice(markerIndex, 1);
+    }
+  }
+
+  getMarkerFromTitle(markerTitle: string) {
+    for (const marker of this.allMarkers) {
+      if (marker && marker._marker.getTitle() === markerTitle) {
+        return marker;
+      }
     }
   }
 }

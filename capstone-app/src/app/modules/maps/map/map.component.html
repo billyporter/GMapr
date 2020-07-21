@@ -26,7 +26,9 @@
             [matAutocomplete]="auto">
             <button mat-button 
               *ngIf="typesInput.value" 
-              matSuffix mat-icon-button aria-label="Clear" 
+              matSuffix 
+              mat-icon-button 
+              aria-label="Clear" 
               (click)="typesInput.value=''">
                 <mat-icon>close</mat-icon>
               </button>
@@ -43,7 +45,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Marker Types</mat-label>
-    <mat-select (selectionChange)="changeType($event.value)">
+    <mat-select id="type-select" (selectionChange)="changeType($event.value)">
       <mat-option *ngFor="let option of optionsTypes" [value]="option">
         {{option}}
       </mat-option>

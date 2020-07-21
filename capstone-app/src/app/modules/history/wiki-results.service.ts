@@ -28,7 +28,8 @@ export class WikiResultsService {
           this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${result}${WikiResultsService.URL_END}`
           )
-        ),map(history => {
+        ),
+        map(history => {
           if (history.parse.text) {
             const historyResult = this.fixString(history.parse.text['*']);
             const title = history.parse.title;
@@ -46,9 +47,12 @@ export class WikiResultsService {
   }
 
   fixString(text: string): {history: string, furtherReading?: Map<string, string>} {
-    const firstIndex = text.indexOf('<span class="mw-headline" id="History">History</span>', 0);
+    const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
+    const regexParsing = /\.mw.*?}}/gi;
+    const parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');
+    const firstIndex = parsedText.indexOf('<span class="mw-headline" id="History">History</span>', 0);
     if (firstIndex !== -1){
-      const firstPartOfString = text.substring(firstIndex, text.length);
+      const firstPartOfString = parsedText.substring(firstIndex, parsedText.length);
       const endIndex = firstPartOfString.indexOf('<h2>', 0);
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);

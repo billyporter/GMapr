@@ -4,6 +4,8 @@ import {
   OnChanges,
   SimpleChanges,
   OnInit,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavItem } from '../../nav-item';
@@ -17,6 +19,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   @Input() city: string;
   @Input() markerPlaces: Map<string, string[]>;
   @Input() activeMarker: string;
+  @Output() activeMarkerUpdate = new EventEmitter<string>();
   previousCity: string;
   limitControl = new FormControl(10, [Validators.min(1), Validators.max(10)]);
   maxPhotos = 10;
@@ -41,12 +44,12 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.city && this.city === '') {
       this.city = this.previousCity;
-    } else {
-      this.previousCity = this.city;
     }
-
-    if (!changes.activeMarker) {
-      this.activeMarker = '';
+    else if (changes.activeMarker) {
+      this.markerFilter = this.activeMarker;
+    }
+    else {
+      this.previousCity = this.city;
     }
 
     this.extractUniqueTypes();
@@ -101,6 +104,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   }
 
   updateFilterSelected(newFilter: string) {
+    this.activeMarkerUpdate.emit(newFilter);
     if (newFilter !== this.city) {
       this.markerFilter = newFilter;
     } else {
