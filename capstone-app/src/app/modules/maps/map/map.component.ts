@@ -1,3 +1,4 @@
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 import { OnChanges, SimpleChanges, Input, ViewChildren } from '@angular/core';
 /// <reference types="googlemaps" />
 import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
@@ -17,8 +18,6 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() activeMark: string;
   @Output() activeMarkerOutput = new EventEmitter<string>();
-  @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
-  @Output() cityOutput = new EventEmitter<string>();
 
   // allMarkers: MapMarker[] = [];
   infoWindowMarker: MapMarker;
@@ -40,7 +39,7 @@ export class MapComponent implements OnInit, OnChanges {
     type: 'tourist_attraction'
   };
 
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef, private placesSerice: SharedPlacesCityService) {}
 
   ngOnInit() {
     this.getCurrentOrSetLocation();
@@ -73,9 +72,10 @@ export class MapComponent implements OnInit, OnChanges {
       {fields: ['geometry', 'name', 'formatted_address'], types: ['(cities)']});
     autoComplete.addListener('place_changed', () => {
       this.location = autoComplete.getPlace().geometry.location;
+      this.changeDetector.markForCheck();
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequestFunc(this.location);
-      this.cityOutput.emit(this.cityLocation);
+      this.placesSerice.setCityName(this.cityLocation);
     });
   }
 
@@ -90,7 +90,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.markerData.set(result.name, result.types);
       }
       this.changeDetector.markForCheck();
-      this.markerDataOutput.emit(this.markerData);
+      this.placesSerice.setPlaces(this.markerData);
     });
   }
 
@@ -113,9 +113,10 @@ export class MapComponent implements OnInit, OnChanges {
   // gets our default location
   getCurrentOrSetLocation() {
     if (!this.location) {
-      this.cityLocation = "Los Angeles, CA, USA"
+      this.cityLocation = "Los Angeles, CA, USA";
       this.location = new google.maps.LatLng(34.0522, -118.2437);
-      this.cityOutput.emit(this.cityLocation);
+      this.changeDetector.markForCheck();
+      this.placesSerice.setCityName(this.cityLocation);
     }
   }
 
