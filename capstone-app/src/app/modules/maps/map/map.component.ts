@@ -39,7 +39,7 @@ export class MapComponent implements OnInit, OnChanges {
     type: 'tourist_attraction'
   };
 
-  constructor(private readonly changeDetector: ChangeDetectorRef, private placesSerice: SharedPlacesCityService) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
   ngOnInit() {
     this.getCurrentOrSetLocation();
@@ -75,7 +75,7 @@ export class MapComponent implements OnInit, OnChanges {
       this.changeDetector.markForCheck();
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequestFunc(this.location);
-      this.placesSerice.setCityName(this.cityLocation);
+      this.placeCitySharer.setCityName(this.cityLocation);
     });
   }
 
@@ -90,7 +90,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.markerData.set(result.name, result.types);
       }
       this.changeDetector.markForCheck();
-      this.placesSerice.setPlaces(this.markerData);
+      this.placeCitySharer.setPlaces(this.markerData);
     });
   }
 
@@ -116,7 +116,7 @@ export class MapComponent implements OnInit, OnChanges {
       this.cityLocation = "Los Angeles, CA, USA";
       this.location = new google.maps.LatLng(34.0522, -118.2437);
       this.changeDetector.markForCheck();
-      this.placesSerice.setCityName(this.cityLocation);
+      this.placeCitySharer.setCityName(this.cityLocation);
     }
   }
 
