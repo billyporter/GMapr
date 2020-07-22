@@ -42,7 +42,6 @@ export class MapComponent implements OnInit, OnChanges {
     radius: 5000,
     type: 'tourist_attraction'
   }
-  myControl = new FormControl();
   optionsTypes: string[] = ['Airport', 'Amusement Park', 'Aquarium', 'Art Gallery', 'Atm', 
     'Bar', 'Book Store', 'Bowling Alley', 'Bus Station', 'Cafe', 'Campground', 
     'Casino', 'Cemetery', 'Church', 'City Hall', 'Clothing Store', 'Convenience Store',
@@ -51,7 +50,6 @@ export class MapComponent implements OnInit, OnChanges {
     'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
     'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
     'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
-  filteredOptions: Observable<string[]>;
 
   constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
@@ -60,11 +58,6 @@ export class MapComponent implements OnInit, OnChanges {
     this.getCurrentLocation();
     this.getCurrentOrSetLocation();
     this.locationSearch();
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -90,11 +83,6 @@ export class MapComponent implements OnInit, OnChanges {
                 .toLowerCase();
     this.placesRequest.type = title;
     this.placesRequestFunc(this.location);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase()
-    return this.optionsTypes.filter(option => option.includes(filterValue));
   }
 
   locationSearch() {
@@ -159,7 +147,6 @@ export class MapComponent implements OnInit, OnChanges {
             const resultArr = results.filter(result => result.types.includes('locality'));
             this.cityLocation = resultArr[0].formatted_address;
           }
-          console.log(this.cityLocation);
           this.cityOutput.emit(this.cityLocation);
         });
         this.placesRequestFunc(this.location);
@@ -167,7 +154,6 @@ export class MapComponent implements OnInit, OnChanges {
 
   getCurrentLocation () {
     navigator.geolocation.getCurrentPosition(position =>  this.locationCallbackSuccess(position), this.locationCallbackFail);
-    console.log(this.cityLocation);
     return this.position;
   }
 

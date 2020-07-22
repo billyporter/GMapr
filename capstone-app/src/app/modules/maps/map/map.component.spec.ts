@@ -139,7 +139,7 @@ describe('MapComponent', () => {
     expect(searchMarkers).toEqual(coordinates);
   });
 
-  fit('test geocoder', () => {
+  it('test geocoder', () => {
     const fixture = TestBed.createComponent(MapComponent);
     let coordinates: Coordinates = {
       latitude: 26.011761,
@@ -173,6 +173,7 @@ describe('MapComponent', () => {
     spyOn(fixture.componentInstance.geocoder, 'geocode').and.callFake(({location: searchLocation}, callback) => {
       let status: google.maps.GeocoderStatus = 'OK' as google.maps.GeocoderStatus;
       const results: google.maps.GeocoderResult[] = addresses.map((address, index) => {
+        // locality helps find the closest city address 
         return {
           formatted_address: address,
           types: index === 5 ? ['locality'] : [],

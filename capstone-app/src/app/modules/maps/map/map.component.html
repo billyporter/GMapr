@@ -1,4 +1,3 @@
-
 <span class="buttons">
   <div class ="search-box">
     <mat-form-field class="search-bar">
@@ -16,35 +15,8 @@
     </button>
   </div>
 
-  <form>
-    <mat-form-field class="example-full-width">
-      <input type="text" #typesInput
-            placeholder="Pick Type"
-            aria-label="String"
-            matInput
-            [formControl]="myControl"
-            [matAutocomplete]="auto">
-            <button mat-button 
-              *ngIf="typesInput.value" 
-              matSuffix 
-              mat-icon-button 
-              aria-label="Clear" 
-              (click)="typesInput.value=''">
-                <mat-icon>close</mat-icon>
-              </button>
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <button mat-icon-button color="primary" (click)="changeType(typesInput.value)" >
-      Submit
-    </button>  
-  </form>
-
   <mat-form-field appearance="fill">
-    <mat-label>Marker Types</mat-label>
+    <mat-label class="mat-select">Marker Types</mat-label>
     <mat-select id="type-select" (selectionChange)="changeType($event.value)">
       <mat-option *ngFor="let option of optionsTypes" [value]="option">
         {{option}}
