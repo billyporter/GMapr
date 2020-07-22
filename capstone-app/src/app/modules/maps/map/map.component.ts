@@ -98,6 +98,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   placesRequestFunc(location: google.maps.LatLng) {
     this.placesRequest.location = this.location;
+    console.log('here');
     this.nearSearch.nearbySearch(this.placesRequest, results => {
       // resetting data
       this.searchMarkers = [];
@@ -107,6 +108,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.markerData.set(result.name, result.types);
       }
       this.placeCitySharer.setPlaces(this.markerData);
+      console.log('here');
       this.changeDetector.detectChanges();
     });
   }
@@ -129,25 +131,25 @@ export class MapComponent implements OnInit, OnChanges {
 
   private locationCallbackFail() {
     this.cityLocation = "Los Angeles, CA, USA"
-      this.location = new google.maps.LatLng(34.0522, -118.2437);
-      this.placesRequestFunc(this.location);
-      this.placeCitySharer.setCityName(this.cityLocation);
-    }
+    this.location = new google.maps.LatLng(34.0522, -118.2437);
+    this.placesRequestFunc(this.location);
+    this.placeCitySharer.setCityName(this.cityLocation);
+  }
 
   locationCallbackSuccess(position: Position) {
     this.position = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        this.location = new google.maps.LatLng(this.position);
-        this.geocoder.geocode({'location': this.position}, (results, status) => {
-          if (status === 'OK') {
-            const resultArr = results.filter(result => result.types.includes('locality'));
-            this.cityLocation = resultArr[0].formatted_address;
-          }
-          this.placeCitySharer.setCityName(this.cityLocation);
-        });
-        this.placesRequestFunc(this.location);
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    this.location = new google.maps.LatLng(this.position);
+    this.geocoder.geocode({'location': this.position}, (results, status) => {
+      if (status === 'OK') {
+        const resultArr = results.filter(result => result.types.includes('locality'));
+        this.cityLocation = resultArr[0].formatted_address;
+      }
+      this.placeCitySharer.setCityName(this.cityLocation);
+    });
+    this.placesRequestFunc(this.location);
   }
 
   getCurrentLocation () {
@@ -163,7 +165,7 @@ export class MapComponent implements OnInit, OnChanges {
       } else {
         this.cityLocation = "Los Angeles, CA, USA";
         this.location = new google.maps.LatLng(34.0522, -118.2437);
-        this.changeDetector.markForCheck();
+        this.placesRequestFunc(this.location);
         this.placeCitySharer.setCityName(this.cityLocation);
         this.placesRequestFunc(this.location);
       }
