@@ -8,11 +8,10 @@
 </h1>
 <app-map
   (activeMarkerOutput)="updateActiveMarker($event)"
-  (cityOutput)="cityUpdate($event)"
   [activeMark] = "activeMarker">
 </app-map>
 <app-photos-section 
   [activeMarker]="activeMarker"
   (activeMarkerUpdate)="updateActiveMarker($event)">
 </app-photos-section>
-<app-wiki-media-history-section [cityName]="city"></app-wiki-media-history-section>
+<app-wiki-media-history-section></app-wiki-media-history-section>
