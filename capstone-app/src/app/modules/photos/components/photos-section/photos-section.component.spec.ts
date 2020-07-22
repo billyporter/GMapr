@@ -57,7 +57,6 @@ describe('PhotosSectionComponent', () => {
     testMarkerPlaces.set('Colonial Theater', ['History', 'Entertainment']);
     testMarkerPlaces.set('Valley Forge', ['History', 'Landmark']);
 
-
     const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
     citySpy = placesService.getCityName.and.returnValue(of('Boston'));
