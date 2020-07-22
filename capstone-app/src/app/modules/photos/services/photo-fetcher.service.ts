@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PhotoFetcher {
   private static LINK = 'https://www.googleapis.com/customsearch/v1?';
-  private static API_KEY = 'key=AIzaSyCfxfzJL-9ulyxHWf2tU256qsGR3Wvpov8';
+  private static API_KEY = 'key=AIzaSyCd2vIkDcVuvM3ie4kE661cGS3GsH9IWcQ';
   private static SEARCH_ENGINE = 'cx=014012661603529902036:grbt2ttpety';
   private static SEARCH_TYPE = 'searchType=image';
 
@@ -20,7 +20,7 @@ export class PhotoFetcher {
       `${PhotoFetcher.LINK}${PhotoFetcher.API_KEY}&` +
       `${PhotoFetcher.SEARCH_ENGINE}&${PhotoFetcher.SEARCH_TYPE}&` +
       `q=${query.split(' ').join('+')}&num=${limit}`;
-    return this.http.get(fullUrl).pipe(catchError(this.handleError));
+    return this.http.get(fullUrl).pipe(retry(3), catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

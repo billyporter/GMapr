@@ -1,7 +1,7 @@
-import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
-import { OnChanges, SimpleChanges, Input, ViewChildren } from '@angular/core';
 /// <reference types="googlemaps" />
-import { Component,  ViewChild, ElementRef, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
+import { Component,  ViewChild, ElementRef, OnInit, Output, Input, 
+  EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -37,14 +37,22 @@ export class MapComponent implements OnInit, OnChanges {
     location: this.testlocation,
     radius: 5000,
     type: 'tourist_attraction'
-  };
+  }
+  optionsTypes: string[] = ['Airport', 'Amusement Park', 'Aquarium', 'Art Gallery', 'Atm', 
+    'Bar', 'Book Store', 'Bowling Alley', 'Bus Station', 'Cafe', 'Campground', 
+    'Casino', 'Cemetery', 'Church', 'City Hall', 'Clothing Store', 'Convenience Store',
+    'Courthouse', 'Department Store', 'Electronics Store', 'Embassy', 'Gym',
+    'Hindu Temple', 'Jewelry Store', 'Library', 'Lodging', 'Meal Delivery',
+    'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
+    'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
+    'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
 
   constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
   ngOnInit() {
-    this.getCurrentOrSetLocation();
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
-    this.placesRequestFunc(this.location);
+    this.getCurrentLocation();
+    this.getCurrentOrSetLocation();
     this.locationSearch();
   }
 
@@ -65,6 +73,14 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
+  changeType(newType: string) {
+    let title = newType.split(' ')
+                .join('_')
+                .toLowerCase();
+    this.placesRequest.type = title;
+    this.placesRequestFunc(this.location);
+  }
+
   locationSearch() {
     const input = this.searchBar.nativeElement;
     this.cityLocation = this.searchBar.nativeElement.value;
@@ -72,10 +88,11 @@ export class MapComponent implements OnInit, OnChanges {
       {fields: ['geometry', 'name', 'formatted_address'], types: ['(cities)']});
     autoComplete.addListener('place_changed', () => {
       this.location = autoComplete.getPlace().geometry.location;
-      this.changeDetector.markForCheck();
       this.cityLocation = autoComplete.getPlace().formatted_address;
+      this.placesRequest.type = 'tourist_attraction';
       this.placesRequestFunc(this.location);
       this.placeCitySharer.setCityName(this.cityLocation);
+      this.changeDetector.detectChanges();
     });
   }
 
@@ -89,19 +106,19 @@ export class MapComponent implements OnInit, OnChanges {
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.changeDetector.markForCheck();
       this.placeCitySharer.setPlaces(this.markerData);
+      this.changeDetector.detectChanges();
     });
   }
 
   createMarker(result: google.maps.places.PlaceResult) {
-   return {
-    position: result.geometry.location,
-    title: result.name,
-    icon: {
-        url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
-    }
-   };
+    return {
+      position: result.geometry.location,
+      title: result.name,
+      icon: {
+          url: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+      }
+    };
   }
 
   openInfoWindow(marker: MapMarker) {
@@ -110,13 +127,46 @@ export class MapComponent implements OnInit, OnChanges {
     this.activeMarkerOutput.emit(this.activeMark);
   }
 
+  private locationCallbackFail() {
+    this.cityLocation = 'Los Angeles, CA, USA'
+    this.location = new google.maps.LatLng(34.0522, -118.2437);
+    this.placesRequestFunc(this.location);
+    this.placeCitySharer.setCityName(this.cityLocation);
+  }
+
+  locationCallbackSuccess(position: Position) {
+    this.position = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+    };
+    this.location = new google.maps.LatLng(this.position);
+    this.geocoder.geocode({'location': this.position}, (results, status) => {
+      if (status === 'OK') {
+        const resultArr = results.filter(result => result.types.includes('locality'));
+        this.cityLocation = resultArr[0].formatted_address;
+      }
+      this.placeCitySharer.setCityName(this.cityLocation);
+    });
+    this.placesRequestFunc(this.location);
+  }
+
+  getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(position => this.locationCallbackSuccess(position), this.locationCallbackFail);
+    return this.position;
+  }
+
   // gets our default location
   getCurrentOrSetLocation() {
     if (!this.location) {
-      this.cityLocation = "Los Angeles, CA, USA";
-      this.location = new google.maps.LatLng(34.0522, -118.2437);
-      this.changeDetector.markForCheck();
-      this.placeCitySharer.setCityName(this.cityLocation);
+      if (this.position) {
+        this.location = new google.maps.LatLng(this.position);
+      } else {
+        this.cityLocation = 'Los Angeles, CA, USA';
+        this.location = new google.maps.LatLng(34.0522, -118.2437);
+        this.placeCitySharer.setCityName(this.cityLocation);
+        this.placesRequestFunc(this.location);
+      }
+      
     }
   }
 
@@ -125,7 +175,7 @@ export class MapComponent implements OnInit, OnChanges {
          position: event.latLng,
          title: 'Custom Marker',
          icon: {
-           url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+           url: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
          }
     });
   }

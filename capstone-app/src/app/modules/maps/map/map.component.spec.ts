@@ -1,28 +1,37 @@
 /// <reference types="googlemaps" />
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 import { MapComponent } from './map.component';
 import { GoogleMapsModule, MapMarker } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
 import { SimpleChange, SimpleChanges } from '@angular/core';
+import {MatSelectHarness} from '@angular/material/select/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MapsModule } from '../maps.module';
+import { of } from 'rxjs';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
+
 
 // due to flaky testing sometimes these tests will fail due to undefined markers or map centers
 describe('MapComponent', () => {
   let fixture: ComponentFixture<MapComponent>;
   let component: MapComponent;
+  let service: SharedPlacesCityService;
+  let injector: TestBed;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapComponent ],
-      imports: [ GoogleMapsModule ]
+      imports: [ GoogleMapsModule, MapsModule, NoopAnimationsModule ],
+      providers: [SharedPlacesCityService],
     })
     .compileComponents();
+    injector = getTestBed();
+    service = TestBed.inject(SharedPlacesCityService);
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MapComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   // TODO: fix flaky testing issue
   // sometimes will fail due to undefined marker just refresh until it passes
@@ -79,7 +88,7 @@ describe('MapComponent', () => {
     }
     fixture.detectChanges();
 
-    const deleteButton = fixture.debugElement.query(By.css('.buttonDelete'));
+    const deleteButton = fixture.debugElement.query(By.css('.button-delete'));
     deleteButton.nativeElement.click();
     fixture.detectChanges();
 
@@ -136,6 +145,85 @@ describe('MapComponent', () => {
 
     expect(searchMarkers).toEqual(coordinates);
   });
+
+  fit('test geocoder', () => {
+    const fixture = TestBed.createComponent(MapComponent);
+    const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
+    let coordinates: Coordinates = {
+      latitude: 26.011761,
+      longitude: -80.139053,
+      accuracy: undefined,
+      altitude: undefined,
+      altitudeAccuracy: undefined, 
+      heading: undefined,
+      speed: undefined,
+    }
+    let pos: Position = {
+      coords: coordinates,
+      timestamp: undefined,
+    }
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake(callback => {
+      fixture.componentInstance.locationCallbackSuccess(pos);
+    });
+    const addresses = [
+      '1405 N 12th Ct, Hollywood, FL 33019, USA', 
+      '1402 N 12th Ct, Hollywood, FL 33019, USA',
+      '1598-1300 N 12th Ct, Hollywood, FL 33019, USA',
+      'Hollywood Lakes, Hollywood, FL, USA',
+      'Hollywood, FL 33019, USA',
+      'Hollywood, FL, USA',
+      'Broward County, FL, USA',
+      'Florida, USA',
+      'United States'
+    ];
+    const searchLocation = new google.maps.LatLng(26.011761, -80.139053);
+    // let status: google.maps.GeocoderStatus;
+    spyOn(fixture.componentInstance.geocoder, 'geocode').and.callFake(({location: searchLocation}, callback) => {
+      let status: google.maps.GeocoderStatus = 'OK' as google.maps.GeocoderStatus;
+      const results: google.maps.GeocoderResult[] = addresses.map((address, index) => {
+        // locality helps find the closest city address 
+        return {
+          formatted_address: address,
+          types: index === 5 ? ['locality'] : [],
+          partial_match: undefined,
+          place_id: undefined,
+          postcode_localities: undefined,
+          address_components: undefined,
+          geometry: {
+            location: new google.maps.LatLng(26.011761, -80.139053),
+            viewport: undefined,
+            location_type: undefined,
+            bounds: undefined,
+          },
+        };
+      });
+      callback(results, status)
+    });
+    spyOn(service, 'setCityName').and.callThrough();
+    fixture.detectChanges();
+
+    expect(service.setCityName).toHaveBeenCalled();
+    expect(service.setCityName).toHaveBeenCalledWith(addresses[5]);
+  });
+
+  it('test types select button', async () => {
+    const fixture = TestBed.createComponent(MapComponent);
+    fixture.detectChanges();
+    let loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
+    fixture.detectChanges();
+    
+    const selectHarrness = await loader.getHarness(MatSelectHarness.with({selector: '#type-select'}));
+    
+    await selectHarrness.open();
+    const options = await selectHarrness.getOptions();
+    await options[0].click();
+    let type = await options[0].getText();
+    type = type.split(' ')
+          .join('_')
+          .toLowerCase();
+    expect(type).toEqual(fixture.componentInstance.placesRequest.type);
+  });
+  
   // TODO: fix flaky testing issue
   // sometimes will fail do to an undefined map center just refresh until it passs
   it('sets center and zoom of the map', () => {

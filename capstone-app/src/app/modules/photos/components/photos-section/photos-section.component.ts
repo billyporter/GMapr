@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavItem } from '../../nav-item';
@@ -35,7 +36,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   navItems: NavItem[] = [];
   markerFilter = '';
 
-  constructor(private places: SharedPlacesCityService) { }
+  constructor(private cd: ChangeDetectorRef, private places: SharedPlacesCityService) { }
 
   ngOnInit() {
     this.mockPlaces.set('Pjs Wings', ['Restuarant']);
@@ -47,6 +48,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
       if (placesSource) {
         this.extractUniqueTypes();
         this.populateNavItems();
+        this.cd.detectChanges();
       }
     });
   }

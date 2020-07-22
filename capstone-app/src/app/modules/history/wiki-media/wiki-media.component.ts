@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { Subject } from 'rxjs';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 @Component({
   selector: 'app-wiki-media-history-section',
@@ -17,12 +18,17 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   loading = true;
   body: string;
   urls = new Map();
-  @Input() cityName!: string;
+  cityName: string;
 
-  constructor(private wikiService: WikiResultsService) { }
+  constructor(private cd: ChangeDetectorRef, private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults(this.cityName);
+    this.cityFetcher.getCityName().subscribe(city => {
+      this.cityName = city;
+      if (city) {
+        this.getResults(this.cityName);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -34,16 +40,20 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   getResults(queryString: string) {
+    const currentQuery = queryString;
+    let isOldRequest = false;
     this.wikiService.search(queryString)
       .subscribe((result: WikiServiceResult) => {
-        if (result.history) {
-          this.body = result.history;
-          this.history = result.history;
-          this.urls = result.furtherReading;
-          this.title = result.title;
-          this.loading = false;
+        if (result.history && currentQuery === this.cityName) {
+            isOldRequest = true;
+            this.body = result.history;
+            this.history = result.history;
+            this.urls = result.furtherReading;
+            this.title = result.title;
+            this.loading = false;
+            this.cd.detectChanges();
         }
-        else {
+        else if (!isOldRequest) {
           this.error = 'API did not return a valid response.';
           console.error('API did not return a valid response.');
         }
