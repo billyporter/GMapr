@@ -131,7 +131,6 @@ export class MapComponent implements OnInit, OnChanges {
     this.cityLocation = "Los Angeles, CA, USA"
       this.location = new google.maps.LatLng(34.0522, -118.2437);
       this.placesRequestFunc(this.location);
-      // change to this.placeCitySharer.setPlaces(this.cityLocation);
       this.placeCitySharer.setCityName(this.cityLocation);
     }
 
@@ -146,8 +145,6 @@ export class MapComponent implements OnInit, OnChanges {
             const resultArr = results.filter(result => result.types.includes('locality'));
             this.cityLocation = resultArr[0].formatted_address;
           }
-          // change to this.placeCitySharer.setPlaces(this.cityLocation);
-          console.log(this.cityLocation);
           this.placeCitySharer.setCityName(this.cityLocation);
         });
         this.placesRequestFunc(this.location);
@@ -168,7 +165,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.location = new google.maps.LatLng(34.0522, -118.2437);
         this.changeDetector.markForCheck();
         this.placeCitySharer.setCityName(this.cityLocation);
-        console.log(this.cityLocation);
+        this.placesRequestFunc(this.location);
       }
       
     }

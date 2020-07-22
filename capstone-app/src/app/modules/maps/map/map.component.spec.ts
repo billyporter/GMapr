@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 import { MapComponent } from './map.component';
 import { GoogleMapsModule, MapMarker } from '@angular/google-maps';
 import { By } from '@angular/platform-browser';
@@ -10,20 +10,27 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MapsModule } from '../maps.module';
+import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 
 // due to flaky testing sometimes these tests will fail due to undefined markers or map centers
 describe('MapComponent', () => {
   let fixture: ComponentFixture<MapComponent>;
   let component: MapComponent;
+  let service: SharedPlacesCityService;
+  let injector: TestBed;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapComponent ],
-      imports: [ GoogleMapsModule, MapsModule, NoopAnimationsModule ]
+      imports: [ GoogleMapsModule, MapsModule, NoopAnimationsModule ],
+      providers: [SharedPlacesCityService],
     })
     .compileComponents();
+    injector = getTestBed();
+    service = TestBed.inject(SharedPlacesCityService);
   }));
 
   // TODO: fix flaky testing issue
@@ -139,8 +146,9 @@ describe('MapComponent', () => {
     expect(searchMarkers).toEqual(coordinates);
   });
 
-  it('test geocoder', () => {
+  fit('test geocoder', () => {
     const fixture = TestBed.createComponent(MapComponent);
+    const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
     let coordinates: Coordinates = {
       latitude: 26.011761,
       longitude: -80.139053,
@@ -191,10 +199,11 @@ describe('MapComponent', () => {
       });
       callback(results, status)
     });
-    spyOn(fixture.componentInstance.cityOutput, 'emit').and.callThrough();
+    spyOn(service, 'setCityName').and.callThrough();
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.cityOutput.emit).toHaveBeenCalledWith(addresses[5]);
+    expect(service.setCityName).toHaveBeenCalled();
+    expect(service.setCityName).toHaveBeenCalledWith(addresses[5]);
   });
 
   it('test types select button', async () => {
