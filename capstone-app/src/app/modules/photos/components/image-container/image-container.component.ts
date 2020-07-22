@@ -29,6 +29,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   originalPhotos: Photo[] = [];
   errorMessage: string;
   query = '';
+  guy = 0;
 
   constructor(private photosService: PhotoFetcher) {}
 
@@ -52,10 +53,18 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   getPhotos() {
     this.originalPhotos = [];
+    const currentQuery = this.query;
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
+        let isOldRequest = false;
+        if (currentQuery !== this.query) {
+          isOldRequest = true;
+        }
         for (const item in results.items) {
-          if (item) {
+          if (isOldRequest) {
+            break;
+          }
+          else if (item) {
             const photo = {
               title: results.items[item].title,
               link: results.items[item].link,
@@ -66,7 +75,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
             this.originalPhotos.push(photo);
           }
         }
-        if (this.originalPhotos.length === 0) {
+        if (this.originalPhotos.length === 0 && !isOldRequest) {
           this.errorMessage = '0 images found';
         } else {
           this.limitPhotos(this.limit);
