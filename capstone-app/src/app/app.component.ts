@@ -13,8 +13,4 @@ export class AppComponent {
   updateActiveMarker(newActiveMarker: string) {
     this.activeMarker = newActiveMarker;
   }
-
-  cityUpdate(newCity: string) {
-    this.city = newCity;
-  }
 }
