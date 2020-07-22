@@ -30,17 +30,17 @@ export class WikiResultsService {
           )
         ),map(history => {
           if (history.parse.text) {
-            const langLinks = new Map<string, Map<string, string>>();
-            for (let link of history.parse.langlinks) {
+            const langlinks = new Map<string, Map<string, string>>();
+            for (let link of Object.values(history.parse.langlinks)) {
                 let links = new Map<string, string>();
                 links.set("langName", link.langname);
                 links.set("url", link.url);
                 links.set("searchQuery", link["*"]);
-                langLinks.set(link.lang, links);
+                langlinks.set(link.lang, links);
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
             const title = history.parse.title;
-            return {title, ...historyResult, langLinks};
+            return {title, ...historyResult, langlinks};
           }
           else {
             throw new Error("API did not return a valid response");
@@ -54,26 +54,21 @@ export class WikiResultsService {
   }
 
   searchNewLang(query: string, language: string, wordForHistory: string): Observable<WikiServiceResult> {
-    return this.searchHandler
-      .getQueryString(query)
-      .pipe(
-        switchMap((result) =>
-          this.http.get<WikiSearchResult>(
+    return this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${query}${WikiResultsService.URL_END}`
-          )
-        ),map(history => {
+          ).pipe(map(history => {
           if (history.parse.text) {
-            const langLinks = new Map<string, Map<string, string>>();
-            for (let link of history.parse.langlinks) {
+            const langlinks = new Map<string, Map<string, string>>();
+            for (let link of Object.values(history.parse.langlinks)) {
                 let links = new Map<string, string>();
                 links.set("langName", link.langname);
                 links.set("url", link.url);
                 links.set("searchQuery", link["*"]);
-                langLinks.set(link.lang, links);
+                langlinks.set(link.lang, links);
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
             const title = history.parse.title;
-            return {title, ...historyResult, langLinks};
+            return {title, ...historyResult, langlinks};
           }
           else {
             throw new Error("API did not return a valid response");

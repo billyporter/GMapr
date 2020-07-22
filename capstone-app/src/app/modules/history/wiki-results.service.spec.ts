@@ -4,6 +4,7 @@ import { WikiResultsService } from './wiki-results.service';
 import { WikiSearchResult } from './WikiSearchTemplate';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
 
+
 const title = 'Stillwater, Oklahoma';
 const history = 'The north-central region of Oklahoma became part of the United '
               + 'States with the Louisiana Purchase in 1803. In 1832, author and '
@@ -39,7 +40,7 @@ describe('WikiResultsService', () => {
   });
 
   it('search(query) should return data', () => {
-    service.search('Stillwater, Oklahoma').subscribe((result) => {
+    service.search('Stillwater, Oklahoma', 'en', 'History').subscribe((result) => {
       expect(result).toBeTruthy();
     });
 
@@ -51,7 +52,7 @@ describe('WikiResultsService', () => {
   });
 
   it('should format the string properly', () => {
-    expect(service.fixString(MockWikiResponse.parse.text['*']))
+    expect(service.fixString(MockWikiResponse.parse.text['*'], 'History', 'en'))
     .toEqual(testFixStringResponse);
   });
 });

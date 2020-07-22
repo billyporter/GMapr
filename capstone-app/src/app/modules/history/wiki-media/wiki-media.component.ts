@@ -21,9 +21,9 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   loading = true;
   body: string;
   urls = new Map();
-  langLinks = new Map();
+  langlinks = new Map();
   languages: any = Languages as any;
-  language: string;
+  language: any = Languages as any;
   query: string;
   prevQuery: string;
   prevWordForHistory: string;
@@ -55,9 +55,11 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.urls = result.furtherReading;
           this.title = result.title;
           this.loading = false;
-          this.langLinks = result.langLinks;
-          const language = this.langLinks.get("ca");
-          this.prevQuery = language.get("searchQuery");
+          console.log(result.langlinks);
+          this.langlinks = new Map(Object.values(result.langlinks));
+          console.log(this.langlinks);
+          const language = new Map(Object.values(this.langlinks['ca']));
+          this.prevQuery = language['searchQuery'];
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
         }
@@ -71,6 +73,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   changeLanguage(queryString: string, languagePrefix: string, wordForHistory: string) {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
+        console.log(result);
         this.history = result.history;
         if (!(this.history) || (this.history.includes("CPU time usage:"))){
           this.loading = true;
@@ -81,8 +84,8 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.loading = false;
           this.title = result.title;
           this.urls = result.furtherReading;
-          if(result.langLinks && result.langLinks.size > 0) {
-              this.langLinks = result.langLinks;
+          if(result.langlinks && result.langlinks.size > 0) {
+              this.langlinks = result.langlinks;
           }
         }
     });
@@ -92,9 +95,9 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     if (prefix == this.prevPreFix) {
       this.changeLanguage(this.prevQuery, this.prevPreFix, this.prevWordForHistory);
     }
-    else if (prefix == 'en' && !(this.langLinks.get('en'))) {
+    else if (prefix == 'en' && !(this.langlinks.get('en'))) {
       this.prevPreFix = prefix;
-      const language = this.langLinks.get('ca');
+      const language = this.langlinks["ca"];
       this.query = language.get("searchQuery");
       this.prevQuery = this.query;
       this.language = 'English';
@@ -102,13 +105,15 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       this.changeLanguage(this.query, 'en', 'History');
     }
     else {
-      const language = this.langLinks.get(prefix);
+      console.log(this.langlinks);
+      const language = this.langlinks[prefix];
       this.prevPreFix = prefix;
-      this.query = language.get("searchQuery");
+      this.query = language["searchQuery"];
       this.prevQuery = this.query;
-      this.language = language.get("langName");
+      this.language = language["langName"];
       const wordForHistory = this.languages[prefix];
       this.prevWordForHistory = wordForHistory;
+      console.log(this.query, prefix, wordForHistory);
       this.changeLanguage(this.query, prefix, wordForHistory);
     }
   }
