@@ -55,7 +55,6 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   getPhotos() {
     this.originalPhotos = [];
     const currentQuery = this.query;
-    console.log(currentQuery);
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
         let isOldRequest = false;

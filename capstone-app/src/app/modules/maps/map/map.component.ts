@@ -117,7 +117,7 @@ export class MapComponent implements OnInit, OnChanges {
       position: result.geometry.location,
       title: result.name,
       icon: {
-          url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
+          url: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
       }
     };
   }
@@ -129,7 +129,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private locationCallbackFail() {
-    this.cityLocation = "Los Angeles, CA, USA"
+    this.cityLocation = 'Los Angeles, CA, USA'
     this.location = new google.maps.LatLng(34.0522, -118.2437);
     this.placesRequestFunc(this.location);
     this.placeCitySharer.setCityName(this.cityLocation);
@@ -139,7 +139,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.position = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-      };
+    };
     this.location = new google.maps.LatLng(this.position);
     this.geocoder.geocode({'location': this.position}, (results, status) => {
       if (status === 'OK') {
@@ -151,8 +151,8 @@ export class MapComponent implements OnInit, OnChanges {
     this.placesRequestFunc(this.location);
   }
 
-  getCurrentLocation () {
-    navigator.geolocation.getCurrentPosition(position =>  this.locationCallbackSuccess(position), this.locationCallbackFail);
+  getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(position => this.locationCallbackSuccess(position), this.locationCallbackFail);
     return this.position;
   }
 
@@ -162,7 +162,7 @@ export class MapComponent implements OnInit, OnChanges {
       if (this.position) {
         this.location = new google.maps.LatLng(this.position);
       } else {
-        this.cityLocation = "Los Angeles, CA, USA";
+        this.cityLocation = 'Los Angeles, CA, USA';
         this.location = new google.maps.LatLng(34.0522, -118.2437);
         this.placesRequestFunc(this.location);
         this.placeCitySharer.setCityName(this.cityLocation);
@@ -177,7 +177,7 @@ export class MapComponent implements OnInit, OnChanges {
          position: event.latLng,
          title: 'Custom Marker',
          icon: {
-           url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+           url: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
          }
     });
   }
