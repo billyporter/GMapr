@@ -108,7 +108,6 @@ export class MapComponent implements OnInit, OnChanges {
         this.markerData.set(result.name, result.types);
       }
       this.placeCitySharer.setPlaces(this.markerData);
-      console.log('here');
       this.changeDetector.detectChanges();
     });
   }
