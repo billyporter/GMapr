@@ -8,6 +8,7 @@ import {
   EventEmitter,
   OnInit,
   SimpleChanges,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 interface LimitChange {
@@ -31,7 +32,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   query = '';
   guy = 0;
 
-  constructor(private photosService: PhotoFetcher) {}
+  constructor(private cd: ChangeDetectorRef, private photosService: PhotoFetcher) {}
 
   ngOnInit() {
     this.getPhotos();
@@ -54,6 +55,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   getPhotos() {
     this.originalPhotos = [];
     const currentQuery = this.query;
+    console.log(currentQuery);
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
         let isOldRequest = false;
@@ -90,6 +92,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   limitPhotos(limit: number) {
     this.displayPhotos = this.originalPhotos.slice(0, limit);
+    this.cd.detectChanges();
   }
 
   removePhoto(index: number) {

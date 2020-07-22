@@ -88,11 +88,11 @@ export class MapComponent implements OnInit, OnChanges {
       {fields: ['geometry', 'name', 'formatted_address'], types: ['(cities)']});
     autoComplete.addListener('place_changed', () => {
       this.location = autoComplete.getPlace().geometry.location;
-      this.changeDetector.markForCheck();
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequest.type = 'tourist_attraction';
       this.placesRequestFunc(this.location);
       this.placeCitySharer.setCityName(this.cityLocation);
+      this.changeDetector.detectChanges();
     });
   }
 
@@ -106,8 +106,8 @@ export class MapComponent implements OnInit, OnChanges {
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.changeDetector.markForCheck();
       this.placeCitySharer.setPlaces(this.markerData);
+      this.changeDetector.detectChanges();
     });
   }
 
