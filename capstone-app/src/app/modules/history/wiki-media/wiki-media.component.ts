@@ -56,12 +56,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           console.log(result.langlinks);
-<<<<<<< HEAD
-          console.log("Result.langlinks");
-          this.langlinks = result.langlinks;
-          console.log(this.langlinks);
-          const language = this.langlinks['ca'];
-=======
           // const langLinksIter = result.langlinks.values();
           // while (langLinksIter.next()) {
           //   console.log((langLinksIter.next().value));
@@ -70,7 +64,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.langlinks = result.langlinks;
           console.log(this.langlinks);
           const language = new Map(this.langlinks['ca']);
->>>>>>> 6adc636c94d79d8dc0cf40aa383232f70c17e8b7
           this.prevQuery = language['searchQuery'];
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
@@ -109,13 +102,8 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     }
     else if (prefix == 'en' && !(this.langlinks.get('en'))) {
       this.prevPreFix = prefix;
-<<<<<<< HEAD
-      const language = this.langlinks["ca"];
-      this.query = language["searchQuery"];
-=======
       const language = this.langlinks.get(prefix);
       this.query = language.get('searchQuery');
->>>>>>> 6adc636c94d79d8dc0cf40aa383232f70c17e8b7
       this.prevQuery = this.query;
       this.language = 'English';
       this.prevWordForHistory = 'History';
