@@ -1,4 +1,5 @@
 /// <reference types="googlemaps" />
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 import { Component,  ViewChild, ElementRef, OnInit, Output, Input, 
   EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
@@ -17,8 +18,6 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() activeMark: string;
   @Output() activeMarkerOutput = new EventEmitter<string>();
-  @Output() markerDataOutput = new EventEmitter<Map<string, string[]>>();
-  @Output() cityOutput = new EventEmitter<string>();
 
   // allMarkers: MapMarker[] = [];
   infoWindowMarker: MapMarker;
@@ -48,7 +47,7 @@ export class MapComponent implements OnInit, OnChanges {
     'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
     'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
 
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
   ngOnInit() {
     this.nearSearch = new google.maps.places.PlacesService(document.createElement('div'));
@@ -89,10 +88,11 @@ export class MapComponent implements OnInit, OnChanges {
       {fields: ['geometry', 'name', 'formatted_address'], types: ['(cities)']});
     autoComplete.addListener('place_changed', () => {
       this.location = autoComplete.getPlace().geometry.location;
+      this.changeDetector.markForCheck();
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequest.type = 'tourist_attraction';
       this.placesRequestFunc(this.location);
-      this.cityOutput.emit(this.cityLocation);
+      this.placeCitySharer.setCityName(this.cityLocation);
     });
   }
 
@@ -106,7 +106,8 @@ export class MapComponent implements OnInit, OnChanges {
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.markerDataOutput.emit(this.markerData);
+      this.changeDetector.markForCheck();
+      this.placeCitySharer.setPlaces(this.markerData);
     });
   }
 
@@ -130,8 +131,9 @@ export class MapComponent implements OnInit, OnChanges {
     this.cityLocation = "Los Angeles, CA, USA"
       this.location = new google.maps.LatLng(34.0522, -118.2437);
       this.placesRequestFunc(this.location);
-      this.cityOutput.emit(this.cityLocation);
-  }
+      // change to this.placeCitySharer.setPlaces(this.cityLocation);
+      this.placeCitySharer.setCityName(this.cityLocation);
+    }
 
   locationCallbackSuccess(position: Position) {
     this.position = {
@@ -144,7 +146,9 @@ export class MapComponent implements OnInit, OnChanges {
             const resultArr = results.filter(result => result.types.includes('locality'));
             this.cityLocation = resultArr[0].formatted_address;
           }
-          this.cityOutput.emit(this.cityLocation);
+          // change to this.placeCitySharer.setPlaces(this.cityLocation);
+          console.log(this.cityLocation);
+          this.placeCitySharer.setCityName(this.cityLocation);
         });
         this.placesRequestFunc(this.location);
   }
@@ -160,11 +164,13 @@ export class MapComponent implements OnInit, OnChanges {
       if (this.position) {
         this.location = new google.maps.LatLng(this.position);
       } else {
-        this.cityLocation = "Los Angeles, CA, USA"
+        this.cityLocation = "Los Angeles, CA, USA";
         this.location = new google.maps.LatLng(34.0522, -118.2437);
-        this.placesRequestFunc(this.location);
-        this.cityOutput.emit(this.cityLocation);
+        this.changeDetector.markForCheck();
+        this.placeCitySharer.setCityName(this.cityLocation);
+        console.log(this.cityLocation);
       }
+      
     }
   }
 
