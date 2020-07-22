@@ -1,3 +1,4 @@
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 import {
   Component,
   Input,
@@ -9,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavItem } from '../../nav-item';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-photos-section',
@@ -16,11 +18,10 @@ import { NavItem } from '../../nav-item';
   styleUrls: ['./photos-section.component.scss'],
 })
 export class PhotosSectionComponent implements OnInit, OnChanges {
-  @Input() city: string;
-  @Input() markerPlaces: Map<string, string[]>;
   @Input() activeMarker: string;
   @Output() activeMarkerUpdate = new EventEmitter<string>();
-  previousCity: string;
+  city: string;
+  markerPlaces: Map<string, string[]>;
   limitControl = new FormControl(10, [Validators.min(1), Validators.max(10)]);
   maxPhotos = 10;
   mockPlaces = new Map<string, string[]>();
@@ -34,26 +35,26 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   navItems: NavItem[] = [];
   markerFilter = '';
 
+  constructor(private places: SharedPlacesCityService) { }
+
   ngOnInit() {
     this.mockPlaces.set('Pjs Wings', ['Restuarant']);
     this.mockPlaces.set('Colonial Theater', ['History', 'Entertainment']);
     this.mockPlaces.set('Valley Forge', ['History', 'Landmark']);
+    combineLatest([this.places.getPlacesSource(), this.places.getCityName()]).subscribe(([placesSource, citySource]) => {
+      this.markerPlaces = placesSource;
+      this.city = citySource;
+      if (placesSource) {
+        this.extractUniqueTypes();
+        this.populateNavItems();
+      }
+    });
   }
 
-  // Until the photos section is connected to the maps, only mocks are supported
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.city && this.city === '') {
-      this.city = this.previousCity;
-    }
-    else if (changes.activeMarker) {
+    if (changes.activeMarker) {
       this.markerFilter = this.activeMarker;
     }
-    else {
-      this.previousCity = this.city;
-    }
-
-    this.extractUniqueTypes();
-    this.populateNavItems();
   }
 
   /**

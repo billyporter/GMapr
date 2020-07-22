@@ -9,14 +9,9 @@ export class AppComponent {
   title = 'GMapr';
   activeMarker: string;
   city: string;
-  markerData = new Map<string, string[]>();
 
   updateActiveMarker(newActiveMarker: string) {
     this.activeMarker = newActiveMarker;
-  }
-
-  updateMarkerData(newMarker: Map<string, string[]>) {
-    this.markerData = newMarker;
   }
 
   cityUpdate(newCity: string) {
