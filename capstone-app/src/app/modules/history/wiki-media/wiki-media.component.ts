@@ -56,9 +56,14 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           console.log(result.langlinks);
-          this.langlinks = new Map(Object.values(result.langlinks));
+          // const langLinksIter = result.langlinks.values();
+          // while (langLinksIter.next()) {
+          //   console.log((langLinksIter.next().value));
+          //   this.langlinks.set(langLinksIter.next().value);
+          // }
+          this.langlinks = result.langlinks;
           console.log(this.langlinks);
-          const language = new Map(Object.values(this.langlinks['ca']));
+          const language = new Map(this.langlinks['ca']);
           this.prevQuery = language['searchQuery'];
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
@@ -97,23 +102,21 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     }
     else if (prefix == 'en' && !(this.langlinks.get('en'))) {
       this.prevPreFix = prefix;
-      const language = this.langlinks["ca"];
-      this.query = language.get("searchQuery");
+      const language = this.langlinks.get(prefix);
+      this.query = language.get('searchQuery');
       this.prevQuery = this.query;
       this.language = 'English';
       this.prevWordForHistory = 'History';
       this.changeLanguage(this.query, 'en', 'History');
     }
     else {
-      console.log(this.langlinks);
-      const language = this.langlinks[prefix];
+      const language = this.langlinks.get(prefix);
       this.prevPreFix = prefix;
-      this.query = language["searchQuery"];
+      this.query = language.get('searchQuery');
       this.prevQuery = this.query;
-      this.language = language["langName"];
+      this.language = language.langName;
       const wordForHistory = this.languages[prefix];
       this.prevWordForHistory = wordForHistory;
-      console.log(this.query, prefix, wordForHistory);
       this.changeLanguage(this.query, prefix, wordForHistory);
     }
   }
