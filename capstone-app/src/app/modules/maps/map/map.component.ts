@@ -98,7 +98,6 @@ export class MapComponent implements OnInit, OnChanges {
 
   placesRequestFunc(location: google.maps.LatLng) {
     this.placesRequest.location = this.location;
-    console.log('here');
     this.nearSearch.nearbySearch(this.placesRequest, results => {
       // resetting data
       this.searchMarkers = [];
@@ -164,7 +163,6 @@ export class MapComponent implements OnInit, OnChanges {
       } else {
         this.cityLocation = 'Los Angeles, CA, USA';
         this.location = new google.maps.LatLng(34.0522, -118.2437);
-        this.placesRequestFunc(this.location);
         this.placeCitySharer.setCityName(this.cityLocation);
         this.placesRequestFunc(this.location);
       }
