@@ -56,9 +56,10 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           console.log(result.langlinks);
-          this.langlinks = new Map(Object.values(result.langlinks));
+          console.log("Result.langlinks");
+          this.langlinks = result.langlinks;
           console.log(this.langlinks);
-          const language = new Map(Object.values(this.langlinks['ca']));
+          const language = this.langlinks['ca'];
           this.prevQuery = language['searchQuery'];
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
@@ -98,7 +99,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     else if (prefix == 'en' && !(this.langlinks.get('en'))) {
       this.prevPreFix = prefix;
       const language = this.langlinks["ca"];
-      this.query = language.get("searchQuery");
+      this.query = language["searchQuery"];
       this.prevQuery = this.query;
       this.language = 'English';
       this.prevWordForHistory = 'History';
