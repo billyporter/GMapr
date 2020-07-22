@@ -34,14 +34,17 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   getResults(queryString: string) {
+    console.log(queryString);
     this.wikiService.search(queryString)
       .subscribe((result: WikiServiceResult) => {
         if (result.history) {
-          this.body = result.history;
-          this.history = result.history;
-          this.urls = result.furtherReading;
-          this.title = result.title;
-          this.loading = false;
+          if (queryString === this.cityName) {
+            this.body = result.history;
+            this.history = result.history;
+            this.urls = result.furtherReading;
+            this.title = result.title;
+            this.loading = false;
+          }
         }
         else {
           this.error = 'API did not return a valid response.';
