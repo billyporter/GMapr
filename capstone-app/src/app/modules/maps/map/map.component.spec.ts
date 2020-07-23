@@ -109,7 +109,7 @@ describe('MapComponent', () => {
       {lat: 25.9420377, lng: -80.2456045},
       {lat: 25.9499743, lng: -80.20790439999999},
       {lat: 25.9774105, lng: -80.24748629999999},
-      {lat: 25.9098525, lng: -80.2687515}, 
+      {lat: 25.9098525, lng: -80.2687515},
       {lat: 25.9544579, lng: -80.1978578},
       {lat: 25.9383788, lng: -80.2509212},
       {lat: 25.9636111, lng: -80.2530556},
@@ -117,7 +117,7 @@ describe('MapComponent', () => {
       {lat: 25.9424855, lng: -80.2543383},
       {lat: 25.9326195, lng: -80.2835547},
       {lat: 25.939876, lng: -80.287765},
-      {lat: 25.9749119, lng: -80.2128896}, 
+      {lat: 25.9749119, lng: -80.2128896},
     ];
 
     spyOn(fixture.componentInstance.nearSearch, 'nearbySearch').and.callFake((request, callback) => {
@@ -146,7 +146,7 @@ describe('MapComponent', () => {
     expect(searchMarkers).toEqual(coordinates);
   });
 
-  fit('test geocoder', () => {
+  it('test geocoder', () => {
     const fixture = TestBed.createComponent(MapComponent);
     const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
     let coordinates: Coordinates = {
@@ -154,7 +154,7 @@ describe('MapComponent', () => {
       longitude: -80.139053,
       accuracy: undefined,
       altitude: undefined,
-      altitudeAccuracy: undefined, 
+      altitudeAccuracy: undefined,
       heading: undefined,
       speed: undefined,
     }
@@ -166,7 +166,7 @@ describe('MapComponent', () => {
       fixture.componentInstance.locationCallbackSuccess(pos);
     });
     const addresses = [
-      '1405 N 12th Ct, Hollywood, FL 33019, USA', 
+      '1405 N 12th Ct, Hollywood, FL 33019, USA',
       '1402 N 12th Ct, Hollywood, FL 33019, USA',
       '1598-1300 N 12th Ct, Hollywood, FL 33019, USA',
       'Hollywood Lakes, Hollywood, FL, USA',
@@ -181,7 +181,7 @@ describe('MapComponent', () => {
     spyOn(fixture.componentInstance.geocoder, 'geocode').and.callFake(({location: searchLocation}, callback) => {
       let status: google.maps.GeocoderStatus = 'OK' as google.maps.GeocoderStatus;
       const results: google.maps.GeocoderResult[] = addresses.map((address, index) => {
-        // locality helps find the closest city address 
+        // locality helps find the closest city address
         return {
           formatted_address: address,
           types: index === 5 ? ['locality'] : [],
@@ -211,9 +211,9 @@ describe('MapComponent', () => {
     fixture.detectChanges();
     let loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
-    
+
     const selectHarrness = await loader.getHarness(MatSelectHarness.with({selector: '#type-select'}));
-    
+
     await selectHarrness.open();
     const options = await selectHarrness.getOptions();
     await options[0].click();
@@ -223,7 +223,7 @@ describe('MapComponent', () => {
           .toLowerCase();
     expect(type).toEqual(fixture.componentInstance.placesRequest.type);
   });
-  
+
   // TODO: fix flaky testing issue
   // sometimes will fail do to an undefined map center just refresh until it passs
   it('sets center and zoom of the map', () => {

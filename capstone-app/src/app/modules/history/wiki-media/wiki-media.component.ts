@@ -29,7 +29,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   prevQuery: string;
   prevWordForHistory: string;
   prevPreFix: string;
-  
+
   @Input() cityName!: string;
 
   constructor(private cd: ChangeDetectorRef, private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService) { }
@@ -45,7 +45,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     const change = changes.cityName;
-
     if (!change.firstChange && change){
       this.getResults(this.cityName);
     }
@@ -80,6 +79,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
+        console.log(this.history);
         if (!(this.history) || (this.history.includes("CPU time usage:"))){
           this.loading = true;
           this.error = "Unfortunately, the language you requested does not have an available tranlation for this page. Please select a different language.";

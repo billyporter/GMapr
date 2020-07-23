@@ -53,7 +53,7 @@ export class WikiResultsService {
         })
       );
   }
-  
+
   searchNewLang(query: string, language: string, wordForHistory: string): Observable<WikiServiceResult> {
     return this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${query}${WikiResultsService.URL_END}`
@@ -83,7 +83,7 @@ export class WikiResultsService {
   }
 
 
-  fixString(text: string, wordForHistory: string, language: string): {history: string, furtherReading: Map<string, string>} {
+  fixString(text: string, wordForHistory: string, language: string): {history: string, furtherReading?: Map<string, string>} {
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
     const regexParsing = /\.mw.*?}}/gi;
     const parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');

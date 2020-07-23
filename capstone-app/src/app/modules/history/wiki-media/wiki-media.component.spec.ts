@@ -4,6 +4,7 @@ import MockWikiServiceResponse from 'testing/mock-wiki-service-response.json';
 import MockWikiServiceGermanResponse from 'testing/mock-wiki-service-german-response.json';
 import { asyncData } from 'testing/async-observable-helpers';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 import { of } from 'rxjs';
 import { DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { WikiResultsService } from '../wiki-results.service';
@@ -27,7 +28,7 @@ describe('WikiMediaComponent', () => {
               + 'description of the area around Stillwater in his book A Tour on the Prairies. He wrote of “a '
               + 'glorious prairie spreading out beneath the golden beams of an autumnal sun. The deep and frequent '
               + 'traces of buffalo, showed it to be a one of their favorite grazing grounds.”9',
-           langlinks: new Map()
+            langlinks: new Map()
         }
 
         const englishLangLinks = new Map<string, Map<string, string>>();
@@ -102,20 +103,19 @@ describe('WikiMediaComponent', () => {
     const wikiService = jasmine.createSpyObj('WikiResultsService', ['search', 'searchNewLang']);
     getWikiResponseSpy = wikiService.search.and.returnValue(of(mockResponse));
     getWikiLangResponseSpy = wikiService.searchNewLang.and.returnValue(of(mockGermanResponse));
+    const sharedCityService = new SharedPlacesCityService();
 
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule, MatMenuModule ],
-      providers: [ WikiMediaComponent, { provide: WikiResultsService, useValue: wikiService } ],
+      providers: [{ provide: WikiResultsService, useValue: wikiService }, { provide: SharedPlacesCityService, useValue: sharedCityService }  ],
       declarations: [ WikiMediaComponent ]
     })
     .compileComponents();
-  }));
-
-  beforeEach(() => {
+    sharedCityService.setCityName('Stillwater, Oklahoma');
     fixture = TestBed.createComponent(WikiMediaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   describe('when test with asynchronous observable', () => {
 
@@ -157,7 +157,8 @@ describe('WikiMediaComponent', () => {
     it('langlinks are changed correctly on changeLanguage call', () => {
       component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
       expect(component.langlinks).toEqual(testWikiGermanServiceResponse.langlinks);
-      
+    });
+
     it('info changes with new city input', () => {
       spyOn(component, 'getResults');
       component.cityName = 'Stillwater, Oklahoma';
@@ -166,6 +167,5 @@ describe('WikiMediaComponent', () => {
       component.ngOnChanges(changes);
       expect(component.getResults).toHaveBeenCalledWith('Los Angeles, California');
     });
-
   });
 });
