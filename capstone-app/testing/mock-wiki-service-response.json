@@ -4,9 +4,11 @@
  "furtherReading" : {"https://en.wikipedia.org/wiki/Louisiana_Purchase": "Louisiana Purchase",
                      "https://en.wikipedia.org/wiki/Washington_Irving": "Washington Irving"},
  "langlinks": {
-                  "ca": { "searchQuery" : "Stillwater, Oklahoma",
-                          "langName" : "Catalan"},
+                  "ca": { "searchQuery" : "Stillwater (Oklahoma)",
+                          "langName" : "Catalan",
+                          "url" : "https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)" },
                   "de" : { "searchQuery": "Stillwater, (Oklahoma)",
-                            "langName" : "German"}
+                            "langName" : "German",
+                            "url" : "https://de.wikipedia.org/wiki/Stillwater_(Oklahoma)" }
               }
 }

@@ -102,7 +102,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       this.changeLanguage(this.query, 'en', 'History');
     }
     else {
-      console.log(this.langlinks.get(prefix));
       const language = this.langlinks.get(prefix);
       this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
