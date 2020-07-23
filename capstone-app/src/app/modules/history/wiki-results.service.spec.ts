@@ -51,6 +51,18 @@ describe('WikiResultsService', () => {
     req.flush(testResponse);
   });
 
+  it('searchNewLang(query) should return data', () => {
+    service.searchNewLang('Stillwater, (Oklahoma)', 'de', 'Geschichte').subscribe((result) => {
+      expect(result).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne((request) =>
+      request.url.includes('https://de.wikipedia.org/')
+    );
+    expect(req.request.method).toBe('GET');
+    req.flush(testResponse);
+  });
+
   it('should format the string properly', () => {
     expect(service.fixString(MockWikiResponse.parse.text['*'], 'History', 'en'))
     .toEqual(testFixStringResponse);
