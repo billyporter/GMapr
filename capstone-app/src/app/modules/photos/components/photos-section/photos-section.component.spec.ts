@@ -3,23 +3,26 @@ import { ImageContainerComponent } from './../image-container/image-container.co
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import MockTestImages from 'testing/mock-image-response.json';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { of } from 'rxjs';
-import { PhotosSectionComponent } from './photos-section.component';
 import { PhotoFetcher } from '../../services/photo-fetcher.service';
+import { PhotosSectionComponent } from './photos-section.component';
 import { By } from '@angular/platform-browser';
-import { DebugElement, SimpleChanges, SimpleChange } from '@angular/core';
+import { SimpleChanges, SimpleChange } from '@angular/core';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { NavItem } from '../../nav-item';
 import { MatMenuHarness } from '@angular/material/menu/testing';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 describe('PhotosSectionComponent', () => {
   let component: PhotosSectionComponent;
   let fixture: ComponentFixture<PhotosSectionComponent>;
   let loader: HarnessLoader;
-  let getPhotosSpy: jasmine.Spy;
   let testItems: NavItem[];
+  let citySpy: jasmine.Spy;
+  let placesSpy: jasmine.Spy;
+  let getPhotosSpy: jasmine.Spy;
   const testMarkerPlaces = new Map<string, string[]>();
 
   beforeEach(async(() => {
@@ -54,13 +57,16 @@ describe('PhotosSectionComponent', () => {
     testMarkerPlaces.set('Colonial Theater', ['History', 'Entertainment']);
     testMarkerPlaces.set('Valley Forge', ['History', 'Landmark']);
 
+    const placesService = jasmine.createSpyObj('SharedPlacesCityService', ['getPlacesSource', 'getCityName']);
     const photosService = jasmine.createSpyObj('PhotoFetcher', ['getPhotos']);
+    citySpy = placesService.getCityName.and.returnValue(of('Boston'));
+    placesSpy = placesService.getPlacesSource.and.returnValue(of(testMarkerPlaces));
     getPhotosSpy = photosService.getPhotos.and.returnValue(of(MockTestImages));
 
     TestBed.configureTestingModule({
       declarations: [PhotosSectionComponent, ImageContainerComponent],
       imports: [PhotosModule],
-      providers: [{ provide: PhotoFetcher, useValue: photosService }],
+      providers: [{provide: SharedPlacesCityService, useValue: placesService }, { provide: PhotoFetcher, useValue: photosService }],
     }).compileComponents();
   }));
 
@@ -71,25 +77,38 @@ describe('PhotosSectionComponent', () => {
     fixture.detectChanges();
   });
 
+  it('receives marker places and city from service', () => {
+    expect(component.city).toEqual('Boston');
+    expect(component.markerPlaces).toEqual(testMarkerPlaces);
+  });
+
   it('should convert marker types to unique types', () => {
     component.markerPlaces = testMarkerPlaces;
-    const changesObj: SimpleChanges = {
-      city: new SimpleChange('Boston', 'Philly', false)
-    };
     const expectedUniqueTypes = ['Restaurant', 'Entertainment', 'History', 'Landmark'];
-    component.ngOnChanges(changesObj);
+    component.extractUniqueTypes();
     expect(component.uniqueTypes).toEqual(expectedUniqueTypes);
   });
 
-  it('active marker should be blank if city or filter changes', () => {
+  it('active marker should reset if city or filter changes', () => {
+    spyOn(component.activeMarkerUpdate, 'emit');
     component.city = 'Boston';
     component.markerPlaces = testMarkerPlaces;
     component.activeMarker = 'Aquarium';
-    const changesObjNonActive: SimpleChanges = {
-      city: new SimpleChange('Boston', 'Philly', false)
+    component.updateFilterSelected('State House');
+    expect(component.activeMarkerUpdate.emit).toHaveBeenCalled();
+  });
+
+  it('filter should be active marker if active marker selected', () => {
+    component.city = 'Boston';
+    component.markerPlaces = testMarkerPlaces;
+    component.updateFilterSelected('Aquarium');
+    expect(component.markerFilter).toBe('Aquarium');
+    component.activeMarker = 'State House';
+    const changesObj: SimpleChanges = {
+      activeMarker: new SimpleChange('Aquarium', 'State House', false)
     };
-    component.ngOnChanges(changesObjNonActive);
-    expect(component.activeMarker).toEqual('');
+    component.ngOnChanges(changesObj);
+    expect(component.markerFilter).toBe('State House');
   });
 
   it('should ouput the value of the limit', async () => {

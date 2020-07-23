@@ -8,6 +8,7 @@ import {
   EventEmitter,
   OnInit,
   SimpleChanges,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 interface LimitChange {
@@ -24,14 +25,14 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   @Input() city!: string;
   @Input() filter?: string;
   @Input() limit = 10;
-  @Input() activeMarker?: string;
   @Output() limitChange = new EventEmitter<LimitChange>();
   displayPhotos: Photo[] = [];
   originalPhotos: Photo[] = [];
   errorMessage: string;
   query = '';
+  guy = 0;
 
-  constructor(private photosService: PhotoFetcher) {}
+  constructor(private cd: ChangeDetectorRef, private photosService: PhotoFetcher) {}
 
   ngOnInit() {
     this.getPhotos();
@@ -42,13 +43,10 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     if (changes.city) {
       this.filter = '';
     }
-    else if (changes.activeMarker) {
-      this.filter = this.activeMarker;
-    }
     this.query = this.filter
       ? `${this.city} ${this.filter}`
       : `${this.city} early 1900s`;
-    if (changes.city || changes.filter || changes.activeMarker) {
+    if (changes.city || changes.filter) {
       this.getPhotos();
     }
     this.limitPhotos(this.limit);
@@ -56,10 +54,18 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   getPhotos() {
     this.originalPhotos = [];
+    const currentQuery = this.query;
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
+        let isOldRequest = false;
+        if (currentQuery !== this.query) {
+          isOldRequest = true;
+        }
         for (const item in results.items) {
-          if (item) {
+          if (isOldRequest) {
+            break;
+          }
+          else if (item) {
             const photo = {
               title: results.items[item].title,
               link: results.items[item].link,
@@ -70,7 +76,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
             this.originalPhotos.push(photo);
           }
         }
-        if (this.originalPhotos.length === 0) {
+        if (this.originalPhotos.length === 0 && !isOldRequest) {
           this.errorMessage = '0 images found';
         } else {
           this.limitPhotos(this.limit);
@@ -85,6 +91,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   limitPhotos(limit: number) {
     this.displayPhotos = this.originalPhotos.slice(0, limit);
+    this.cd.detectChanges();
   }
 
   removePhoto(index: number) {

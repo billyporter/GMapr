@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { WikiSearchResult } from '../WikiSearchTemplate';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { HttpClientModule } from '@angular/common/http';
 import Languages from '../languages-word-for-history.json';
 import { Subject } from 'rxjs';
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 @Component({
   selector: 'app-wiki-media-history-section',
@@ -28,14 +29,18 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   prevQuery: string;
   prevWordForHistory: string;
   prevPreFix: string;
-
-
+  
   @Input() cityName!: string;
 
-  constructor(private wikiService: WikiResultsService) { }
+  constructor(private cd: ChangeDetectorRef, private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService) { }
 
   ngOnInit(): void {
-    this.getResults(this.cityName);
+    this.cityFetcher.getCityName().subscribe(city => {
+      this.cityName = city;
+      if (city) {
+        this.getResults(this.cityName);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,9 +52,11 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   getResults(queryString: string) {
+    const currentQuery = queryString;
+    let isOldRequest = false;
     this.wikiService.search(queryString, 'en', 'History')
       .subscribe((result: WikiServiceResult) => {
-        if (result.history) {
+        if (result.history && currentQuery === this.cityName) {
           this.body = result.history;
           this.history = result.history;
           this.urls = result.furtherReading;
@@ -60,8 +67,9 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.prevQuery = language.get('searchQuery');
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
+          this.cd.detectChanges();
         }
-        else {
+        else if (!isOldRequest) {
           this.error = 'API did not return a valid response.';
           console.error('API did not return a valid response.');
         }

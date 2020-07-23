@@ -1,4 +1,3 @@
-
 <span class="buttons">
   <div class ="search-box">
     <mat-form-field class="search-bar">
@@ -15,8 +14,19 @@
       <mat-icon>search</mat-icon>
     </button>
   </div>
-  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Delete All Custom Markers</button>
+
+  <mat-form-field appearance="fill">
+    <mat-label class="mat-select">Marker Types</mat-label>
+    <mat-select id="type-select" (selectionChange)="changeType($event.value)">
+      <mat-option *ngFor="let option of optionsTypes" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button class="button-delete" mat-raised-button (click)="deleteAllCustomMark()">Clear</button>
 </span>
+
 <div class="map-container">
     <google-map class="map"
                 [center]="location"

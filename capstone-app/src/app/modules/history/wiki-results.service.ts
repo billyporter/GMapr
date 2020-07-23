@@ -28,7 +28,8 @@ export class WikiResultsService {
           this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${result}${WikiResultsService.URL_END}`
           )
-        ),map(history => {
+        ),
+        map(history => {
           if (history.parse.text) {
             const langlinks = new Map<string, Map<string, string>>();
             for (let link of Object.values(history.parse.langlinks)) {
@@ -52,7 +53,7 @@ export class WikiResultsService {
         })
       );
   }
-
+  
   searchNewLang(query: string, language: string, wordForHistory: string): Observable<WikiServiceResult> {
     return this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${query}${WikiResultsService.URL_END}`
@@ -83,28 +84,35 @@ export class WikiResultsService {
 
 
   fixString(text: string, wordForHistory: string, language: string): {history: string, furtherReading: Map<string, string>} {
-    const firstIndex = text.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
-    let middleOfString = text;
+    const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
+    const regexParsing = /\.mw.*?}}/gi;
+    const parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');
+    const firstIndex = parsedText.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
     if (firstIndex !== -1){
-      const firstPartOfString = text.substring(firstIndex, text.length);
+      const firstPartOfString = parsedText.substring(firstIndex, parsedText.length);
       const endIndex = firstPartOfString.indexOf('<h2>', 0);
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
-      middleOfString = firstPartOfString.substring(startIndex, endIndex);
-    }
-    const paragraphs = middleOfString.split('<p>');
-    if (paragraphs.length > 9) {
-      if (paragraphs[0].startsWith('</h2')) {
-        middleOfString = paragraphs.slice(1,10).join('');
+      let middleOfString = firstPartOfString.substring(startIndex, endIndex);
+      const paragraphs = middleOfString.split('<p>');
+      if (paragraphs.length > 9) {
+        if (paragraphs[0].startsWith('</h2')) {
+          middleOfString = paragraphs.slice(1,10).join('');
+        }
+        else {
+          middleOfString = paragraphs.slice(0,9).join('');
+        }
       }
-      else {
-        middleOfString = paragraphs.slice(0,9).join('');
-      }
+      const furtherReading = this.findHrefs(middleOfString, language);
+      let history = middleOfString.split(/<h3>.*?<\/h3>/g).join('');
+      history = history.split(/<.*?>/g).join('');
+      history = history.split(/\d*&.*?;/g).join('');
+      return {history, furtherReading};
     }
-    const furtherReading = this.findHrefs(middleOfString, language);
-    let history = middleOfString.split(/<h3>.*?<\/h3>/g).join('');
+    console.error('The city page was found, but unfortunately there was no history paragraph found!');
+    let history = text.split(/<h3>.*?<\/h3>/g).join('');
     history = history.split(/<.*?>/g).join('');
     history = history.split(/\d*&.*?;/g).join('');
-    return {history, furtherReading};
+    return {history};
   }
 
   findHrefs(text: string, languageAbreviation: string): Map<string, string> {

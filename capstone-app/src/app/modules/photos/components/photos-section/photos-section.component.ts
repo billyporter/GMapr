@@ -1,12 +1,17 @@
+import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 import {
   Component,
   Input,
   OnChanges,
   SimpleChanges,
   OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavItem } from '../../nav-item';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-photos-section',
@@ -14,10 +19,10 @@ import { NavItem } from '../../nav-item';
   styleUrls: ['./photos-section.component.scss'],
 })
 export class PhotosSectionComponent implements OnInit, OnChanges {
-  @Input() city: string;
-  @Input() markerPlaces: Map<string, string[]>;
   @Input() activeMarker: string;
-  previousCity: string;
+  @Output() activeMarkerUpdate = new EventEmitter<string>();
+  city: string;
+  markerPlaces: Map<string, string[]>;
   limitControl = new FormControl(10, [Validators.min(1), Validators.max(10)]);
   maxPhotos = 10;
   mockPlaces = new Map<string, string[]>();
@@ -31,26 +36,27 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   navItems: NavItem[] = [];
   markerFilter = '';
 
+  constructor(private cd: ChangeDetectorRef, private places: SharedPlacesCityService) { }
+
   ngOnInit() {
     this.mockPlaces.set('Pjs Wings', ['Restuarant']);
     this.mockPlaces.set('Colonial Theater', ['History', 'Entertainment']);
     this.mockPlaces.set('Valley Forge', ['History', 'Landmark']);
+    combineLatest([this.places.getPlacesSource(), this.places.getCityName()]).subscribe(([placesSource, citySource]) => {
+      this.markerPlaces = placesSource;
+      this.city = citySource;
+      if (placesSource) {
+        this.extractUniqueTypes();
+        this.populateNavItems();
+        this.cd.detectChanges();
+      }
+    });
   }
 
-  // Until the photos section is connected to the maps, only mocks are supported
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.city && this.city === '') {
-      this.city = this.previousCity;
-    } else {
-      this.previousCity = this.city;
+    if (changes.activeMarker) {
+      this.markerFilter = this.activeMarker;
     }
-
-    if (!changes.activeMarker) {
-      this.activeMarker = '';
-    }
-
-    this.extractUniqueTypes();
-    this.populateNavItems();
   }
 
   /**
@@ -101,6 +107,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   }
 
   updateFilterSelected(newFilter: string) {
+    this.activeMarkerUpdate.emit(newFilter);
     if (newFilter !== this.city) {
       this.markerFilter = newFilter;
     } else {

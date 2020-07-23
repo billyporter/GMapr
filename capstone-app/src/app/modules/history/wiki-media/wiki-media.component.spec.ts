@@ -5,7 +5,7 @@ import MockWikiServiceGermanResponse from 'testing/mock-wiki-service-german-resp
 import { asyncData } from 'testing/async-observable-helpers';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChange, SimpleChanges } from '@angular/core';
 import { WikiResultsService } from '../wiki-results.service';
 import { WikiSearchResult } from '../WikiSearchTemplate';
 import { MatMenuModule } from '@angular/material/menu';
@@ -157,6 +157,14 @@ describe('WikiMediaComponent', () => {
     it('langlinks are changed correctly on changeLanguage call', () => {
       component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
       expect(component.langlinks).toEqual(testWikiGermanServiceResponse.langlinks);
+      
+    it('info changes with new city input', () => {
+      spyOn(component, 'getResults');
+      component.cityName = 'Stillwater, Oklahoma';
+      const changes: SimpleChanges = {cityName: new SimpleChange('Stillwater, Oklahoma', 'Los Angeles, California', false)};
+      component.cityName = 'Los Angeles, California';
+      component.ngOnChanges(changes);
+      expect(component.getResults).toHaveBeenCalledWith('Los Angeles, California');
     });
 
   });
