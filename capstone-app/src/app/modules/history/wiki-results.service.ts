@@ -33,9 +33,9 @@ export class WikiResultsService {
             const langlinks = new Map<string, Map<string, string>>();
             for (let link of Object.values(history.parse.langlinks)) {
                 let links = new Map<string, string>();
-                links.set("langName", link.langname);
-                links.set("url", link.url);
-                links.set("searchQuery", link["*"]);
+                links.set('langName', link.langname);
+                links.set('url', link.url);
+                links.set('searchQuery', link["*"]);
                 langlinks.set(link.lang, links);
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
@@ -43,7 +43,7 @@ export class WikiResultsService {
             return {title, ...historyResult, langlinks};
           }
           else {
-            throw new Error("API did not return a valid response");
+            throw new Error('API did not return a valid response');
           }
         }),
         catchError(() => {
@@ -59,11 +59,11 @@ export class WikiResultsService {
           ).pipe(map(history => {
           if (history.parse.text) {
             const langlinks = new Map<string, Map<string, string>>();
-            for (let link of Object.values(history.parse.langlinks)) {
-                let links = new Map<string, string>();
-                links.set("langName", link.langname);
-                links.set("url", link.url);
-                links.set("searchQuery", link["*"]);
+            for (const link of Object.values(history.parse.langlinks)) {
+                const links = new Map<string, string>();
+                links.set('langName', link.langname);
+                links.set('url', link.url);
+                links.set('searchQuery', link["*"]);
                 langlinks.set(link.lang, links);
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
@@ -71,7 +71,7 @@ export class WikiResultsService {
             return {title, ...historyResult, langlinks};
           }
           else {
-            throw new Error("API did not return a valid response");
+            throw new Error('API did not return a valid response');
           }
         }),
         catchError(() => {
