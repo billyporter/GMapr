@@ -17,8 +17,6 @@ describe('WikiMediaComponent', () => {
   let fixture: ComponentFixture<WikiMediaComponent>;
   let testWikiServiceResponse: WikiServiceResult;
   let testWikiGermanServiceResponse: WikiServiceResult;
-  let getWikiResponseSpy: jasmine.Spy;
-  let getWikiLangResponseSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     testWikiServiceResponse = {
@@ -33,13 +31,13 @@ describe('WikiMediaComponent', () => {
 
         const englishLangLinks = new Map<string, Map<string, string>>();
         const enDe = new Map<string, string>();
-        enDe.set("searchQuery", "Stillwater, (Oklahoma)");
-        enDe.set("langName", "German");
-        enDe.set("url", "https://de.wikipedia.org/wiki/Stillwater_(Oklahoma)");
+        enDe.set('searchQuery', 'Stillwater, (Oklahoma)');
+        enDe.set('langName', 'German');
+        enDe.set('url', 'https://de.wikipedia.org/wiki/Stillwater_(Oklahoma)');
         const enCa = new Map<string, string>();
-        enCa.set("searchQuery", "Stillwater (Oklahoma)");
-        enCa.set("langName", "Catalan");
-        enCa.set("url", "https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)");
+        enCa.set('searchQuery', 'Stillwater (Oklahoma)');
+        enCa.set('langName', 'Catalan');
+        enCa.set('url', 'https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)');
         englishLangLinks.set('ca', enCa);
         englishLangLinks.set('de', enDe);
         testWikiServiceResponse.langlinks = englishLangLinks;
@@ -52,17 +50,17 @@ describe('WikiMediaComponent', () => {
 
     const germanLangLinks = new Map<string, Map<string, string>>();
     const es = new Map<string, string>();
-    es.set("searchQuery", "Stillwater (Oklahoma)");
-    es.set("langName", "Spanisch");
-    es.set("url", "https://es.wikipedia.org/wiki/Stillwater_(Oklahoma)");
+    es.set('searchQuery', 'Stillwater (Oklahoma)');
+    es.set('langName', 'Spanisch');
+    es.set('url', 'https://es.wikipedia.org/wiki/Stillwater_(Oklahoma)');
     const en = new Map<string, string>();
-    en.set("searchQuery", "Stillwater, Oklahoma");
-    en.set("langName", "Englisch");
-    en.set("url", "https://en.wikipedia.org/wiki/Stillwater,_Oklahoma");
+    en.set('searchQuery', 'Stillwater, Oklahoma');
+    en.set('langName', 'Englisch');
+    en.set('url', 'https://en.wikipedia.org/wiki/Stillwater,_Oklahoma');
     const ca = new Map<string, string>();
-    ca.set("searchQuery", "Stillwater (Oklahoma)");
-    ca.set("langName", "Katalanisch");
-    ca.set("url", "https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)");
+    ca.set('searchQuery', 'Stillwater (Oklahoma)');
+    ca.set('langName', 'Katalanisch');
+    ca.set('url', 'https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)');
     germanLangLinks.set('ca', ca);
     germanLangLinks.set('en', en);
     germanLangLinks.set('es', es);
@@ -101,8 +99,8 @@ describe('WikiMediaComponent', () => {
     }
 
     const wikiService = jasmine.createSpyObj('WikiResultsService', ['search', 'searchNewLang']);
-    getWikiResponseSpy = wikiService.search.and.returnValue(of(mockResponse));
-    getWikiLangResponseSpy = wikiService.searchNewLang.and.returnValue(of(mockGermanResponse));
+    wikiService.search.and.returnValue(of(mockResponse));
+    wikiService.searchNewLang.and.returnValue(of(mockGermanResponse));
     const sharedCityService = new SharedPlacesCityService();
 
     TestBed.configureTestingModule({

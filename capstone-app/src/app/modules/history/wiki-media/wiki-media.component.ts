@@ -23,8 +23,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   body: string;
   urls = new Map();
   langlinks = new Map();
-  languages: any = Languages as any;
-  language: any = Languages as any;
+  languages: {[language: string]: string} = Languages as {[language: string]: string};
   query: string;
   prevQuery: string;
   prevWordForHistory: string;
@@ -80,9 +79,10 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
         console.log(this.history);
-        if (!(this.history) || (this.history.includes("CPU time usage:"))){
+        if (!(this.history)){
           this.loading = true;
-          this.error = "Unfortunately, the language you requested does not have an available tranlation for this page. Please select a different language.";
+          this.error = 'Unfortunately, the language you requested does not have an available tranlation '
+          + 'for this page. Please select a different language.';
         }
         else {
           this.body = this.history;
@@ -92,6 +92,11 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           if(result.langlinks && result.langlinks.size > 0) {
               this.langlinks = result.langlinks;
           }
+        }
+        if (this.history.includes("CPU time usage:")){
+          this.loading = false;
+          this.error = 'Unfortunately, the language you requested has not been fully translated. '
+          + 'The data being shown is what the Wikipedia page returned.';
         }
     });
   }
@@ -105,16 +110,16 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       const language = this.langlinks.get(prefix);
       this.query = language.get('searchQuery');
       this.prevQuery = this.query;
-      this.language = 'English';
       this.prevWordForHistory = 'History';
       this.changeLanguage(this.query, 'en', 'History');
     }
     else {
       const language = this.langlinks.get(prefix);
+      console.log(this.langlinks);
+      console.log(prefix);
       this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
       this.prevQuery = this.query;
-      this.language = language.get('langName');
       const wordForHistory = this.languages[prefix];
       this.prevWordForHistory = wordForHistory;
       this.changeLanguage(this.query, prefix, wordForHistory);

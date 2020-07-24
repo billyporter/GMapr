@@ -6,16 +6,19 @@ import { WikiServiceResult } from './WikiServiceResult';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
-
+interface HistoryFixString{
+  history: string;
+  furtherReading?: Map<string, string>;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class WikiResultsService {
-
   constructor(
     private readonly http: HttpClient,
     private searchHandler: WikiSearchHandler
   ) {}
+
   private static readonly URL_BEGINNING = 'https://'
   private static readonly URL_MIDDLE = '.wikipedia.org/w/api.php?origin=*&action=parse&page=';
   private static readonly URL_END = '&format=json';
@@ -64,7 +67,7 @@ export class WikiResultsService {
                 const links = new Map<string, string>();
                 links.set('langName', link.langname);
                 links.set('url', link.url);
-                links.set('searchQuery', link["*"]);
+                links.set('searchQuery', link['*']);
                 langlinks.set(link.lang, links);
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
@@ -83,36 +86,37 @@ export class WikiResultsService {
   }
 
 
-  fixString(text: string, wordForHistory: string, language: string): {history: string, furtherReading?: Map<string, string>} {
+  fixString(text: string, wordForHistory: string, language: string): HistoryFixString {
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
     const regexParsing = /\.mw.*?}}/gi;
-    const parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');
+    let parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');
     const firstIndex = parsedText.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
     if (firstIndex !== -1){
       const firstPartOfString = parsedText.substring(firstIndex, parsedText.length);
       const endIndex = firstPartOfString.indexOf('<h2>', 0);
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
-      let middleOfString = firstPartOfString.substring(startIndex, endIndex);
-      const paragraphs = middleOfString.split('<p>');
-      if (paragraphs.length > 9) {
-        if (paragraphs[0].startsWith('</h2')) {
-          middleOfString = paragraphs.slice(1,10).join('');
-        }
-        else {
-          middleOfString = paragraphs.slice(0,9).join('');
-        }
-      }
-      const furtherReading = this.findHrefs(middleOfString, language);
-      let history = middleOfString.split(/<h3>.*?<\/h3>/g).join('');
-      history = history.split(/<.*?>/g).join('');
-      history = history.split(/\d*&.*?;/g).join('');
-      return {history, furtherReading};
+      parsedText = firstPartOfString.substring(startIndex, endIndex);
     }
-    console.error('The city page was found, but unfortunately there was no history paragraph found!');
-    let history = text.split(/<h3>.*?<\/h3>/g).join('');
+    else {
+      console.error('The city page was found, but unfortunately there was no history paragraph found!');
+    }
+    const paragraphs = parsedText.split('<p>');
+    console.log(paragraphs);
+    if (paragraphs.length > 9) {
+      if (paragraphs[0].startsWith('</h2')) {
+        parsedText = paragraphs.slice(1,10).join('');
+      }
+      else {
+        parsedText = paragraphs.slice(0,9).join('');
+      }
+    }
+    const furtherReading = this.findHrefs(parsedText, language);
+    let history = parsedText.split(/<h3>.*?<\/h3>/g).join('');
+    console.log(history);
     history = history.split(/<.*?>/g).join('');
     history = history.split(/\d*&.*?;/g).join('');
-    return {history};
+    console.log(history);
+    return {history, furtherReading};
   }
 
   findHrefs(text: string, languageAbreviation: string): Map<string, string> {
@@ -123,7 +127,7 @@ export class WikiResultsService {
     let count = 1;
     for (const h of hrefs) {
       if (count <= 12 && !(h.getAttribute('href').charAt(0) === '#' ||
-      (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit')))) {
+        (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit')))) {
         const name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://'+ languageAbreviation +'.wikipedia.org' + url;

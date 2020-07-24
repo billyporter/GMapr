@@ -12,19 +12,9 @@
       <a href="{{url.key}}" target="_blank">{{url.value}}</a>
     </p>
   </mat-card>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>language</mat-icon>
-    <span>Languages</span>
-  </button>
-  <mat-menu #menu="matMenu" class="languages">
-    <button *ngFor="let lang of languages | keyvalue" mat-menu-item (click)="onChangeLanguage(lang.key)">
-      {{lang.key}}
-    </button>
-  </mat-menu>
 </div>
-<div *ngIf="loading" class="history">
-  <h1> The {{language}} translation for {{query}} is unavailable. </h1>
-  {{error}}
+<div class="history">
+  <h1>{{error}}</h1>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>language</mat-icon>
     <span>Languages</span>
