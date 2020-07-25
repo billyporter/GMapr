@@ -8,6 +8,10 @@ import Languages from '../languages-word-for-history.json';
 import { Subject } from 'rxjs';
 import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
+interface LanguageData {
+  [language: string]: string;
+}
+
 @Component({
   selector: 'app-wiki-media-history-section',
   templateUrl: './wiki-media.component.html',
@@ -23,7 +27,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   body: string;
   urls = new Map();
   langlinks = new Map();
-  languages: {[language: string]: string} = Languages as {[language: string]: string};
+  languages: LanguageData = Languages as LanguageData;
   query: string;
   prevQuery: string;
   prevWordForHistory: string;
@@ -78,8 +82,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
-        console.log(this.history);
-        if (!(this.history)){
+        if (!this.history){
           this.loading = true;
           this.error = 'Unfortunately, the language you requested does not have an available tranlation '
           + 'for this page. Please select a different language.';
@@ -102,10 +105,10 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   onChangeLanguage(prefix: string) {
-    if (prefix == this.prevPreFix) {
+    if (prefix === this.prevPreFix) {
       this.changeLanguage(this.prevQuery, this.prevPreFix, this.prevWordForHistory);
     }
-    else if (prefix == 'en' && !(this.langlinks.get('en'))) {
+    else if (prefix === 'en' && !this.langlinks.get('en')) {
       this.prevPreFix = prefix;
       const language = this.langlinks.get(prefix);
       this.query = language.get('searchQuery');
@@ -115,8 +118,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     }
     else {
       const language = this.langlinks.get(prefix);
-      console.log(this.langlinks);
-      console.log(prefix);
       this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
       this.prevQuery = this.query;

@@ -16,7 +16,7 @@ const material = [
   MatMenuModule,
   MatSelectModule,
   MatCardModule,
-  MatNativeDateModule
+  MatNativeDateModule,
 ];
 
 @NgModule({

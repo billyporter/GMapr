@@ -6,10 +6,12 @@ import { WikiServiceResult } from './WikiServiceResult';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
+
 interface HistoryFixString{
   history: string;
   furtherReading?: Map<string, string>;
 }
+
 @Injectable({
   providedIn: 'root',
 })
@@ -101,7 +103,6 @@ export class WikiResultsService {
       console.error('The city page was found, but unfortunately there was no history paragraph found!');
     }
     const paragraphs = parsedText.split('<p>');
-    console.log(paragraphs);
     if (paragraphs.length > 9) {
       if (paragraphs[0].startsWith('</h2')) {
         parsedText = paragraphs.slice(1,10).join('');
@@ -112,10 +113,8 @@ export class WikiResultsService {
     }
     const furtherReading = this.findHrefs(parsedText, language);
     let history = parsedText.split(/<h3>.*?<\/h3>/g).join('');
-    console.log(history);
     history = history.split(/<.*?>/g).join('');
     history = history.split(/\d*&.*?;/g).join('');
-    console.log(history);
     return {history, furtherReading};
   }
 
