@@ -113,8 +113,17 @@ export class WikiResultsService {
     }
     const furtherReading = this.findHrefs(parsedText, language);
     let history = parsedText.split(/<h3>.*?<\/h3>/g).join('');
-    history = history.split(/<.*?>/g).join('');
-    history = history.split(/\d*&.*?;/g).join('');
+    const regexForULists = /<ul[\s\S]+<\/ul>/gi;
+    const regexForOLists = /<ol[\s\S]+<\/ol>/gi;
+    const regexForTables = /<table[\s\S]+<\/table>/gi;
+    const regexForCPUStats = /<!--[\s\S]*-->/gi;
+    const regexForAllTags = /<.*?>/gi;
+    const regexForContentListDiv = /<div id="toc"[\s\S]*?<\/div>/gi;
+    const regexForExtraColorAttributes = /\d*&.*?;/gi;
+    const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
+    history = history.replace(regexForOLists, '').replace(regexForULists, '')
+    .replace(regexForTables, '').replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
+    .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
     return {history, furtherReading};
   }
 
