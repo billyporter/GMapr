@@ -58,6 +58,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     let isOldRequest = false;
     this.wikiService.search(queryString, 'en', 'History')
       .subscribe((result: WikiServiceResult) => {
+        this.error = "";
         if (result.history && currentQuery === this.cityName) {
           this.body = result.history;
           this.history = result.history;
@@ -81,6 +82,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   changeLanguage(queryString: string, languagePrefix: string, wordForHistory: string) {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
+        this.error = "";
         this.history = result.history;
         if (!this.history){
           this.loading = true;
