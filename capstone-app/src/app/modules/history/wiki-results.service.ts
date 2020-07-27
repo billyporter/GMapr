@@ -121,9 +121,11 @@ export class WikiResultsService {
     const regexForContentListDiv = /<div id="toc"[\s\S]*?<\/div>/gi;
     const regexForExtraColorAttributes = /\d*&.*?;/gi;
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
+    const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
     history = history.replace(regexForOLists, '').replace(regexForULists, '')
     .replace(regexForTables, '').replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
-    .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
+    .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '')
+    .replace(regexForAnyRemainingCSSStyling, '');
     return {history, furtherReading};
   }
 
