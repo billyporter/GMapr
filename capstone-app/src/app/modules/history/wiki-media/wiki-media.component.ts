@@ -64,23 +64,23 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.wikiService.search(queryString, 'en', 'History')
       .subscribe((result: WikiServiceResult) => {
         this.error = "";
-        if (result.history && currentQuery === this.cityName) {
+        if (result.history) {
+          this.cd.detach();
           this.body = result.history;
           this.history = result.history;
           this.urls = result.furtherReading;
           this.title = result.title;
           this.loading = false;
           this.langlinks = result.langlinks;
-          const language = this.langlinks.get('ca');
-          this.prevQuery = language.get('searchQuery');
+          this.prevQuery = result.originalSearchQuery;
           this.prevWordForHistory = 'History';
           this.prevPreFix = 'en';
-          this.cd.detectChanges();
         }
-        else if (!isOldRequest) {
-          this.error = 'API did not return a valid response.';
-          console.error('API did not return a valid response.');
+        else {
+          this.error = 'Unfortunately there is no history to display.';
         }
+        this.cd.detectChanges();
+        this.cd.reattach();
     });
   }
 

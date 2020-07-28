@@ -3,4 +3,5 @@ export interface WikiServiceResult {
   history: string,
   furtherReading?: Map<string, string>
   langlinks?: Map<string, Map<string, string>>
+  originalSearchQuery?: string;
 }
