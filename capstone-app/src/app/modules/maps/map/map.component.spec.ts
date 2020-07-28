@@ -206,6 +206,21 @@ describe('MapComponent', () => {
     expect(service.setCityName).toHaveBeenCalledWith(addresses[5]);
   });
 
+  it('test map theme select button', async () => {
+    const fixture = TestBed.createComponent(MapComponent);
+    fixture.detectChanges();
+    let loader: HarnessLoader = TestbedHarnessEnvironment.loader(fixture);
+    fixture.detectChanges();
+
+    const selectHarrness = await loader.getHarness(MatSelectHarness.with({selector: '#map-theme'}));
+
+    await selectHarrness.open();
+    const options = await selectHarrness.getOptions();
+    await options[0].click();
+    let type = await options[0].getText();
+    expect(type).toEqual(fixture.componentInstance.mapTypes[0]);
+  });
+
   it('test types select button', async () => {
     const fixture = TestBed.createComponent(MapComponent);
     fixture.detectChanges();
