@@ -16,6 +16,15 @@
   </div>
 
   <mat-form-field appearance="fill">
+    <mat-label >Map Theme</mat-label>
+    <mat-select id="map-theme" (selectionChange)="setMapStyle($event.value)">
+      <mat-option *ngFor="let map of mapTypes" [value]="map">
+        {{map}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
     <mat-label class="mat-select">Marker Types</mat-label>
     <mat-select id="type-select" (selectionChange)="changeType($event.value)">
       <mat-option *ngFor="let option of optionsTypes" [value]="option">
@@ -32,6 +41,7 @@
                 [center]="location"
                 height="750px"
                 width="100%"
+                [options]="options"
                 [zoom] = "zoom"
                 (mapClick)="addMarker($event)">
       <map-marker #customMarker
