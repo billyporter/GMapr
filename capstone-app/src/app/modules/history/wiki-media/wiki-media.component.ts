@@ -9,7 +9,12 @@ import { Subject } from 'rxjs';
 import { SharedPlacesCityService } from 'src/app/services/shared-places-city.service';
 
 interface LanguageData {
-  [language: string]: string;
+  [language: string]: AllLanguages;
+}
+
+interface AllLanguages {
+  ["FullLangName"]: string,
+  ["WordForHistory"]: string
 }
 
 @Component({
@@ -123,7 +128,8 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
       this.prevQuery = this.query;
-      const wordForHistory = this.languages[prefix];
+      const wordForHistory = this.languages[prefix]["WordForHistory"];
+      console.log(this.languages[prefix]["WordForHistory"]);
       this.prevWordForHistory = wordForHistory;
       this.changeLanguage(this.query, prefix, wordForHistory);
     }

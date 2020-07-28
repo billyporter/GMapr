@@ -22,7 +22,7 @@
   <mat-menu #menu="matMenu" class="languages">
     <div *ngFor="let lang of languages | keyvalue">
       <button *ngIf="langlinks.has(lang.key)" mat-menu-item (click)="onChangeLanguage(lang.key)">
-        {{lang.key}}
+        {{lang.value["FullLangName"]}}
       </button>
     </div>
   </mat-menu>
