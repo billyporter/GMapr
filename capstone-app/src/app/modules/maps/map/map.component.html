@@ -16,7 +16,7 @@
   </div>
 
   <mat-form-field appearance="fill">
-    <mat-label >Map Theme</mat-label>
+    <mat-label>Map Theme</mat-label>
     <mat-select id="map-theme" (selectionChange)="setMapStyle($event.value)">
       <mat-option *ngFor="let map of mapTypes" [value]="map">
         {{map}}

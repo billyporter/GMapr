@@ -46,6 +46,7 @@ export class MapComponent implements OnInit, OnChanges {
     'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
     'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
     'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
+  // Todo smontana: exporting these from a separate style so as to not clutter the component file.
   darkMode: google.maps.MapTypeStyle[] = [
     {
       elementType: "geometry",
@@ -1033,42 +1034,38 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   setMapStyle(mapType: string) {
-    if (mapType.includes('Retro')) {
-      const newMap: google.maps.MapOptions = {
+    let newMap: google.maps.MapOptions = {};
+    if (mapType === 'Retro') {
+       newMap = {
         styles: this.retroMode,
       }
-      this.options = newMap;
     }
-    else if (mapType.includes('Dark')) {
-      const newMap: google.maps.MapOptions = {
+    else if (mapType === 'Dark') {
+      newMap = {
         styles: this.darkMode,
       }
-      this.options = newMap;
     }
-    else if (mapType.includes('Light')) {
-      const newMap: google.maps.MapOptions = {
+    else if (mapType === 'Light') {
+      newMap = {
         styles: this.lightMode,
       }
-      this.options = newMap;
     }
-    else if (mapType.includes('Silver')) {
-      const newMap: google.maps.MapOptions = {
+    else if (mapType === 'Silver') {
+      newMap = {
         styles: this.silverMode,
       }
-      this.options = newMap;
     }
-    else if (mapType.includes('Night')) {
-      const newMap: google.maps.MapOptions = {
+    else if (mapType === 'Night') {
+      newMap = {
         styles: this.nightMode,
       }
-      this.options = newMap;
     }
-    else if (mapType.includes('Aubergine')) {
-      const newMap: google.maps.MapOptions = {
+    else if (mapType === 'Aubergine') {
+      newMap = {
         styles: this.aubergineMode,
       }
-      this.options = newMap;
     }
+    this.options = newMap;
   }
 
   changeType(newType: string) {
