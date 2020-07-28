@@ -19,10 +19,36 @@
 }
 
 .title {
-  margin-top: 0;
-  margin-bottom: 30px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 60px;
-  font-weight: 590;
+  font-size: 4vh;
+  font-weight: 10;
   text-align: center;
+  -webkit-text-stroke: 0.5px white
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  height: 7vh;
+  font-size: 25px;
+}
+
+.flex-container {
+  display: flex;
+  height: 93vh;
+}
+
+.map {
+  margin: 0px;
+  width: 60vw;
+}
+
+.instructions {
+  font-weight: 200;
+}
+
+.photos {
+  margin: 20px;
+  width: 40vw;
+  overflow: scroll;
 }

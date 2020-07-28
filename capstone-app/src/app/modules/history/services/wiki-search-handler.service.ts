@@ -8,7 +8,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class WikiSearchHandler {
   private static LINK = 'https://www.googleapis.com/customsearch/v1?';
-  private static API_KEY = 'key=AIzaSyCd2vIkDcVuvM3ie4kE661cGS3GsH9IWcQ';
+  private static API_KEY = 'key=AIzaSyBdi-mLi0sRpQT3z9T0aKfEfuTRqAhZVYQ';
   private static SEARCH_ENGINE = 'cx=015569016282384541059:opag6em0spe';
 
   constructor(private readonly http: HttpClient) {}

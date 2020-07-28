@@ -7,13 +7,22 @@
       <mat-card-title class="history-title">
         {{title}}
       </mat-card-title>
+      <div class="text">
       {{body}}
+      </div>
     </mat-card>
   </div>
   <mat-card class="more-reading">
-    <p *ngFor="let url of urls | keyvalue">
-      <a href="{{url.key}}" target="_blank">{{url.value}}</a>
-    </p>
+    <ng-template matMenuContent></ng-template>
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <mat-icon>expand_more</mat-icon>
+        Further Reading
+      </button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let url of urls | keyvalue">
+          <a mat-menu-item href="{{url.key}}" target="_blank">{{url.value}}</a>
+        </ng-container>
+      </mat-menu>
   </mat-card>
 </div>
 <div *ngIf="loading" class="history">

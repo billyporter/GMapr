@@ -1,17 +1,41 @@
-<head><link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"></head>
-<h1 class="title">
-  <span id="G">G</span>
-  <span id="M">M</span>
-  <span id="a">a</span>
-  <span id="p">p</span>
-  <span id="r">r</span>
-</h1>
+<head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+    rel="stylesheet"/>
+</head>
+<mat-toolbar color="primary">
+    <div class="title">
+      <span id="G">G</span>
+      <span id="M">M</span>
+      <span id="a">a</span>
+      <span id="p">p</span>
+      <span id="r">r</span>
+    </div>
+  <div class="instructions">
+    Search for a city to view a "Snapshot in History"
+  </div>
+</mat-toolbar>
+
+<div class="flex-container">
+  <div class="map">
+
 <app-map
-  (activeMarkerOutput)="updateActiveMarker($event)"
-  [activeMark] = "activeMarker">
+(activeMarkerOutput)="updateActiveMarker($event)"
+[activeMark]="activeMarker">
 </app-map>
-<app-photos-section 
-  [activeMarker]="activeMarker"
-  (activeMarkerUpdate)="updateActiveMarker($event)">
-</app-photos-section>
+  </div>
+  <div class="photos">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Photos">
+        <app-photos-section
+        [activeMarker]="activeMarker"
+        (activeMarkerUpdate)="updateActiveMarker($event)">
+        </app-photos-section>
+      </mat-tab>
+      <mat-tab label="History">
+
 <app-wiki-media-history-section></app-wiki-media-history-section>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

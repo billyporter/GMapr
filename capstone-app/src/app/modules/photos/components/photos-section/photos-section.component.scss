@@ -1,15 +1,27 @@
 .flex-container {
-  margin-left: 43px;
-  margin-right: 43px;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-card {
+  margin: 20px 10px;
 }
 
 .mat-raised-button {
-  margin-bottom: 20px;
-  margin-top: 20px;
 }
 
-.count {
-  margin-bottom: 20px;
-  text-align: left;
+.limit {
+}
+
+.limit mat-form-field {
+
+  width: 150px !important;
+}
+
+.photos {
 }

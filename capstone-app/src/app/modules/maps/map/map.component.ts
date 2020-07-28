@@ -37,15 +37,17 @@ export class MapComponent implements OnInit, OnChanges {
     location: this.testlocation,
     radius: 5000,
     type: 'tourist_attraction'
-  }
-  optionsTypes: string[] = ['Airport', 'Amusement Park', 'Aquarium', 'Art Gallery', 'Atm', 
-    'Bar', 'Book Store', 'Bowling Alley', 'Bus Station', 'Cafe', 'Campground', 
-    'Casino', 'Cemetery', 'Church', 'City Hall', 'Clothing Store', 'Convenience Store',
-    'Courthouse', 'Department Store', 'Electronics Store', 'Embassy', 'Gym',
-    'Hindu Temple', 'Jewelry Store', 'Library', 'Lodging', 'Meal Delivery',
-    'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
-    'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
-    'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
+  };
+  optionsTypes: string[][] = [
+    ['Airport', 'local_airport'],
+    ['Bar', 'local_bar'],
+    ['Church', 'add'], ['City Hall', 'home_work'],
+    ['Lodging', 'hotel'],
+    ['Museum', 'museum'], ['Park', 'nature_people'], ['Police', 'local_police'],
+    ['Restaurant', 'restaurant'], ['Store', 'store'],
+    ['Tourist Attraction', 'public'], ['University', 'school']
+  ];
+  showOptions = false;
 
   constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
@@ -74,7 +76,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   changeType(newType: string) {
-    let title = newType.split(' ')
+    const title = newType.split(' ')
                 .join('_')
                 .toLowerCase();
     this.placesRequest.type = title;
@@ -106,7 +108,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.placeCitySharer.setPlaces(this.markerData);
+      this.placeCitySharer.setPlaces(this.markerData, this.placesRequest.type);
       this.changeDetector.detectChanges();
     });
   }
@@ -116,7 +118,7 @@ export class MapComponent implements OnInit, OnChanges {
       position: result.geometry.location,
       title: result.name,
       icon: {
-          url: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+          url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
       }
     };
   }
@@ -203,5 +205,13 @@ export class MapComponent implements OnInit, OnChanges {
         return marker;
       }
     }
+  }
+
+  resetFilter() {
+    this.activeMarkerOutput.emit('');
+  }
+
+  toggleOptions() {
+    this.showOptions = !this.showOptions;
   }
 }

@@ -35,6 +35,7 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   allTypes: string[] = [];
   navItems: NavItem[] = [];
   markerFilter = '';
+  category = 'Tourist Attraction';
 
   constructor(private cd: ChangeDetectorRef, private places: SharedPlacesCityService) { }
 
@@ -82,9 +83,16 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
         .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ');
 
+      this.category = this.category
+      .split('_')
+      .join(' ')
+      .split(' ')
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(' ');
+
       tempItem.push({ name: tempType, children: menuTypes });
     }
-    this.navItems.push({ name: 'Tourist Attraction', children: tempItem });
+    this.navItems.push({ name: this.category, children: tempItem });
   }
 
   /**
@@ -97,10 +105,10 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
   updateLimit(newLimit: number, wasRemoved: number) {
     if (this.limitControl.value === this.maxPhotos && this.maxPhotos < newLimit) {
       this.maxPhotos = newLimit;
-      this.limitControl = new FormControl(newLimit);
+      this.limitControl = new FormControl(newLimit, [Validators.min(1), Validators.max(newLimit)]);
     } else if (wasRemoved === 1 && this.limitControl.value >= newLimit) {
       this.maxPhotos = newLimit;
-      this.limitControl = new FormControl(newLimit);
+      this.limitControl = new FormControl(newLimit, [Validators.min(1), Validators.max(newLimit)]);
     } else {
       this.maxPhotos = newLimit;
     }
@@ -119,9 +127,15 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
     this.allTypes = [];
     const tempTypes: string[][] = [];
     for (const [key, value] of this.markerPlaces) {
+      if (value.length === 0) {
+        this.category = key;
+        break;
+      }
       tempTypes.push(value);
     }
-    this.allTypes = tempTypes.flat();
+    const bannedTypes = ['point_of_interest', 'establishment', 'premise'];
+    this.allTypes = tempTypes.flat().filter(type => !bannedTypes.includes(type));
+    console.log(this.allTypes);
     const copyForSplicing = this.allTypes.slice();
     this.uniqueTypes = this.allTypes.filter((category) => {
       copyForSplicing.splice(copyForSplicing.indexOf(category), 1);
