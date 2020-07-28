@@ -116,6 +116,7 @@ export class WikiResultsService {
     const regexForULists = /<ul[\s\S]+<\/ul>/gi;
     const regexForOLists = /<ol[\s\S]+<\/ol>/gi;
     const regexForTables = /<table[\s\S]+<\/table>/gi;
+    const regexForNotes = /<div role="note"[\s\S]+?<\/div>/gi;
     const regexForCPUStats = /<!--[\s\S]*-->/gi;
     const regexForAllTags = /<.*?>/gi;
     const regexForContentListDiv = /<div id="toc"[\s\S]*?<\/div>/gi;
@@ -123,7 +124,8 @@ export class WikiResultsService {
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
     const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
     history = history.replace(regexForOLists, '').replace(regexForULists, '')
-    .replace(regexForTables, '').replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
+    .replace(regexForTables, '').replace(regexForNotes, '')
+    .replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
     .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '')
     .replace(regexForAnyRemainingCSSStyling, '');
     return {history, furtherReading};
