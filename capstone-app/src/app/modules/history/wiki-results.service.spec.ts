@@ -4,6 +4,7 @@ import { WikiResultsService } from './wiki-results.service';
 import { WikiSearchResult } from './WikiSearchTemplate';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
 
+
 const title = 'Stillwater, Oklahoma';
 const history = 'The north-central region of Oklahoma became part of the United '
               + 'States with the Louisiana Purchase in 1803. In 1832, author and '

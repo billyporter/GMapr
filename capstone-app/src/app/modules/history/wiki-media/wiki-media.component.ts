@@ -131,6 +131,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       const wordForHistory = this.languages[prefix]["WordForHistory"];
       console.log(this.languages[prefix]["WordForHistory"]);
       this.prevWordForHistory = wordForHistory;
+      console.log(this.query, prefix, wordForHistory);
       this.changeLanguage(this.query, prefix, wordForHistory);
     }
   }

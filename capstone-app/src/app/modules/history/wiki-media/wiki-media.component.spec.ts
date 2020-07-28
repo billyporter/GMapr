@@ -165,5 +165,22 @@ describe('WikiMediaComponent', () => {
       component.ngOnChanges(changes);
       expect(component.getResults).toHaveBeenCalledWith('Los Angeles, California');
     });
+
+    it('language change function is called on button selection', () => {
+      spyOn(component, 'changeLanguage');
+      component.onChangeLanguage('de');
+      expect(component.changeLanguage).toHaveBeenCalledWith('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+    });
+
+    // it('language change function is called on button selection', () => {
+    //   spyOn(component, 'getResults');
+    //   let links = new Map<string, string>();
+    //   links.set('langName', 'German');
+    //   links.set('searchQuery', 'Stillwater, (Oklahoma)');
+    //   component.langlinks = new Map();
+    //   component.langlinks.set('de', links);
+    //   component.onChangeLanguage('de');
+    //   expect(component.changeLanguage).toHaveBeenCalledWith('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+    // });
   });
 });
