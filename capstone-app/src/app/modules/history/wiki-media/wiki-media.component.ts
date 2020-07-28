@@ -125,8 +125,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     }
     else {
       const language = this.langlinks.get(prefix);
-      console.log(this.langlinks);
-      console.log(prefix);
       this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
       this.prevQuery = this.query;
