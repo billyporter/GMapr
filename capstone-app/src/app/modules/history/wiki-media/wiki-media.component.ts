@@ -117,8 +117,8 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     }
     else if (prefix === 'en' && !this.langlinks.get('en')) {
       this.prevPreFix = prefix;
-      const language = this.langlinks.get(prefix);
-      this.query = language.get('searchQuery');
+      const language = this.langlinks["ca"];
+      this.query = language["searchQuery"];
       this.prevQuery = this.query;
       this.prevWordForHistory = 'History';
       this.changeLanguage(this.query, 'en', 'History');
