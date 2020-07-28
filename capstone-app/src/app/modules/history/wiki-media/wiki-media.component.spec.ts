@@ -172,15 +172,20 @@ describe('WikiMediaComponent', () => {
       expect(component.changeLanguage).toHaveBeenCalledWith('Stillwater, (Oklahoma)', 'de', 'Geschichte');
     });
 
-    // it('language change function is called on button selection', () => {
-    //   spyOn(component, 'getResults');
-    //   let links = new Map<string, string>();
-    //   links.set('langName', 'German');
-    //   links.set('searchQuery', 'Stillwater, (Oklahoma)');
-    //   component.langlinks = new Map();
-    //   component.langlinks.set('de', links);
-    //   component.onChangeLanguage('de');
-    //   expect(component.changeLanguage).toHaveBeenCalledWith('Stillwater, (Oklahoma)', 'de', 'Geschichte');
-    // });
+    it('history is changed correctly on changeLanguage call', () => {
+      component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+      expect(component.history).toEqual(testWikiGermanServiceResponse.history);
+    });
+
+    it('title is changed correctly on changeLanguage call', () => {
+      component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+      expect(component.title).toEqual(testWikiGermanServiceResponse.title);
+    });
+
+    it('langlinks are changed correctly on changeLanguage call', () => {
+      component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+      expect(component.langlinks).toEqual(testWikiGermanServiceResponse.langlinks);
+    });
+
   });
 });
