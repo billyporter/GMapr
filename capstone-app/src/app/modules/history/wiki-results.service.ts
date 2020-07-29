@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
 
 interface HistoryFixString{
-  history: string;
+  history: string[];
   furtherReading?: Map<string, string>;
 }
 
@@ -58,7 +58,7 @@ export class WikiResultsService {
         }),
         catchError(() => {
           console.error('API did not return a valid response.');
-          return of({title: '', history: ''});
+          return of({title: '', history: ['']});
         })
       );
   }
@@ -86,7 +86,7 @@ export class WikiResultsService {
         }),
         catchError(() => {
           console.error('API did not return a valid response.');
-          return of({title: '', history: ''});
+          return of({title: '', history: ['']});
         })
       );
   }
@@ -104,16 +104,19 @@ export class WikiResultsService {
     const paragraphs = parsedText.split('<p>');
     if (paragraphs.length > 9) {
       if (paragraphs[0].startsWith('</h2')) {
-        parsedText = paragraphs.slice(1,10).join('');
+        parsedText = paragraphs.slice(1,10).join('----');
       }
       else {
-        parsedText = paragraphs.slice(0,9).join('');
+        parsedText = paragraphs.slice(0,9).join('----');
       }
+    }
+    else {
+      parsedText = paragraphs.join('----');
     }
     const regexForSourceNeeded = /<sup class="noprint Inline-Template Template-Fact"[\s\S]*?<\/sup>/gi;
     parsedText = parsedText.replace(regexForSourceNeeded, '');
     const furtherReading = this.findHrefs(parsedText, language);
-    let history = parsedText;
+    let tempHistory = parsedText;
     const regexForCatLinks = /class="catlinks[\s\S]*?<\/div>/gi;
     const regexForDabLinks = /<div class="dablink[\s\S]*?<\/div>/gi;
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
@@ -133,21 +136,20 @@ export class WikiResultsService {
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
     const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
     const regexForDivStyleTags = /<div style=[\s\S]*?<\/div>/gi;
-    history = history.replace(regexCaptions, '').replace(regexParsing, '');
-    history = history.replace(regexForOLists, '').replace(regexForULists, '');
-    history = history.replace(regexCaptions, '').replace(regexParsing, '').replace(regexForCatLinks, '>');
-    history = history.replace(regexForOLists, '').replace(regexForULists, '').replace(regexForDabLinks, '');
-    history = history.replace(regexForTables, '').replace(regexForNotes, '');
-    history = history.replace(regexForRows, '').replace(regexForColumns, '');
-    history = history.replace(regexForDivStyleTags, '');
-    history = history.replace(regexForCPUStats, '').replace(regexForContentListDiv, '');
-    history = history.replace(regexForRefrenceNumbers, '').replace(regexForCitationNeeded, '');
-    history = history.replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
-    history = history.replace(regexForAnyRemainingCSSStyling, '');
-    if(history.length < 20 && firstIndex !== -1) {
+    tempHistory = tempHistory.replace(regexCaptions, '').replace(regexParsing, '').replace(regexForCatLinks, '>');
+    tempHistory = tempHistory.replace(regexForOLists, '').replace(regexForULists, '').replace(regexForDabLinks, '');
+    tempHistory = tempHistory.replace(regexForTables, '').replace(regexForNotes, '');
+    tempHistory = tempHistory.replace(regexForRows, '').replace(regexForColumns, '');
+    tempHistory = tempHistory.replace(regexForDivStyleTags, '');
+    tempHistory = tempHistory.replace(regexForCPUStats, '').replace(regexForContentListDiv, '');
+    tempHistory = tempHistory.replace(regexForRefrenceNumbers, '').replace(regexForCitationNeeded, '');
+    tempHistory = tempHistory.replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
+    tempHistory = tempHistory.replace(regexForAnyRemainingCSSStyling, '');
+    if(tempHistory.length < 20 && firstIndex !== -1) {
       text = text.replace('span class="mw-headline" id="', '');
       return this.fixString(text, wordForHistory, language);
     }
+    const history = tempHistory.split('----');
     return {history, furtherReading};
   }
 

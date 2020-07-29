@@ -24,12 +24,12 @@ interface AllLanguages {
 })
 
 export class WikiMediaComponent implements OnChanges, OnInit {
-  history: string;
+  history: string[];
   title: string;
   error: string;
   destroy$ = new Subject<void>();
   loading = true;
-  body: string;
+  body: string[];
   urls = new Map();
   langlinks = new Map();
   languages: LanguageData = Languages as LanguageData;
@@ -85,7 +85,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
         this.history = result.history;
-        if (this.history.length > 5){
+        if (this.history.length > 0){
           this.error = "";
           this.body = this.history;
           this.loading = false;
