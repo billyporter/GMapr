@@ -3,6 +3,12 @@ import { SharedPlacesCityService } from 'src/app/services/shared-places-city.ser
 import { Component,  ViewChild, ElementRef, OnInit, Output, Input, 
   EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
+import { darkModeTheme } from 'src/app/modules/maps/assets/darkMode';
+import { retroModeTheme } from './../assets/retroMode';
+import { nightModeTheme } from './../assets/nightMode';
+import { aubergineModeTheme } from './../assets/aubergineMode';
+import { silverModeTheme } from './../assets/silverMode';
+import { lightModeTheme } from './../assets/lightMode';
 
 @Component({
   selector: 'app-map',
@@ -49,6 +55,24 @@ export class MapComponent implements OnInit, OnChanges {
   ];
   showOptions = false;
 
+  // Todo smontana: exporting these from a separate style so as to not clutter the component file.
+  darkMode: google.maps.MapTypeStyle[] = darkModeTheme;
+  retroMode: google.maps.MapTypeStyle[] = retroModeTheme;
+  silverMode: google.maps.MapTypeStyle[] = silverModeTheme;
+  nightMode: google.maps.MapTypeStyle[] = nightModeTheme;
+  aubergineMode: google.maps.MapTypeStyle[] = aubergineModeTheme;
+  lightMode: google.maps.MapTypeStyle[] = lightModeTheme;
+  mapTypes = ['Aubergine', 'Dark', 'Light', 'Night', 'Retro', 'Silver'];
+  options: google.maps.MapOptions = {
+      styles: this.retroMode,
+      zoomControl: false,
+      rotateControl: false,
+      streetViewControl: false,
+      mapTypeControlOptions: {
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      },
+    };
+
   constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
   ngOnInit() {
@@ -73,6 +97,49 @@ export class MapComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  setMapStyle(mapType: string) {
+    let newMap: google.maps.MapOptions = {};
+    switch(mapType) {
+      case 'Retro': {
+        newMap = {
+          styles: this.retroMode,
+        };
+        break;
+      }
+      case 'Light': {
+        newMap = {
+          styles: this.lightMode,
+        };
+        break;
+      }
+      case 'Dark': {
+        newMap = {
+          styles: this.darkMode,
+        };
+        break;
+      }
+      case 'Night': {
+        newMap = {
+          styles: this.nightMode,
+        };
+        break;
+      }
+      case 'Silver': {
+        newMap = {
+          styles: this.silverMode,
+        };
+        break;
+      }
+      case 'Aubergine': {
+        newMap = {
+          styles: this.aubergineMode,
+        };
+        break;
+      }
+    }
+    this.options = newMap;
   }
 
   changeType(newType: string) {
@@ -118,7 +185,7 @@ export class MapComponent implements OnInit, OnChanges {
       position: result.geometry.location,
       title: result.name,
       icon: {
-          url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+          url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
       }
     };
   }
@@ -130,7 +197,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private locationCallbackFail() {
-    this.cityLocation = 'Los Angeles, CA, USA'
+    this.cityLocation = 'Los Angeles, CA, USA';
     this.location = new google.maps.LatLng(34.0522, -118.2437);
     this.placesRequestFunc(this.location);
     this.placeCitySharer.setCityName(this.cityLocation);
@@ -213,5 +280,9 @@ export class MapComponent implements OnInit, OnChanges {
 
   toggleOptions() {
     this.showOptions = !this.showOptions;
+  }
+
+  tester(any: any) {
+    console.log(any);
   }
 }

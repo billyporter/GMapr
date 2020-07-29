@@ -35,6 +35,24 @@
       <ng-template matMenuContent></ng-template>
       <div class="flex-menu">
       <span [matMenuTriggerFor]="menu">
+        <mat-icon>map</mat-icon>
+        Map Theme
+      </span>
+    </div>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let map of mapTypes">
+          <button mat-menu-item (click)="setMapStyle(map)">
+            <mat-icon>explore</mat-icon>
+            <span> {{ map }}</span>
+          </button>
+        </ng-container>
+      </mat-menu>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+      <ng-template matMenuContent></ng-template>
+      <div class="flex-menu">
+      <span [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
         Marker Types
       </span>
@@ -65,6 +83,7 @@
   <google-map
     class="map"
     [center]="location"
+    [options]="options"
     height="93vh"
     width="100%"
     [zoom]="zoom"

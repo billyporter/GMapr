@@ -23,7 +23,9 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
+    "object-mapper": "^6.2.0",
     "rxjs": "~6.5.4",
+    "ts-object-mapper": "0.0.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -35,7 +37,7 @@
     "@types/googlemaps": "^3.39.8",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.12.47",
+    "@types/node": "^12.12.51",
     "codelyzer": "^5.1.2",
     "firebase-tools": "^8.0.0",
     "fuzzy": "^0.1.3",

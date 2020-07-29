@@ -1,0 +1,17 @@
+{
+ "title" : "Stillwater, (Oklahoma)",
+ "history" : "Im Jahre 1879 war das Gebiet des heutigen Oklahoma noch unbesiedelt. Elias C. Boudinot, ein Abgeordneter der Arkansas Sezession, wollte dieses Land 1879 als „öffentliches Land“ deklarieren und es somit seinen Kunden der MKT – Railroad zur Verfügung zu stellen. Doch der amerikanische Präsident Rutherford B. Hayes wollte das Eindringen von Angloamerikanern in das geschützte Land verhindern und rief am 26. April 1879 eine Proklamation aus, die es untersagte dieses Land zu betreten, da es den Indianern gehöre. Doch es war bereits zu spät. Nur fünf Jahre später im Jahre 1884 konnte die Regierung dem Druck der Bevölkerung nicht mehr standhalten und das Amtsgericht in Topeka, Kansas urteilte, dass es ab sofort kein Verbrechen mehr sei, auf diesem Land zu siedeln. Am 12. Dezember 1884 wurde Stillwater als erste Siedlung gegründet. Nach dem ersten Land run (vgl. Oklahoma Land Run) am 22. April 1889 wurden auch weitere Gebiete von Angloamerikanern besiedelt.",
+ "furtherReading" : {"https://en.wikipedia.org/wiki/Louisiana_Purchase": "Louisiana Purchase",
+                     "https://en.wikipedia.org/wiki/Washington_Irving": "Washington Irving"},
+ "langlinks": {
+                  "ca": { "searchQuery" : "Stillwater (Oklahoma)",
+                          "langName" : "Katalanisch",
+                          "url" : "https://ca.wikipedia.org/wiki/Stillwater_(Oklahoma)" },
+                  "en" : { "searchQuery": "Stillwater, Oklahoma",
+                            "langName" : "Englisch",
+                            "url" : "https://en.wikipedia.org/wiki/Stillwater,_Oklahoma" },
+                  "es" : { "searchQuery" : "Stillwater (Oklahoma)",
+                           "langName" : "Spanisch",
+                            "url" : "https://es.wikipedia.org/wiki/Stillwater_(Oklahoma)"}
+              }
+}

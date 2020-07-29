@@ -1,6 +1,3 @@
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-</head>
 <div *ngIf="!loading" class="history">
   <div class="body">
     <mat-card class="history-body">
@@ -25,6 +22,17 @@
       </mat-menu>
   </mat-card>
 </div>
-<div *ngIf="loading" class="history">
-  {{error}}
+<div class="history">
+  <h1>{{error}}</h1>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>language</mat-icon>
+    <span>Languages</span>
+  </button>
+  <mat-menu #menu="matMenu" class="languages">
+    <div *ngFor="let lang of languages | keyvalue">
+      <button *ngIf="langlinks.has(lang.key)" mat-menu-item (click)="onChangeLanguage(lang.key)">
+        {{lang.value["FullLangName"]}}
+      </button>
+    </div>
+  </mat-menu>
 </div>
