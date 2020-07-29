@@ -34,12 +34,12 @@
     <mat-list-item role="listitem">
       <ng-template matMenuContent></ng-template>
       <div class="flex-menu">
-      <span [matMenuTriggerFor]="menu">
+      <span [matMenuTriggerFor]="menuThemes">
         <mat-icon>map</mat-icon>
         Map Theme
       </span>
     </div>
-      <mat-menu #menu="matMenu">
+      <mat-menu #menuThemes="matMenu">
         <ng-container *ngFor="let map of mapTypes">
           <button mat-menu-item (click)="setMapStyle(map)">
             <mat-icon>explore</mat-icon>
