@@ -10,6 +10,19 @@
     </mat-card>
   </div>
   <mat-card class="more-reading">
+    <div class="language">
+    <ng-template matMenuContent></ng-template>
+      <span [matMenuTriggerFor]="languageMenu">
+        <mat-icon>language</mat-icon>
+        Languages
+      </span>
+      <mat-menu #languageMenu="matMenu">
+        <ng-container *ngFor="let lang of languages | keyvalue">
+          <a *ngIf="langlinks.has(lang.key)" mat-menu-item (click)="onChangeLanguage(lang.key)">{{lang.value["FullLangName"]}}</a>
+        </ng-container>
+      </mat-menu>
+    </div>
+    <div class="further">
     <ng-template matMenuContent></ng-template>
       <span [matMenuTriggerFor]="menu">
         <mat-icon>expand_more</mat-icon>
@@ -20,19 +33,6 @@
           <a mat-menu-item href="{{url.key}}" target="_blank">{{url.value}}</a>
         </ng-container>
       </mat-menu>
-  </mat-card>
-</div>
-<div class="history">
-  <h1>{{error}}</h1>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>language</mat-icon>
-    <span>Languages</span>
-  </button>
-  <mat-menu #menu="matMenu" class="languages">
-    <div *ngFor="let lang of languages | keyvalue">
-      <button *ngIf="langlinks.has(lang.key)" mat-menu-item (click)="onChangeLanguage(lang.key)">
-        {{lang.value["FullLangName"]}}
-      </button>
     </div>
-  </mat-menu>
+  </mat-card>
 </div>
