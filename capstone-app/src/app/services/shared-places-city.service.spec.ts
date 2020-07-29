@@ -24,9 +24,8 @@ describe('SharedPlacesCityService', () => {
       expect(result).toBe('Boston');
     });
   });
-
   it('set should change markerPlaces, get should return markerPlaces', () => {
-    service.setPlaces(testMarkerPlaces);
+    service.setPlaces(testMarkerPlaces, 'Tourist Attraction');
     service.getPlacesSource().subscribe(result => {
       expect(result).toBe(testMarkerPlaces);
     });
