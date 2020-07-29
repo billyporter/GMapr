@@ -132,7 +132,7 @@ describe('PhotosSectionComponent', () => {
       subItemsText.push(await item.getText());
     }
     // abnormal list due to mat icon text
-    const expectedResponse = ['filter_list Park', 'filter_list Building', 'exploreBoston'];
+    const expectedResponse = ['nature_people Park', 'more Building', 'exploreBoston'];
     expect(expectedResponse).toEqual(subItemsText);
   });
 
@@ -149,7 +149,7 @@ describe('PhotosSectionComponent', () => {
     const errorElement = fixture.debugElement.nativeElement.querySelector(
       'mat-error'
     );
-    expect(errorElement.innerText).toContain('Must be between 1 and 10');
+    expect(errorElement.innerText).toContain('Must be between 1 and 2');
   });
 
   it('max should change when it receives new limit', () => {
