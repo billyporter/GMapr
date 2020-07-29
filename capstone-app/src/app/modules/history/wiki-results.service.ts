@@ -105,10 +105,10 @@ export class WikiResultsService {
     const paragraphs = parsedText.split('<p>');
     if (paragraphs.length > 9) {
       if (paragraphs[0].startsWith('</h2')) {
-        parsedText = paragraphs.slice(1,10).join('\n');
+        parsedText = paragraphs.slice(1,10).join('');
       }
       else {
-        parsedText = paragraphs.slice(0,9).join('\n');
+        parsedText = paragraphs.slice(0,9).join('');
       }
     }
     const furtherReading = this.findHrefs(parsedText, language);
@@ -122,11 +122,10 @@ export class WikiResultsService {
     const regexForExtraColorAttributes = /\d*&.*?;/gi;
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
     const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
-    const regexNewLine = /(\n)(\n\n)+/gi;
     history = history.replace(regexForOLists, '').replace(regexForULists, '')
     .replace(regexForTables, '').replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
     .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '')
-    .replace(regexForAnyRemainingCSSStyling, '').replace(regexNewLine, '');
+    .replace(regexForAnyRemainingCSSStyling, '');
     return {history, furtherReading};
   }
 
