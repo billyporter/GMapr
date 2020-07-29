@@ -135,7 +135,6 @@ export class PhotosSectionComponent implements OnInit, OnChanges {
     }
     const bannedTypes = ['point_of_interest', 'establishment', 'premise'];
     this.allTypes = tempTypes.flat().filter(type => !bannedTypes.includes(type));
-    console.log(this.allTypes);
     const copyForSplicing = this.allTypes.slice();
     this.uniqueTypes = this.allTypes.filter((category) => {
       copyForSplicing.splice(copyForSplicing.indexOf(category), 1);

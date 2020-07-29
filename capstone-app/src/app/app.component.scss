@@ -28,9 +28,9 @@
 
 mat-toolbar {
   display: flex;
-  justify-content: space-between;
-  height: 7vh;
   font-size: 25px;
+  height: 7vh;
+  justify-content: space-between;
 }
 
 .flex-container {
@@ -49,6 +49,30 @@ mat-toolbar {
 
 .photos {
   margin: 20px;
-  width: 40vw;
   overflow: scroll;
+  width: 40vw;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .flex-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .map {
+    width: 100vw;
+  }
+
+  .photos {
+    margin: 0px;
+    width: 100vw;
+  }
+
+}
+
+@media only screen and (max-width: 400px) {
+  .instructions {
+    display: none;
+  }
 }

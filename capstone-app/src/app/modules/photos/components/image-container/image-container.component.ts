@@ -124,7 +124,6 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   isDuplicate(photoLink: string) {
     const shortenedLink = photoLink.match(/([^\/]+$)/g)[0];
-    console.log(this.imageLinks);
     if (this.imageLinks.includes(shortenedLink)) {
       return true;
     }
@@ -134,17 +133,12 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     }
   }
 
-  khaled() {
+  loading() {
     this.numLoaded++;
     const smallerOne = this.limit > this.originalPhotos.length ? this.originalPhotos.length : this.limit;
     this.value = (100 / smallerOne) * this.numLoaded;
-    console.log(this.value);
-    console.log(this.numLoaded);
-    console.log(this.limit);
-    console.log(this.originalPhotos.length);
     if (this.numLoaded === this.limit || this.numLoaded === this.originalPhotos.length) {
       this.display = true;
-      console.log('displaying');
       this.value = 0;
     }
     this.cd.detectChanges();

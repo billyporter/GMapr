@@ -40,6 +40,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   getResults(queryString: string) {
+    this.cd.detach();
     const currentQuery = queryString;
     let isOldRequest = false;
     this.wikiService.search(queryString)
@@ -51,12 +52,13 @@ export class WikiMediaComponent implements OnChanges, OnInit {
             this.urls = result.furtherReading;
             this.title = result.title;
             this.loading = false;
-            this.cd.detectChanges();
         }
         else if (!isOldRequest) {
           this.error = 'API did not return a valid response.';
           console.error('API did not return a valid response.');
         }
+        this.cd.reattach();
+        this.cd.markForCheck();
     });
   }
 }

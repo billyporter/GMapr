@@ -57,17 +57,18 @@ export class WikiResultsService {
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       let middleOfString = firstPartOfString.substring(startIndex, endIndex);
       const paragraphs = middleOfString.split('<p>');
-      console.log(paragraphs);
       if (paragraphs.length > 9) {
         if (paragraphs[0].startsWith('</h2')) {
           middleOfString = paragraphs.slice(1,10).join('\n');
         }
         else {
-          middleOfString = paragraphs.slice(0,9).join('');
+          middleOfString = paragraphs.slice(0,9).join('\n');
         }
       }
       const furtherReading = this.findHrefs(middleOfString);
       let history = middleOfString.split(/<h3>.*?<\/h3>/g).join('');
+      const regexNewLine = /(\n)(\n)+/gi;
+      history = history.replace(regexNewLine, '');
       history = history.split(/<.*?>/g).join('');
       history = history.split(/\d*&.*?;/g).join('');
       return {history, furtherReading};

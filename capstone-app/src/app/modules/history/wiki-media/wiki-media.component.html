@@ -14,10 +14,10 @@
   </div>
   <mat-card class="more-reading">
     <ng-template matMenuContent></ng-template>
-      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+      <span [matMenuTriggerFor]="menu">
         <mat-icon>expand_more</mat-icon>
         Further Reading
-      </button>
+      </span>
       <mat-menu #menu="matMenu">
         <ng-container *ngFor="let url of urls | keyvalue">
           <a mat-menu-item href="{{url.key}}" target="_blank">{{url.value}}</a>

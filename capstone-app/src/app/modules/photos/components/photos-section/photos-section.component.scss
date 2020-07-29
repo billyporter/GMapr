@@ -1,27 +1,36 @@
 .flex-container {
-  text-align: left;
+  align-items: center;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 30px;
   margin-top: 30px;
-  align-items: center;
-  justify-content: space-between;
+  text-align: left;
 }
 
 mat-card {
   margin: 20px 10px;
 }
 
-.mat-raised-button {
-}
-
-.limit {
-}
-
 .limit mat-form-field {
-
   width: 150px !important;
 }
 
-.photos {
+@media only screen and (max-width: 450px) { 
+  .flex-container {
+    align-content: space-between;
+    flex-direction: column;
+  }
+
+  .limit {
+    margin-top: 20px;
+  }
+
+  mat-card {
+    margin: 0px;
+  }
+
+  .photos {
+    margin-left: -17px;
+    margin-right: -14px;
+  }
 }

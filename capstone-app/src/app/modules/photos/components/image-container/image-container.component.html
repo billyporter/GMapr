@@ -5,7 +5,7 @@
   <mat-progress-bar mode="determinate" value="{{value}}" [ngStyle]="{'display': !display ? 'block' : 'none'}"></mat-progress-bar>
   <div class="picture" *ngFor="let photo of displayPhotos; let i = index" [ngStyle]="{'display': display ? 'inline-block' : 'none'}">
     <a href="{{ photo.contextLink }}" target="_blank">
-      <img src="{{ photo.link }}" (error)="removePhoto(i)" (load)="khaled()"/>
+      <img src="{{ photo.link }}" (error)="removePhoto(i)" (load)="loading()"/>
       <div class="details">
         <span class="title">{{ photo.title }}</span>
       </div>
