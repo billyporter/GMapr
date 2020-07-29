@@ -40,8 +40,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
 
   @Input() cityName!: string;
 
-  constructor(private cd: ChangeDetectorRef, private cityFetcher: SharedPlacesCityService, 
-    private wikiService: WikiResultsService, public zone: NgZone) { }
+  constructor(private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService, public zone: NgZone) { }
 
   ngOnInit(): void {
     this.cityFetcher.getCityName().subscribe(city => {
