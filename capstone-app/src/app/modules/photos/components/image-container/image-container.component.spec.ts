@@ -21,15 +21,11 @@ describe('ImageContainerComponent', () => {
         title: 'First Test',
         link: '../test1.jpeg',
         contextLink: 'test1.com',
-        height: 3024,
-        width: 4032,
       },
       {
         title: 'Second Test',
         link: '../test2.jpeg',
         contextLink: 'test2.com',
-        height: 3024,
-        width: 4032,
       },
     ];
 
