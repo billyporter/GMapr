@@ -34,9 +34,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   langlinks = new Map();
   languages: LanguageData = Languages as LanguageData;
   query: string;
-  prevQuery: string;
-  prevWordForHistory: string;
-  prevPreFix: string;
   UrlForAttribution: string;
 
   @Input() cityName!: string;
@@ -73,9 +70,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           this.langlinks = result.langlinks;
-          this.prevQuery = result.originalSearchQuery;
-          this.prevWordForHistory = 'History';
-          this.prevPreFix = 'en';
           this.UrlForAttribution = 'https://en.wikipedia.org/wiki/' + result.originalSearchQuery;
         }
         else {
@@ -112,25 +106,9 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   }
 
   onChangeLanguage(prefix: string) {
-    if (prefix === this.prevPreFix) {
-      this.changeLanguage(this.prevQuery, this.prevPreFix, this.prevWordForHistory);
-    }
-    else if (prefix === 'en' && !this.langlinks.get('en')) {
-      this.prevPreFix = prefix;
-      const language = this.langlinks["ca"];
-      this.query = language["searchQuery"];
-      this.prevQuery = this.query;
-      this.prevWordForHistory = 'History';
-      this.changeLanguage(this.query, 'en', 'History');
-    }
-    else {
       const language = this.langlinks.get(prefix);
-      this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
-      this.prevQuery = this.query;
       const wordForHistory = this.languages[prefix]["WordForHistory"];
-      this.prevWordForHistory = wordForHistory;
       this.changeLanguage(this.query, prefix, wordForHistory);
-    }
   }
 }
