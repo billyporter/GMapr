@@ -114,6 +114,8 @@ export class WikiResultsService {
     parsedText = parsedText.replace(regexForSourceNeeded, '');
     const furtherReading = this.findHrefs(parsedText, language);
     let history = parsedText;
+    const regexForCatLinks = /class="catlinks[\s\S]*?<\/div>/gi;
+    const regexForDabLinks = /<div class="dablink[\s\S]*?<\/div>/gi;
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
     const regexParsing = /\.mw.*?}}/gi;
     const regexForH3 = /<h3>.*?<\/h3>/gi;
@@ -133,6 +135,8 @@ export class WikiResultsService {
     const regexForDivStyleTags = /<div style=[\s\S]*?<\/div>/gi;
     history = history.replace(regexCaptions, '').replace(regexParsing, '');
     history = history.replace(regexForOLists, '').replace(regexForULists, '');
+    history = history.replace(regexCaptions, '').replace(regexParsing, '').replace(regexForCatLinks, '>');
+    history = history.replace(regexForOLists, '').replace(regexForULists, '').replace(regexForDabLinks, '');
     history = history.replace(regexForTables, '').replace(regexForNotes, '');
     history = history.replace(regexForRows, '').replace(regexForColumns, '');
     history = history.replace(regexForDivStyleTags, '');
