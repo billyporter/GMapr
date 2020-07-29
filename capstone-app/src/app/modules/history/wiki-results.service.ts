@@ -110,6 +110,8 @@ export class WikiResultsService {
         parsedText = paragraphs.slice(0,9).join('');
       }
     }
+    const regexForSourceNeeded = /<sup class="noprint Inline-Template Template-Fact"[\s\S]*?<\/sup>/gi;
+    parsedText = parsedText.replace(regexForSourceNeeded, '');
     const furtherReading = this.findHrefs(parsedText, language);
     let history = parsedText;
     const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
