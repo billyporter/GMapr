@@ -42,8 +42,8 @@
       <mat-menu #menuThemes="matMenu">
         <ng-container *ngFor="let map of mapTypes">
           <button mat-menu-item (click)="setMapStyle(map)">
-            <mat-icon>explore</mat-icon>
-            <span> {{ map }}</span>
+            <mat-icon>{{ map[1] }}</mat-icon>
+            <span> {{ map[0] }}</span>
           </button>
         </ng-container>
       </mat-menu>
@@ -60,7 +60,7 @@
       <mat-menu #menu="matMenu">
         <ng-container *ngFor="let option of optionsTypes">
           <button mat-menu-item (click)="changeType(option[0])">
-            <mat-icon>{{option[1]}}</mat-icon>
+            <mat-icon>{{ option[1] }}</mat-icon>
             <span> {{ option[0] }}</span>
           </button>
         </ng-container>

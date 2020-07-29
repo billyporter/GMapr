@@ -62,7 +62,14 @@ export class MapComponent implements OnInit, OnChanges {
   nightMode: google.maps.MapTypeStyle[] = nightModeTheme;
   aubergineMode: google.maps.MapTypeStyle[] = aubergineModeTheme;
   lightMode: google.maps.MapTypeStyle[] = lightModeTheme;
-  mapTypes = ['Aubergine', 'Dark', 'Light', 'Night', 'Retro', 'Silver'];
+  mapTypes: string[][] = [
+    ['Aubergine', 'brightness_4'],
+    ['Dark', 'wb_cloudy'],
+    ['Light', 'wb_sunny'],
+    ['Night', 'bedtime'],
+    ['Retro', 'sports_motorsports'],
+    ['Silver', 'ac_unit']
+  ]
   options: google.maps.MapOptions = {
       styles: this.retroMode,
       zoomControl: false,
@@ -101,7 +108,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   setMapStyle(mapType: string) {
     let newMap: google.maps.MapOptions = {};
-    switch(mapType) {
+    switch (mapType) {
       case 'Retro': {
         newMap = {
           styles: this.retroMode,
