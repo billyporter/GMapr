@@ -3,7 +3,7 @@
 </div>
 <div class="flex-container">
   <mat-progress-bar mode="determinate" value="{{value}}" [ngStyle]="{'display': !display ? 'block' : 'none'}"></mat-progress-bar>
-  <div [ngClass]="allowClick[i] === 1 ? 'on-photo' : 'off-photo'" href="{{ photo.contextLink }}" class="picture" *ngFor="let photo of displayPhotos; let i = index" [ngStyle]="{'display': display ? 'inline-block' : 'none'}">
+  <div [ngClass]="allowClick[i] === 1 ? 'on-photo' : 'off-photo'" class="picture" *ngFor="let photo of displayPhotos; let i = index" [ngStyle]="{'display': display ? 'inline-block' : 'none'}">
       <img src="{{ photo.link }}" (error)="removePhoto(i)" (load)="loading()" (click)="toggleClickEvent(i)"/>
       <div class="details" (click)="toggleClickEvent(i)">
         <span class="title"><a [ngClass]="allowClick[i] === 1 ? 'click-on' : 'click-off'" href="{{ photo.contextLink }}" target="_blank">{{ photo.title }}<br><hr></a></span>
