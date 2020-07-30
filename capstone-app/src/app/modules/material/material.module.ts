@@ -7,6 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 const material = [
   MatButtonModule,
@@ -17,6 +21,10 @@ const material = [
   MatSelectModule,
   MatCardModule,
   MatNativeDateModule,
+  MatDialogModule,
+  MatTooltipModule,
+  MatListModule,
+  MatExpansionModule,
 ];
 
 @NgModule({

@@ -15,10 +15,11 @@ export class ContentComponent implements OnInit {
   images = ['assets/gmapr.jpg' ,'assets/mapsOne.jpg', 'assets/mapsTwo.jpg', 
     'assets/mapsThree.jpg', 'assets/photos.jpg', 'assets/historyOne.png' , 'assets/historyTwo.jpg'
   ];
+  panelOpenState = false;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   togglePaused() {

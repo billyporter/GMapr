@@ -15,7 +15,7 @@ export class OnboardingComponent implements OnInit {
     this.dialog.open(ContentComponent);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.openDialog();
   }
 

@@ -1,13 +1,126 @@
-<ngb-carousel #carousel [interval]="5000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
+<h1>Learn the Basics of GMapr</h1>
+<!-- <ngb-carousel
+  matTooltip="Onboarding images"
+  #carousel [interval]="5000" 
+  [pauseOnHover]="pauseOnHover" 
+  (slide)="onSlide($event)">
     <ng-template ngbSlide *ngFor="let img of images; index as i">
-      <a href="https://www.google.fr/?q=Number+{{i+1}}" target="_blank" rel="nofollow noopener noreferrer">
+      <a href="https://www.google.fr/?q=Number+{{i+1}}" 
+        target="_blank" 
+        rel="nofollow noopener noreferrer">
         <div class="picsum-img-wrapper">
           <img [src]="img" alt="My image {{i + 1}} description">
         </div>
       </a>
     </ng-template>
 </ngb-carousel>
-<button mat-button [mat-dialog-close]="true">Close</button>
-<button mat-button type="button" (click)="togglePaused()">
-    {{paused ? 'Cycle' : 'Pause' }}
-</button>
+<button mat-button 
+  [mat-dialog-close]="true"
+  matTooltip="Close the onboarding module">
+  Close</button>
+<button 
+  mat-button type="button" 
+  (click)="togglePaused()"
+  matTooltip="Click to pause imgaes or cycle through images">
+    {{ paused ? 'Cycle' : 'Pause' }}
+</button> -->
+
+<mat-list role="list">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          GMapr Description
+        </mat-panel-title>
+        <mat-panel-description>
+          Click to learn more about GMapr
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu2.gif">
+      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
+    </mat-expansion-panel>
+ 
+    <mat-expansion-panel >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Maps Search Bar
+        </mat-panel-title>
+        <mat-panel-description>
+          Learn more about how to use the Search bar
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu1.gif">
+      <p>Use the search bar to find any city in the world</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Map Custom Markers
+        </mat-panel-title>
+        <mat-panel-description>
+          Learn more about map custom markers 
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu1.gif">
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Map Type/Themes
+        </mat-panel-title>
+        <mat-panel-description>
+          Learn more about Map Types and Themes
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu2.gif">
+      <p>
+        Use the Marker Types button to change the search marker type. 
+        Use the Map Theme button to change the map color theme.
+      </p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Photo Filter Button
+        </mat-panel-title>
+        <mat-panel-description>
+          Learn more about the Photo filter button
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu1.gif">
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          History Language Feature
+        </mat-panel-title>
+        <mat-panel-description>
+          Click to learn more about Language Feature
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu2.gif">
+      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          History Further Reading Links
+        </mat-panel-title>
+        <mat-panel-description>
+          Click to learn more about Further Reading Links
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <img src="assets/haikyuu2.gif">
+      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</mat-list>

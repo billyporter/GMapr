@@ -6,7 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { OnboardingComponent } from './onboard/onboarding.component';
 import { ContentComponent } from './content/content.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [OnboardingComponent, ContentComponent],
@@ -17,7 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatSelectModule,
     NgbModule,
-    MatDialogModule,
+    MaterialModule,
   ],
   exports: [OnboardingComponent, ContentComponent]
 })

@@ -1094,10 +1094,34 @@ export class MapComponent implements OnInit, OnChanges {
   placesRequestFunc(location: google.maps.LatLng) {
     this.placesRequest.location = this.location;
     this.nearSearch.nearbySearch(this.placesRequest, results => {
+      console.log(results);
+      if (this.placesRequest.location !== this.location) {
+        console.log(this.placesRequest.location + ' doesnt equal ' + this.location);
+        return;
+      }
+      let city;
+      this.placeCitySharer.getCityName().subscribe(cities => {
+        city = cities;
+      })
+      console.log(city);
+      if (city !== this.cityLocation) {
+        console.log('not equal');
+        console.log(city);
+        console.log(this.cityLocation);
+        return;
+      }
       // resetting data
       this.searchMarkers = [];
       this.markerData.clear();
+      console.log(this.location.toString());
       for (const result of results) {
+        let city = this.cityLocation.split(',');
+        // console.log(city);
+        // console.log(result.vicinity);
+        // if (result.vicinity.includes(city)){
+        //   console.log(result.formatted_address + ' isnt equal to ' + this.cityLocation);
+        // }
+        console.log(result);
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
@@ -1141,8 +1165,9 @@ export class MapComponent implements OnInit, OnChanges {
         this.cityLocation = resultArr[0].formatted_address;
       }
       this.placeCitySharer.setCityName(this.cityLocation);
+      console.log(this.location);
+      this.placesRequestFunc(this.location);
     });
-    this.placesRequestFunc(this.location);
   }
 
   getCurrentLocation() {
