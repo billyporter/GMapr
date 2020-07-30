@@ -162,7 +162,7 @@ export class WikiResultsService {
     for (const h of hrefs) {
       if (count <= 12 && !(h.getAttribute('href').charAt(0) === '#' ||
         h.getAttribute('title') && h.getAttribute('title').startsWith('Edit') ||
-        h.getAttribute('href').includes('=edit'))) {
+        h.getAttribute('href').includes('=edit') || h.getAttribute('href').includes('.jpg'))) {
         const name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://'+ languageAbreviation +'.wikipedia.org' + url;
