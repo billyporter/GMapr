@@ -1,85 +1,74 @@
 <mat-card>
   <mat-list role="list">
     <mat-list-item role="listitem" class="search-box">
-      <button
-      class="dropdown"
-      mat-icon-button
-      (click)="toggleOptions()"
-    >
-      <mat-icon>{{!showOptions ? 'expand_more' : 'expand_less'}}</mat-icon>
-    </button>
+      <button class="dropdown" mat-icon-button (click)="toggleOptions()">
+        <mat-icon>{{ !showOptions ? "expand_more" : "expand_less" }}</mat-icon>
+      </button>
       <mat-form-field class="search-bar">
         <mat-label>Search for a city</mat-label>
-        <input matInput type="text" #searchBar
-        placeholder="Search for a City"/>
+        <input
+          matInput
+          type="text"
+          #searchBar
+          placeholder="Search for a City">
         <button
           *ngIf="searchBar.value"
           matSuffix
           mat-icon-button
           aria-label="Clear"
-          (click)="searchBar.value = ''"
-        >
+          (click)="searchBar.value = ''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      <button
-      class="search-icon"
-      mat-icon-button
-      (click)="locationSearch()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-    </mat-list-item> 
+      <button class="search-icon" mat-icon-button (click)="locationSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-list-item>
     <div [ngClass]="showOptions ? 'show' : 'hidden'">
-    <mat-divider></mat-divider>
-    <mat-list-item role="listitem">
-      <ng-template matMenuContent></ng-template>
-      <div class="flex-menu">
-      <span [matMenuTriggerFor]="menuThemes">
-        <mat-icon>map</mat-icon>
-        Map Theme
-      </span>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem">
+        <ng-template matMenuContent></ng-template>
+        <div class="flex-menu">
+          <span [matMenuTriggerFor]="menuThemes">
+            <mat-icon>map</mat-icon>
+            Map Theme
+          </span>
+        </div>
+        <mat-menu #menuThemes="matMenu">
+          <ng-container *ngFor="let map of mapTypes">
+            <button mat-menu-item (click)="setMapStyle(map[0])">
+              <mat-icon>{{ map[1] }}</mat-icon>
+              <span> {{ map[0] }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <ng-template matMenuContent></ng-template>
+        <div class="flex-menu">
+          <span [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+            Marker Types
+          </span>
+        </div>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngFor="let option of optionsTypes">
+            <button mat-menu-item (click)="changeType(option[0])">
+              <mat-icon>{{ option[1] }}</mat-icon>
+              <span> {{ option[0] }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </mat-list-item>
+      <mat-list-item role="listitem" class="clear">
+        <span class="button-delete" (click)="deleteAllCustomMark()">
+          <mat-icon>clear</mat-icon>
+          Clear Custom Markers
+        </span>
+      </mat-list-item>
     </div>
-      <mat-menu #menuThemes="matMenu">
-        <ng-container *ngFor="let map of mapTypes">
-          <button mat-menu-item (click)="setMapStyle(map[0])">
-            <mat-icon>{{ map[1] }}</mat-icon>
-            <span> {{ map[0] }}</span>
-          </button>
-        </ng-container>
-      </mat-menu>
-    </mat-list-item>
-
-    <mat-list-item role="listitem">
-      <ng-template matMenuContent></ng-template>
-      <div class="flex-menu">
-      <span [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
-        Marker Types
-      </span>
-    </div>
-      <mat-menu #menu="matMenu">
-        <ng-container *ngFor="let option of optionsTypes">
-          <button mat-menu-item (click)="changeType(option[0])">
-            <mat-icon>{{ option[1] }}</mat-icon>
-            <span> {{ option[0] }}</span>
-          </button>
-        </ng-container>
-      </mat-menu>
-    </mat-list-item>
-    <mat-list-item role="listitem" class="clear">
-      <span
-        class="button-delete"
-        (click)="deleteAllCustomMark()"
-      >
-      <mat-icon>clear</mat-icon>
-        Clear Custom Markers
-      </span>
-    </mat-list-item>
-  </div>
   </mat-list>
 </mat-card>
-
 <div class="map-container">
   <google-map
     class="map desktop"
@@ -87,29 +76,27 @@
     [options]="options"
     height="93vh"
     width="100%"
-    (mapClick)="addMarker($event)"
-  >
+    (mapClick)="addMarker($event)">
     <map-marker
       #customMarker
       class="custom-marker"
       *ngFor="let marker of markers"
       [options]="marker"
       (mapClick)="clickMarker(customMarker)"
-      (mapRightclick)="removeMarker(customMarker)"
-    ></map-marker>
+      (mapRightclick)="removeMarker(customMarker)">
+    </map-marker>
     <map-marker
       *ngFor="let marker of searchMarkers"
       class="search-marker"
       #searchMarker
       [options]="marker"
-      (mapClick)="openInfoWindow(searchMarker)"
-    >
+      (mapClick)="openInfoWindow(searchMarker)">
     </map-marker>
-    <map-info-window (closeclick)="resetFilter()" #infoWindow
-      ><strong>{{ activeMark }}</strong></map-info-window
-    >
-    <map-info-window #customWindow
-      ><strong>Custom Marker</strong></map-info-window
-    >
+    <map-info-window (closeclick)="resetFilter()" #infoWindow>
+      <strong>{{ activeMark }}</strong>
+      </map-info-window>
+    <map-info-window #customWindow>
+      <strong>Custom Marker</strong>
+    </map-info-window>
   </google-map>
 </div>
