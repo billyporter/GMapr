@@ -29,6 +29,7 @@ mat-list {
   margin: 0px;
 }
 
+// Need negative margins here to override Angular Material Styling
 mat-list .search-box {
   font-size: 15px;
   height: 40px;
