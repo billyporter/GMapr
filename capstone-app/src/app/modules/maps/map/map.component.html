@@ -41,7 +41,7 @@
     </div>
       <mat-menu #menuThemes="matMenu">
         <ng-container *ngFor="let map of mapTypes">
-          <button mat-menu-item (click)="setMapStyle(map)">
+          <button mat-menu-item (click)="setMapStyle(map[0])">
             <mat-icon>{{ map[1] }}</mat-icon>
             <span> {{ map[0] }}</span>
           </button>
