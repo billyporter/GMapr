@@ -10,7 +10,8 @@
     </button>
       <mat-form-field class="search-bar">
         <mat-label>Search for a city</mat-label>
-        <input matInput type="text" #searchBar />
+        <input matInput type="text" #searchBar
+        placeholder="Search for a City"/>
         <button
           *ngIf="searchBar.value"
           matSuffix
@@ -81,12 +82,11 @@
 
 <div class="map-container">
   <google-map
-    class="map"
+    class="map desktop"
     [center]="location"
     [options]="options"
     height="93vh"
     width="100%"
-    [zoom]="zoom"
     (mapClick)="addMarker($event)"
   >
     <map-marker

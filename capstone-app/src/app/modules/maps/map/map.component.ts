@@ -30,7 +30,7 @@ export class MapComponent implements OnInit, OnChanges {
   nearSearch?: google.maps.places.PlacesService;
   location?: google.maps.LatLng;
   city: string;
-  zoom = 13;
+  zoom = window.innerWidth > 600 ? 13 : 12;
   markerData = new Map<string, string[]>();
   searchMarkers: google.maps.MarkerOptions[] = [];
   autoMark: google.maps.Marker;
@@ -72,6 +72,7 @@ export class MapComponent implements OnInit, OnChanges {
   ]
   options: google.maps.MapOptions = {
       styles: this.retroMode,
+      zoom: this.zoom,
       zoomControl: false,
       rotateControl: false,
       streetViewControl: false,
@@ -287,9 +288,5 @@ export class MapComponent implements OnInit, OnChanges {
 
   toggleOptions() {
     this.showOptions = !this.showOptions;
-  }
-
-  tester(any: any) {
-    console.log(any);
   }
 }
