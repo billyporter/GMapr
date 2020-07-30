@@ -145,7 +145,7 @@ export class WikiResultsService {
     tempHistory = tempHistory.replace(regexForRefrenceNumbers, '').replace(regexForCitationNeeded, '');
     tempHistory = tempHistory.replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
     tempHistory = tempHistory.replace(regexForAnyRemainingCSSStyling, '');
-    if(tempHistory.length < 20 && firstIndex !== -1) {
+    if(tempHistory.length < 500 && firstIndex !== -1) {
       text = text.replace('span class="mw-headline" id="', '');
       return this.fixString(text, wordForHistory, language);
     }
