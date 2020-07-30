@@ -35,6 +35,8 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   wasRemoved: number;
   numLoaded: number;
   display: boolean;
+  allowClickLink: boolean;
+  allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   value = 0;
 
   constructor(private cd: ChangeDetectorRef, private photosService: PhotoFetcher) {}
@@ -66,6 +68,7 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   }
 
   getPhotos() {
+    this.allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.originalPhotos = [];
     this.imageLinks = [];
     this.wasRemoved = 0;
@@ -141,6 +144,14 @@ export class ImageContainerComponent implements OnChanges, OnInit {
       this.display = true;
       this.value = 0;
     }
+    this.cd.detectChanges();
+  }
+
+  toggleClickEvent(index: number) {
+    this.allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.allowClick[index] = 1;
+    console.log(this.allowClick);
+    console.log(index);
     this.cd.detectChanges();
   }
 }
