@@ -1,5 +1,5 @@
 .search-icon {
-  margin-right: -30px;
+  margin-left: 30px;
 }
 
 .flex-menu {
@@ -22,12 +22,16 @@ mat-form-field:focus-within .search-icon {
 }
 
 mat-icon .search-box {
-  margin-right: -20px;
+  margin-left: 20px;
 }
 
-.search-box {
+mat-list {
+  margin: 0px;
+}
+
+mat-list .search-box {
   font-size: 15px;
-  height: 40px !important;
+  height: 40px;
   margin-bottom: -5px;
   margin-left: -10px;
   margin-top: -5px;
@@ -38,7 +42,7 @@ mat-icon .search-box {
   width: 200px;
 }
 
-::ng-deep .mat-form-field {
+mat-card ::ng-deep .mat-form-field {
   .mat-input-element {
     font-size: 15px;
     transition-delay: 0.0s;
@@ -56,7 +60,7 @@ mat-icon .search-box {
   -webkit-transition-property: margin-left, margin-right;
 }
 
-::ng-deep .search-bar .mat-form-field-underline {
+.search-bar ::ng-deep .mat-form-field-underline {
   display: none;
 }
 
@@ -125,8 +129,8 @@ button {
 
 @media only screen and (max-width: 450px) { 
   mat-card {
-    border-radius: 0px;
-    margin: 0px;
+    border-radius: 0;
+    margin: 0;
     overflow-x: hidden;
     overflow-y: hidden;
     padding: 15px 0px;
@@ -160,9 +164,7 @@ button {
   .search-box {
     text-align: center;
   }
-
 }
-
 
 @media only screen and (max-width: 350px) { 
   mat-card {
