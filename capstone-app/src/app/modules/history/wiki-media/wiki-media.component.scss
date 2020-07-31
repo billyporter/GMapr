@@ -25,6 +25,12 @@
 .text, p {
   padding-bottom: 15px;
 }
+
+.tag {
+  font-weight: bold;
+  color: blue;
+}
+
 .body {
   display: flex;
   justify-content: center;

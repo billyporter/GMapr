@@ -34,7 +34,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   langlinks = new Map();
   languages: LanguageData = Languages as LanguageData;
   query: string;
-  UrlForAttribution: string;
+  urlForAttribution: string;
 
   @Input() cityName!: string;
 
@@ -69,11 +69,11 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.title = result.title;
           this.loading = false;
           this.langlinks = result.langlinks;
-          this.UrlForAttribution = 'https://en.wikipedia.org/wiki/' + result.originalSearchQuery;
+          this.urlForAttribution = 'https://en.wikipedia.org/wiki/' + result.originalSearchQuery;
         }
         else {
           this.error = 'Unfortunately there is no history to display.';
-          this.UrlForAttribution = '';
+          this.urlForAttribution = '';
         }
     });
   }
@@ -89,14 +89,14 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.loading = false;
           this.title = result.title;
           this.urls = result.furtherReading;
-          this.UrlForAttribution = 'https://' + languagePrefix + '.wikipedia.org/wiki/' + queryString;
+          this.urlForAttribution = 'https://' + languagePrefix + '.wikipedia.org/wiki/' + queryString;
           if(result.langlinks && result.langlinks.size > 0) {
               this.langlinks = result.langlinks;
           }
         }
         else {
           this.loading = true;
-          this.UrlForAttribution = '';
+          this.urlForAttribution = '';
           this.error = 'Unfortunately, the language you requested does not have an available tranlation '
           + 'for this page. Please select a different language.';
         }
