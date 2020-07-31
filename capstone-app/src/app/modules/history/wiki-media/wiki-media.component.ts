@@ -83,8 +83,8 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       .subscribe((result: WikiServiceResult) => {
         this.error = '';
         this.history = result.history;
-        if (this.history.length > 0){
-          this.error = "";
+        if (this.history.length > 0) {
+          this.error = '';
           this.body = this.history;
           this.loading = false;
           this.title = result.title;
@@ -106,7 +106,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   onChangeLanguage(prefix: string) {
       const language = this.langlinks.get(prefix);
       this.query = language.get('searchQuery');
-      const wordForHistory = this.languages[prefix]["WordForHistory"];
+      const wordForHistory = this.languages[prefix]['WordForHistory'];
       this.changeLanguage(this.query, prefix, wordForHistory);
   }
 }
