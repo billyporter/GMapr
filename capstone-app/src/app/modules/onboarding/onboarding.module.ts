@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { OnboardingComponent } from './onboard/onboarding.component';
 import { ContentComponent } from './content/content.component';
 import { MaterialModule } from '../material/material.module';
 
 @NgModule({
-  declarations: [OnboardingComponent, ContentComponent],
+  declarations: [ContentComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -17,6 +16,6 @@ import { MaterialModule } from '../material/material.module';
     MatSelectModule,
     MaterialModule,
   ],
-  exports: [OnboardingComponent, ContentComponent]
+  exports: [ContentComponent]
 })
 export class OnboardingModule { }

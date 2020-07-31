@@ -1103,11 +1103,7 @@ export class MapComponent implements OnInit, OnChanges {
       this.placeCitySharer.getCityName().subscribe(cities => {
         city = cities;
       })
-      console.log(city);
       if (city !== this.cityLocation) {
-        console.log('not equal');
-        console.log(city);
-        console.log(this.cityLocation);
         return;
       }
       // resetting data
@@ -1115,13 +1111,7 @@ export class MapComponent implements OnInit, OnChanges {
       this.markerData.clear();
       console.log(this.location.toString());
       for (const result of results) {
-        let city = this.cityLocation.split(',');
-        // console.log(city);
-        // console.log(result.vicinity);
-        // if (result.vicinity.includes(city)){
-        //   console.log(result.formatted_address + ' isnt equal to ' + this.cityLocation);
-        // }
-        console.log(result);
+       
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
