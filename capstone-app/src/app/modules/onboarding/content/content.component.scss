@@ -11,4 +11,14 @@ img {
     img {
         height: 100px;
     }
+
+    mat-panel-title {
+        height: fit-content;
+        font-size: 3px !important;
+    }
+
+    mat-panel-description {
+        height: fit-content;
+        font-size: 3px !important;
+    }
 }
