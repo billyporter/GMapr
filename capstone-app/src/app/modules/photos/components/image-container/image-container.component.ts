@@ -31,6 +31,12 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   errorMessage: string;
   query = '';
   guy = 0;
+  imageLinks: string[] = [];
+  wasRemoved: number;
+  numLoaded: number;
+  display: boolean;
+  allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  value = 0;
 
   constructor(private cd: ChangeDetectorRef, private photosService: PhotoFetcher) {}
 
@@ -40,6 +46,12 @@ export class ImageContainerComponent implements OnChanges, OnInit {
 
   // TODO(billyporter): Fix expressionchanged error
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.limit && this.numLoaded === this.limit) {
+      this.display = true;
+    }
+    if (this.filter === this.city) {
+      this.filter = '';
+    }
     if (changes.city) {
       this.filter = '';
     }
@@ -49,11 +61,17 @@ export class ImageContainerComponent implements OnChanges, OnInit {
     if (changes.city || changes.filter) {
       this.getPhotos();
     }
-    this.limitPhotos(this.limit);
+    else {
+      this.limitPhotos(this.limit);
+    }
   }
 
   getPhotos() {
+    this.allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.originalPhotos = [];
+    this.imageLinks = [];
+    this.wasRemoved = 0;
+    this.display = false;
     const currentQuery = this.query;
     this.photosService.getPhotos(this.query, 10).subscribe(
       (results) => {
@@ -70,17 +88,22 @@ export class ImageContainerComponent implements OnChanges, OnInit {
               title: results.items[item].title,
               link: results.items[item].link,
               contextLink: results.items[item].image.contextLink,
-              height: results.items[item].image.height,
-              width: results.items[item].image.width,
             };
-            this.originalPhotos.push(photo);
+            if (!this.isDuplicate(photo.link)) {
+              this.originalPhotos.push(photo);
+            }
+            else {
+              this.wasRemoved = 1;
+            }
           }
         }
         if (this.originalPhotos.length === 0 && !isOldRequest) {
           this.errorMessage = '0 images found';
-        } else {
+        } else if (!isOldRequest) {
+          this.numLoaded = 0;
+          this.value = 0;
           this.limitPhotos(this.limit);
-          this.limitChange.emit({max: 10, wasRemoved: 0});
+          this.limitChange.emit({max: this.originalPhotos.length, wasRemoved: this.wasRemoved});
         }
       },
       (error) => {
@@ -95,9 +118,37 @@ export class ImageContainerComponent implements OnChanges, OnInit {
   }
 
   removePhoto(index: number) {
-    this.limit = this.originalPhotos.length--;
+    this.limit = this.displayPhotos.length - 1;
     this.originalPhotos.splice(index, 1);
     this.limitPhotos(this.limit);
-    this.limitChange.emit({max: this.limit, wasRemoved: 1});
+    this.limitChange.emit({max: this.originalPhotos.length, wasRemoved: 1});
+  }
+
+  isDuplicate(photoLink: string) {
+    const shortenedLink = photoLink.match(/([^\/]+$)/g)[0];
+    if (this.imageLinks.includes(shortenedLink)) {
+      return true;
+    }
+    else {
+      this.imageLinks.push(shortenedLink);
+      return false;
+    }
+  }
+
+  loading() {
+    this.numLoaded++;
+    const smallerOne = this.limit > this.originalPhotos.length ? this.originalPhotos.length : this.limit;
+    this.value = (100 / smallerOne) * this.numLoaded;
+    if (this.numLoaded === this.limit || this.numLoaded === this.originalPhotos.length) {
+      this.display = true;
+      this.value = 0;
+    }
+    this.cd.detectChanges();
+  }
+
+  toggleClickEvent(index: number) {
+    this.allowClick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.allowClick[index] = 1;
+    this.cd.detectChanges();
   }
 }

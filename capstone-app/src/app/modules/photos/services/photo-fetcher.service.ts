@@ -8,7 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class PhotoFetcher {
   private static LINK = 'https://www.googleapis.com/customsearch/v1?';
-  private static API_KEY = 'key=AIzaSyCd2vIkDcVuvM3ie4kE661cGS3GsH9IWcQ';
+  private static API_KEY = 'key=AIzaSyBdi-mLi0sRpQT3z9T0aKfEfuTRqAhZVYQ';
   private static SEARCH_ENGINE = 'cx=014012661603529902036:grbt2ttpety';
   private static SEARCH_TYPE = 'searchType=image';
 

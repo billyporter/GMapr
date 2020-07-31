@@ -7,8 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 export class SharedPlacesCityService {
   private cityName = new BehaviorSubject<string>(null);
   private placesSource = new BehaviorSubject<Map<string, string[]>>(null);
+  private markerType = new BehaviorSubject<string>('Tourist Attraction');
 
-  setPlaces(newPlaces: Map<string, string[]>) {
+  setPlaces(newPlaces: Map<string, string[]>, newMarkerType: string) {
+    newPlaces.set(newMarkerType, []);
     this.placesSource.next(newPlaces);
   }
 
@@ -22,5 +24,13 @@ export class SharedPlacesCityService {
 
   getPlacesSource() {
     return this.placesSource.asObservable();
+  }
+
+  setMarkerType(newMarkerType: string) {
+    this.markerType.next(newMarkerType);
+  }
+
+  getMarkerType() {
+    return this.markerType.asObservable;
   }
 }

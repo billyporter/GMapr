@@ -1,0 +1,23 @@
+[ 
+    {
+        "name": "Tourist Attractions",
+        "children": [
+            {
+                "name": "Park",
+                "children": [
+                    {
+                        "name": "Central Park"
+                    }
+                ]
+            },
+            {
+                "name": "Building",
+                "children": [
+                    {
+                        "name": "New Guy"
+                    }
+                ]
+            }
+        ]
+    }
+]

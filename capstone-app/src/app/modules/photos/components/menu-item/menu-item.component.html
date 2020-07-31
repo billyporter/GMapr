@@ -2,8 +2,8 @@
   <span *ngFor="let child of items">
     <span *ngIf="child.children && child.children.length > 0">
       <button mat-menu-item [matMenuTriggerFor]="menu.childMenu || defaultMenu">
-        <mat-icon>filter_list</mat-icon>
-        {{ child.name }}
+        <mat-icon>{{optionsTypes.get(child.name) ? optionsTypes.get(child.name) : 'more'}}</mat-icon>
+        {{child.name}}
       </button>
       <app-menu-item
         #menu
