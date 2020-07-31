@@ -1,8 +1,10 @@
-<div class="flex-container"><div class="filter">
+<mat-card>
+<div class="flex-container">
+  <div class="filter">
   <span *ngFor="let item of navItems">
     <span *ngIf="item.children && item.children.length > 0">
       <ng-template matMenuContent></ng-template>
-      <button mat-raised-button [matMenuTriggerFor]="menu.childMenu || defaultMenu">
+      <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu || defaultMenu">
         {{item.name}}
         <mat-icon>expand_more</mat-icon>
       </button>
@@ -18,9 +20,10 @@
 <mat-menu #defaultMenu="matMenu">
 </mat-menu>
 </div>
+<div class="limit">
   <form class="count">
     <mat-form-field>
-      <mat-label>Number</mat-label>
+      <mat-label>Number to display</mat-label>
       <input
         matInput
         type="number"
@@ -29,7 +32,7 @@
         min="1"
         class="limit-input"
         max="{{ maxPhotos }}">
-      <span matSuffix>count</span>
+      <span matSuffix>photos</span>
       <mat-hint>Between 1 and {{ maxPhotos }}</mat-hint>
       <mat-error *ngIf="limitControl.invalid"
         >Must be between 1 and {{ maxPhotos }}</mat-error
@@ -37,9 +40,13 @@
     </mat-form-field>
   </form>
 </div>
+</div>
+<div class="photos">
 <app-image-container
   [filter]="markerFilter"
   [limit]="limitControl.value"
   [city]="city"
   (limitChange)="updateLimit($event.max, $event.wasRemoved)"
 ></app-image-container>
+</div>
+</mat-card>

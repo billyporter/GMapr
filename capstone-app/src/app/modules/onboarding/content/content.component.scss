@@ -7,18 +7,20 @@ img {
     height: 400px;
 }
 
-@media only screen and (max-width: 300px) {
-    img {
-        height: 100px;
+@media only screen and (max-width: 600px) {
+    mat-panel-title ::ng-deep {
+        font-size: 12px;
+        height: fit-content;
+        margin: 0;
     }
 
-    mat-panel-title {
+    mat-panel-description ::ng-deep {
         height: fit-content;
-        font-size: 3px !important;
+        font-size: 12px;
+        margin: 0;
     }
-
-    mat-panel-description {
-        height: fit-content;
-        font-size: 3px !important;
+    
+    mat-expansion-panel p {
+        font-size: 12px;
     }
 }
