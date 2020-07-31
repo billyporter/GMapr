@@ -167,8 +167,10 @@ export class WikiResultsService {
         const name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://'+ languageAbreviation +'.wikipedia.org' + url;
-        urls.set(url, name);
-        count++;
+        if(name){
+          urls.set(url, name);
+          count++;
+        }
       }
     }
     return urls;

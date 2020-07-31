@@ -63,7 +63,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       .subscribe((result: WikiServiceResult) => {
         if (result.history) {
           this.error = '';
-          this.cd.detach();
           this.body = result.history;
           this.history = result.history;
           this.urls = result.furtherReading;
@@ -76,8 +75,6 @@ export class WikiMediaComponent implements OnChanges, OnInit {
           this.error = 'Unfortunately there is no history to display.';
           this.UrlForAttribution = '';
         }
-        this.cd.detectChanges();
-        this.cd.reattach();
     });
   }
 
