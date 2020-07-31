@@ -1,31 +1,6 @@
 <h1>Learn the Basics of GMapr</h1>
-<!-- <ngb-carousel
-  matTooltip="Onboarding images"
-  #carousel [interval]="5000" 
-  [pauseOnHover]="pauseOnHover" 
-  (slide)="onSlide($event)">
-    <ng-template ngbSlide *ngFor="let img of images; index as i">
-      <a href="https://www.google.fr/?q=Number+{{i+1}}" 
-        target="_blank" 
-        rel="nofollow noopener noreferrer">
-        <div class="picsum-img-wrapper">
-          <img [src]="img" alt="My image {{i + 1}} description">
-        </div>
-      </a>
-    </ng-template>
-</ngb-carousel>
-<button mat-button 
-  [mat-dialog-close]="true"
-  matTooltip="Close the onboarding module">
-  Close</button>
-<button 
-  mat-button type="button" 
-  (click)="togglePaused()"
-  matTooltip="Click to pause imgaes or cycle through images">
-    {{ paused ? 'Cycle' : 'Pause' }}
-</button> -->
 
-<mat-list role="list">
+<mat-dialog-content class="mat-typography">
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -36,10 +11,10 @@
           Click to learn more about GMapr
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu2.gif">
+      <img src="assets/gmaprGen.gif">
       <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
     </mat-expansion-panel>
- 
+
     <mat-expansion-panel >
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -49,12 +24,11 @@
           Learn more about how to use the Search bar
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu1.gif">
-      <p>Use the search bar to find any city in the world</p>
+      <img src="assets/mapsSearchbar.gif">
+      <p>Use the search bar to search up any city in the world</p>
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Map Custom Markers
@@ -63,8 +37,12 @@
           Learn more about map custom markers 
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu1.gif">
-      <p>I'm visible because I am open</p>
+      <img src="assets/markerCustomBetter.gif">
+      <p>
+        Click any on the map to create custom markers.
+        To remove custom marker either use the remove all custom marker button 
+        or right click the custom marker. 
+      </p>
     </mat-expansion-panel>
 
     <mat-expansion-panel >
@@ -76,7 +54,7 @@
           Learn more about Map Types and Themes
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu2.gif">
+      <img src="assets/mapTypeThemes.gif">
       <p>
         Use the Marker Types button to change the search marker type. 
         Use the Map Theme button to change the map color theme.
@@ -92,10 +70,10 @@
           Learn more about the Photo filter button
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu1.gif">
-      <p>I'm visible because I am open</p>
+      <img src="assets/photos.gif">
+      <p>Use the filter button to display photos by marker type</p>
     </mat-expansion-panel>
-  
+
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -105,8 +83,8 @@
           Click to learn more about Language Feature
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu2.gif">
-      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
+      <img src="assets/language.gif">
+      <p>Use the languages button to change the display language of the History section</p>
     </mat-expansion-panel>
 
     <mat-expansion-panel>
@@ -118,9 +96,9 @@
           Click to learn more about Further Reading Links
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <img src="assets/haikyuu2.gif">
-      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
+      <img src="assets/furtherReading.gif">
+      <p>Click on the further reading button to learn about history topic spoken about in the History section</p>
     </mat-expansion-panel>
 
   </mat-accordion>
-</mat-list>
+</mat-dialog-content>
