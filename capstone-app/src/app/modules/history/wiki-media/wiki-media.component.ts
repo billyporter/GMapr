@@ -1,6 +1,6 @@
 import { mergeMap, switchMap, map, takeUntil } from 'rxjs/operators';
 import { WikiSearchResult } from '../WikiSearchTemplate';
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectorRef, AfterContentChecked, AfterViewChecked, NgZone } from '@angular/core';
 import { WikiServiceResult } from '../WikiServiceResult';
 import { WikiResultsService } from '../wiki-results.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,8 +13,8 @@ interface LanguageData {
 }
 
 interface AllLanguages {
-  ["FullLangName"]: string,
-  ["WordForHistory"]: string
+  ['FullLangName']: string,
+  ['WordForHistory']: string
 }
 
 @Component({
@@ -38,13 +38,13 @@ export class WikiMediaComponent implements OnChanges, OnInit {
 
   @Input() cityName!: string;
 
-  constructor(private cd: ChangeDetectorRef, private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService) { }
+  constructor(private cityFetcher: SharedPlacesCityService, private wikiService: WikiResultsService, public zone: NgZone) { }
 
   ngOnInit(): void {
     this.cityFetcher.getCityName().subscribe(city => {
       this.cityName = city;
       if (city) {
-        this.getResults(this.cityName);
+        this.zone.run(() => this.getResults(this.cityName));
       }
     });
   }
@@ -62,7 +62,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     this.wikiService.search(queryString, 'en', 'History')
       .subscribe((result: WikiServiceResult) => {
         if (result.history) {
-          this.error = "";
+          this.error = '';
           this.cd.detach();
           this.body = result.history;
           this.history = result.history;
@@ -84,6 +84,7 @@ export class WikiMediaComponent implements OnChanges, OnInit {
   changeLanguage(queryString: string, languagePrefix: string, wordForHistory: string) {
     this.wikiService.searchNewLang(queryString, languagePrefix, wordForHistory)
       .subscribe((result: WikiServiceResult) => {
+        this.error = '';
         this.history = result.history;
         if (this.history.length > 0){
           this.error = "";

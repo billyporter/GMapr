@@ -1,15 +1,41 @@
 .flex-container {
-  margin-left: 43px;
-  margin-right: 43px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin-top: 30px;
   text-align: left;
 }
 
-.mat-raised-button {
-  margin-bottom: 20px;
-  margin-top: 20px;
+mat-card {
+  margin: 20px 10px;
 }
 
-.count {
-  margin-bottom: 20px;
-  text-align: left;
+.limit mat-form-field {
+  width: 150px !important;
+}
+
+@media only screen and (max-width: 450px) { 
+  .flex-container {
+    align-content: space-between;
+  }
+
+  .limit {
+    margin-top: 20px;
+  }
+
+  mat-card {
+    margin: 0px;
+  }
+
+  .photos {
+    margin-left: -17px;
+    margin-right: -14px;
+  }
+}
+
+@media only screen and (max-width: 350px) { 
+  .flex-container {
+    flex-direction: column;
+  }
 }

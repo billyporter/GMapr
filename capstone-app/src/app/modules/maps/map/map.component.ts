@@ -3,6 +3,12 @@ import { SharedPlacesCityService } from 'src/app/services/shared-places-city.ser
 import { Component,  ViewChild, ElementRef, OnInit, Output, Input, 
   EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChildren } from '@angular/core';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
+import { darkModeTheme } from 'src/app/modules/maps/assets/darkMode';
+import { retroModeTheme } from './../assets/retroMode';
+import { nightModeTheme } from './../assets/nightMode';
+import { aubergineModeTheme } from './../assets/aubergineMode';
+import { silverModeTheme } from './../assets/silverMode';
+import { lightModeTheme } from './../assets/lightMode';
 
 @Component({
   selector: 'app-map',
@@ -24,7 +30,7 @@ export class MapComponent implements OnInit, OnChanges {
   nearSearch?: google.maps.places.PlacesService;
   location?: google.maps.LatLng;
   city: string;
-  zoom = 13;
+  zoom = window.innerWidth > 600 ? 13 : 12;
   markerData = new Map<string, string[]>();
   searchMarkers: google.maps.MarkerOptions[] = [];
   autoMark: google.maps.Marker;
@@ -37,15 +43,43 @@ export class MapComponent implements OnInit, OnChanges {
     location: this.testlocation,
     radius: 5000,
     type: 'tourist_attraction'
-  }
-  optionsTypes: string[] = ['Airport', 'Amusement Park', 'Aquarium', 'Art Gallery', 'Atm', 
-    'Bar', 'Book Store', 'Bowling Alley', 'Bus Station', 'Cafe', 'Campground', 
-    'Casino', 'Cemetery', 'Church', 'City Hall', 'Clothing Store', 'Convenience Store',
-    'Courthouse', 'Department Store', 'Electronics Store', 'Embassy', 'Gym',
-    'Hindu Temple', 'Jewelry Store', 'Library', 'Lodging', 'Meal Delivery',
-    'Meal Takeaway', 'Mosque', 'Movie Theater', 'Museum','Night Club', 'Park', 'Police', 
-    'Restaurant', 'Rv Park', 'Shopping Mall', 'Stadium', 'Store', 'Subway Station', 'Supermarket',
-    'Synagogue', 'Taxi Stand', 'Tourist Attraction', 'Train Station', 'Transit Station', 'University', 'Zoo'];
+  };
+  optionsTypes: string[][] = [
+    ['Airport', 'local_airport'],
+    ['Bar', 'local_bar'],
+    ['Church', 'add'], ['City Hall', 'home_work'],
+    ['Lodging', 'hotel'],
+    ['Museum', 'museum'], ['Park', 'nature_people'], ['Police', 'local_police'],
+    ['Restaurant', 'restaurant'], ['Store', 'store'],
+    ['Tourist Attraction', 'public'], ['University', 'school']
+  ];
+  showOptions = false;
+
+  // Todo smontana: exporting these from a separate style so as to not clutter the component file.
+  darkMode: google.maps.MapTypeStyle[] = darkModeTheme;
+  retroMode: google.maps.MapTypeStyle[] = retroModeTheme;
+  silverMode: google.maps.MapTypeStyle[] = silverModeTheme;
+  nightMode: google.maps.MapTypeStyle[] = nightModeTheme;
+  aubergineMode: google.maps.MapTypeStyle[] = aubergineModeTheme;
+  lightMode: google.maps.MapTypeStyle[] = lightModeTheme;
+  mapTypes: string[][] = [
+    ['Aubergine', 'brightness_4'],
+    ['Dark', 'wb_cloudy'],
+    ['Light', 'wb_sunny'],
+    ['Night', 'bedtime'],
+    ['Retro', 'sports_motorsports'],
+    ['Silver', 'ac_unit']
+  ]
+  options: google.maps.MapOptions = {
+      styles: this.retroMode,
+      zoom: this.zoom,
+      zoomControl: false,
+      rotateControl: false,
+      streetViewControl: false,
+      mapTypeControlOptions: {
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      },
+    };
 
   constructor(private readonly changeDetector: ChangeDetectorRef, private placeCitySharer: SharedPlacesCityService) {}
 
@@ -73,8 +107,51 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
+  setMapStyle(mapType: string) {
+    let newMap: google.maps.MapOptions = {};
+    switch (mapType) {
+      case 'Retro': {
+        newMap = {
+          styles: this.retroMode,
+        };
+        break;
+      }
+      case 'Light': {
+        newMap = {
+          styles: this.lightMode,
+        };
+        break;
+      }
+      case 'Dark': {
+        newMap = {
+          styles: this.darkMode,
+        };
+        break;
+      }
+      case 'Night': {
+        newMap = {
+          styles: this.nightMode,
+        };
+        break;
+      }
+      case 'Silver': {
+        newMap = {
+          styles: this.silverMode,
+        };
+        break;
+      }
+      case 'Aubergine': {
+        newMap = {
+          styles: this.aubergineMode,
+        };
+        break;
+      }
+    }
+    this.options = newMap;
+  }
+
   changeType(newType: string) {
-    let title = newType.split(' ')
+    const title = newType.split(' ')
                 .join('_')
                 .toLowerCase();
     this.placesRequest.type = title;
@@ -106,7 +183,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.searchMarkers.push(this.createMarker(result));
         this.markerData.set(result.name, result.types);
       }
-      this.placeCitySharer.setPlaces(this.markerData);
+      this.placeCitySharer.setPlaces(this.markerData, this.placesRequest.type);
       this.changeDetector.detectChanges();
     });
   }
@@ -116,7 +193,7 @@ export class MapComponent implements OnInit, OnChanges {
       position: result.geometry.location,
       title: result.name,
       icon: {
-          url: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+          url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
       }
     };
   }
@@ -128,7 +205,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private locationCallbackFail() {
-    this.cityLocation = 'Los Angeles, CA, USA'
+    this.cityLocation = 'Los Angeles, CA, USA';
     this.location = new google.maps.LatLng(34.0522, -118.2437);
     this.placesRequestFunc(this.location);
     this.placeCitySharer.setCityName(this.cityLocation);
@@ -203,5 +280,13 @@ export class MapComponent implements OnInit, OnChanges {
         return marker;
       }
     }
+  }
+
+  resetFilter() {
+    this.activeMarkerOutput.emit('');
+  }
+
+  toggleOptions() {
+    this.showOptions = !this.showOptions;
   }
 }

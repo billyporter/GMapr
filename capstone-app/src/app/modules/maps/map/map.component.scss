@@ -1,36 +1,180 @@
-.map-container {
-  margin-left: 43px;
-  margin-right: 43px;
+.search-icon {
+  margin-left: 30px;
+}
+
+.flex-menu {
+  align-content: center;
+  align-items: center;
+  display: flex;
+}
+
+mat-icon {
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+mat-icon:hover {
+  color:#1A73E9;
+}
+
+mat-form-field:focus-within .search-icon {
+  color:#1A73E9;
+}
+
+mat-icon .search-box {
+  margin-left: 20px;
+}
+
+mat-list {
+  margin: 0px;
+}
+
+// Need negative margins here to override Angular Material Styling
+mat-list .search-box {
+  font-size: 15px;
+  height: 40px;
+  margin-bottom: -5px;
+  margin-left: -10px;
+  margin-top: -5px;
 }
 
 .search-bar {
-  padding-bottom: 0;
-  text-align: center;
+  text-align: left;
+  width: 200px;
 }
 
-.search-icon {
-  align-self: flex-start;
+mat-card ::ng-deep .mat-form-field {
+  .mat-input-element {
+    font-size: 15px;
+    transition-delay: 0.0s;
+    transition-duration: 0.1s;
+    transition-property: width;
+    -webkit-transition-delay: 0.0s;
+    -webkit-transition-duration: 0.1s;
+    -webkit-transition-property: width;
+  }
+  transition-delay: 0.0s;
+  transition-duration: 0.1s;
+  transition-property: margin-left, margin-right;
+  -webkit-transition-delay: 0.0s;
+  -webkit-transition-duration: 0.1s;
+  -webkit-transition-property: margin-left, margin-right;
 }
 
-.search-box {
-  display: flex;
-  flex-wrap: nowrap;
+.search-bar ::ng-deep .mat-form-field-underline {
+  display: none;
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 43px;
-  white-space: normal;
+span:hover {
+  color:#1A73E9;
+  cursor: pointer;
 }
 
-.button-delete.mat-raised-button {
-  margin-bottom: 25px;
-  margin-right: 43px;
+span {
+  font-family: 'Roboto';
+  font-size: 13px;
+  margin-left: -10px;
+  margin-top: 10px;
+}
+
+input {
+  font-size: 20px;
+}
+
+mat-card {
+  border-radius: 10px;
+  margin: 8px;
+  position: absolute;
+  width: 300px;
+  z-index: 4;
+}
+
+mat-divider {
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+button {
+  margin-right: 10px;
+}
+
+.hidden {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none;
+  transition-delay: 0.0s;
+  transition-duration: 0.25s;
+  transition-property: max-height;
+  -webkit-transition-delay: 0.0s;
+  -webkit-on-duration: 0.25s;
+  -webkit-transition-property: max-height;
+}
+
+.show {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.0s;
+  transition-duration: 0.5s;
+  transition-property: max-height, opacity;
+  -webkit-transition-delay: 0.0s;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-property: max-height, opacity;
 }
 
 .button-delete ::ng-deep .mat-button-wrapper {
   //Had to override ang material style bc it wouldn't act the way we needed it to.
   line-height: 14px;
   white-space: normal;
+}
+
+@media only screen and (max-width: 450px) { 
+  mat-card {
+    border-radius: 0;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 15px 0px;
+    width: 100vw;
+  }
+
+  .search-bar {
+    width: 325px;
+  }
+
+  .search-icon {
+    margin-right: -30px;
+    margin-left: 10px;
+  }
+
+  mat-card ::ng-deep .mat-form-field {
+    .mat-input-element {
+      background-color: #e6ebea;
+      border-radius: 20px;
+      height: 50px;
+      font-size: 20px;
+      width: 250px;
+    }
+  }
+
+  .search-bar mat-label {
+    display: none;
+    font-size: 20px;
+  }
+
+  .search-box {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 350px) { 
+  mat-card {
+    padding: 10px 0px;
+    margin: 0px;
+    width: 100vw;
+  }
+
+  .search-bar {
+    width: 225px;
+  }
 }

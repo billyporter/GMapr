@@ -1,3 +1,4 @@
+import { MaterialModule } from './modules/material/material.module';
 import { MockWikiHandlerService } from './modules/history/services/mock-wiki-handler.service';
 import { WikiSearchHandler } from './modules/history/services/wiki-search-handler.service';
 import { PhotosModule } from './modules/photos/photos.module';
@@ -20,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MapsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MaterialModule,
   ],
   // providers: [
   //   { provide: PhotoFetcher, useExisting: MockPhotoFetcher },
