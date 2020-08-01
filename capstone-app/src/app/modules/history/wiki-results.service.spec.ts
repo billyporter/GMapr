@@ -5,16 +5,18 @@ import { WikiSearchResult } from './WikiSearchTemplate';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
 
 const title = 'Stillwater, Oklahoma';
-const history = 'The north-central region of Oklahoma became part of the United '
-              + 'States with the Louisiana Purchase in 1803. In 1832, author and '
-              + 'traveler Washington Irving provided the first recorded description '
-              + 'of the area around Stillwater in his book A Tour on the Prairies. '
-              + 'He wrote of “a glorious prairie spreading out beneath the golden '
-              + 'beams of an autumnal sun. The deep and frequent traces of buffalo, '
-              + 'showed it to be a one of their favorite grazing grounds.”';
+const history = ['History', 'The north-central region of Oklahoma became part of the United States '
+                  + 'with the Louisiana Purchase in 1803. In 1832, author and traveler Washington '
+                  + 'Irving provided the first recorded description of the area around Stillwater in '
+                  + 'his book A Tour on the Prairies. He wrote of “a glorious prairie spreading out beneath '
+                  + 'the golden beams of an autumnal sun. The deep and frequent traces of buffalo, showed it '
+                  + 'to be a one of their favorite grazing grounds.”More data that should be represented since '
+                  + 'history paragraph was too short, so it should examine everything!'];
 const furtherReading = new Map<string, string>();
-furtherReading.set("https://en.wikipedia.org/wiki/Louisiana_Purchase","Louisiana Purchase");
-furtherReading.set("https://en.wikipedia.org/wiki/Washington_Irving","Washington Irving");
+furtherReading.set('https://en.wikipedia.org/wiki/Hill_Street_(Los_Angeles)', 'Hill Street (Los Angeles)');
+furtherReading.set('https://en.wikipedia.org/wiki/Pershing_Square_(Los_Angeles)', 'Pershing Square (Los Angeles)');
+furtherReading.set('https://en.wikipedia.org/wiki/Louisiana_Purchase','Louisiana Purchase');
+furtherReading.set('https://en.wikipedia.org/wiki/Washington_Irving','Washington Irving');
 const testFixStringResponse = {history, furtherReading};
 const testResponse = {title, history, furtherReading};
 

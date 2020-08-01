@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import MockWikiResponse from 'testing/mock-wiki-response.json';
 
 interface HistoryFixString{
-  history: string;
+  history: string[];
   furtherReading?: Map<string, string>;
 }
 
@@ -24,16 +24,19 @@ export class WikiResultsService {
   private static readonly URL_BEGINNING = 'https://'
   private static readonly URL_MIDDLE = '.wikipedia.org/w/api.php?origin=*&action=parse&page=';
   private static readonly URL_END = '&format=json';
+  searchQuery : string;
 
   search(query: string, language: string, wordForHistory: string): Observable<WikiServiceResult> {
     return this.searchHandler
       .getQueryString(query)
       .pipe(
-        switchMap((result) =>
-          this.http.get<WikiSearchResult>(
+        switchMap((result) => {
+          let url = "http://.en.wikipedia.org/wiki/" + result;
+          this.searchQuery = result;
+          return this.http.get<WikiSearchResult>(
             `${WikiResultsService.URL_BEGINNING}${language}${WikiResultsService.URL_MIDDLE}${result}${WikiResultsService.URL_END}`
-          )
-        ),
+          );
+        }),
         map(history => {
           if (history.parse.text) {
             const langlinks = new Map<string, Map<string, string>>();
@@ -46,7 +49,8 @@ export class WikiResultsService {
             }
             const historyResult = this.fixString(history.parse.text['*'], wordForHistory, language);
             const title = history.parse.title;
-            return {title, ...historyResult, langlinks};
+            const originalSearchQuery = this.searchQuery;
+            return {title, ...historyResult, langlinks, originalSearchQuery};
           }
           else {
             throw new Error('API did not return a valid response');
@@ -54,7 +58,7 @@ export class WikiResultsService {
         }),
         catchError(() => {
           console.error('API did not return a valid response.');
-          return of({title: '', history: ''});
+          return of({title: '', history: ['']});
         })
       );
   }
@@ -82,50 +86,71 @@ export class WikiResultsService {
         }),
         catchError(() => {
           console.error('API did not return a valid response.');
-          return of({title: '', history: ''});
+          return of({title: '', history: ['']});
         })
       );
   }
 
 
   fixString(text: string, wordForHistory: string, language: string): HistoryFixString {
-    const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
-    const regexParsing = /\.mw.*?}}/gi;
-    let parsedText = text.replace(regexCaptions, '').replace(regexParsing, '');
-    const firstIndex = parsedText.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
+    let parsedText = text;
+    const firstIndex = text.indexOf('<span class="mw-headline" id="'+ wordForHistory +'">');
     if (firstIndex !== -1){
-      const firstPartOfString = parsedText.substring(firstIndex, parsedText.length);
+      const firstPartOfString = text.substring(firstIndex, parsedText.length);
       const endIndex = firstPartOfString.indexOf('<h2>', 0);
       const startIndex = firstPartOfString.indexOf('</h2>', 0);
       parsedText = firstPartOfString.substring(startIndex, endIndex);
     }
-    else {
-      console.error('The city page was found, but unfortunately there was no history paragraph found!');
-    }
     const paragraphs = parsedText.split('<p>');
     if (paragraphs.length > 9) {
       if (paragraphs[0].startsWith('</h2')) {
-        parsedText = paragraphs.slice(1,10).join('');
+        parsedText = paragraphs.slice(1,10).join('----');
       }
       else {
-        parsedText = paragraphs.slice(0,9).join('');
+        parsedText = paragraphs.slice(0,9).join('----');
       }
     }
+    else {
+      parsedText = paragraphs.join('----');
+    }
+    const regexForSourceNeeded = /<sup class="noprint Inline-Template Template-Fact"[\s\S]*?<\/sup>/gi;
+    parsedText = parsedText.replace(regexForSourceNeeded, '');
     const furtherReading = this.findHrefs(parsedText, language);
-    let history = parsedText.split(/<h3>.*?<\/h3>/g).join('');
-    const regexForULists = /<ul[\s\S]+<\/ul>/gi;
-    const regexForOLists = /<ol[\s\S]+<\/ol>/gi;
-    const regexForTables = /<table[\s\S]+<\/table>/gi;
-    const regexForCPUStats = /<!--[\s\S]*-->/gi;
-    const regexForAllTags = /<.*?>/gi;
+    let tempHistory = parsedText;
+    const regexForCatLinks = /class="catlinks[\s\S]*?<\/div>/gi;
+    const regexForDabLinks = /<div class="dablink[\s\S]*?<\/div>/gi;
+    const regexCaptions = /<a.*?<\/div><\/div><\/div>/gi;
+    const regexParsing = /\.mw.*?}}/gi;
+    const regexForH3 = /<h3>.*?<\/h3>/gi;
+    const regexForULists = /<ul[\s\S]+?<\/ul>/gi;
+    const regexForOLists = /<ol[\s\S]+?<\/ol>/gi;
+    const regexForTables = /<table[\s\S]+?<\/table>/gi;
+    const regexForNotes = /<div role="note"[\s\S]+?<\/div>/gi;
+    const regexForCPUStats = /<!--[\s\S]*?-->/gi;
+    const regexForCitationNeeded = /<span[\s\S]*?<\/span>/gi;
+    const regexForRows = /<tr[\s\S]*?<\/tr>/gi;
+    const regexForColumns = /<td[\s\S]*?<\/td>/gi;
+    const regexForAllTags = /<[\s\S]*?>/gi;
     const regexForContentListDiv = /<div id="toc"[\s\S]*?<\/div>/gi;
     const regexForExtraColorAttributes = /\d*&.*?;/gi;
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
     const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
-    history = history.replace(regexForOLists, '').replace(regexForULists, '')
-    .replace(regexForTables, '').replace(regexForCPUStats, '').replace(regexForContentListDiv, '')
-    .replace(regexForRefrenceNumbers, '').replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '')
-    .replace(regexForAnyRemainingCSSStyling, '');
+    const regexForDivStyleTags = /<div style=[\s\S]*?<\/div>/gi;
+    const regexForQuoteBox = /<div class="quotebox [\s\S]+?<\/p>/gi;
+    tempHistory = tempHistory.replace(regexCaptions, '').replace(regexParsing, '').replace(regexForCatLinks, '>');
+    tempHistory = tempHistory.replace(regexForOLists, '').replace(regexForULists, '').replace(regexForDabLinks, '');
+    tempHistory = tempHistory.replace(regexForTables, '').replace(regexForNotes, '');
+    tempHistory = tempHistory.replace(regexForRows, '').replace(regexForColumns, '').replace(regexForQuoteBox, '');
+    tempHistory = tempHistory.replace(regexForDivStyleTags, '');
+    tempHistory = tempHistory.replace(regexForCPUStats, '').replace(regexForContentListDiv, '');
+    tempHistory = tempHistory.replace(regexForRefrenceNumbers, '').replace(regexForCitationNeeded, '');
+    tempHistory = tempHistory.replace(regexForAllTags, '').replace(regexForExtraColorAttributes, '');
+    tempHistory = tempHistory.replace(regexForAnyRemainingCSSStyling, '');
+    if(tempHistory.length < 500 && firstIndex !== -1) {
+      text = text.replace('span class="mw-headline" id="', '');
+      return this.fixString(text, wordForHistory, language);
+    }
+    const history = tempHistory.split('----');
     return {history, furtherReading};
   }
 
@@ -137,12 +162,16 @@ export class WikiResultsService {
     let count = 1;
     for (const h of hrefs) {
       if (count <= 12 && !(h.getAttribute('href').charAt(0) === '#' ||
-        (h.getAttribute('title') && h.getAttribute('title').startsWith('Edit')))) {
+        h.getAttribute('title') && h.getAttribute('title').startsWith('Edit') ||
+        h.getAttribute('href').includes('=edit') || h.getAttribute('href').includes('.jpg') ||
+        h.getAttribute('href').includes('https://'))) {
         const name = h.getAttribute('title');
         let url = h.getAttribute('href').toString();
         url = 'https://'+ languageAbreviation +'.wikipedia.org' + url;
-        urls.set(url, name);
-        count++;
+        if(name){
+          urls.set(url, name);
+          count++;
+        }
       }
     }
     return urls;

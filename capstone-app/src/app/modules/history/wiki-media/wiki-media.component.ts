@@ -24,19 +24,17 @@ interface AllLanguages {
 })
 
 export class WikiMediaComponent implements OnChanges, OnInit {
-  history: string;
+  history: string[];
   title: string;
   error: string;
   destroy$ = new Subject<void>();
   loading = true;
-  body: string;
+  body: string[];
   urls = new Map();
   langlinks = new Map();
   languages: LanguageData = Languages as LanguageData;
   query: string;
-  prevQuery: string;
-  prevWordForHistory: string;
-  prevPreFix: string;
+  urlForAttribution: string;
 
   @Input() cityName!: string;
 
@@ -63,20 +61,19 @@ export class WikiMediaComponent implements OnChanges, OnInit {
     let isOldRequest = false;
     this.wikiService.search(queryString, 'en', 'History')
       .subscribe((result: WikiServiceResult) => {
-        this.error = '';
-        if (result.history && currentQuery === this.cityName) {
+        if (result.history) {
+          this.error = '';
           this.body = result.history;
           this.history = result.history;
           this.urls = result.furtherReading;
           this.title = result.title;
           this.loading = false;
           this.langlinks = result.langlinks;
-          this.prevWordForHistory = 'History';
-          this.prevPreFix = 'en';
+          this.urlForAttribution = 'https://en.wikipedia.org/wiki/' + result.originalSearchQuery;
         }
-        else if (!isOldRequest) {
-          this.error = 'API did not return a valid response.';
-          console.error('API did not return a valid response.');
+        else {
+          this.error = 'Unfortunately there is no history to display.';
+          this.urlForAttribution = '';
         }
     });
   }
@@ -86,48 +83,30 @@ export class WikiMediaComponent implements OnChanges, OnInit {
       .subscribe((result: WikiServiceResult) => {
         this.error = '';
         this.history = result.history;
-        if (!this.history){
-          this.loading = true;
-          this.error = 'Unfortunately, the language you requested does not have an available tranlation '
-          + 'for this page. Please select a different language.';
-        }
-        else {
+        if (this.history.length > 0) {
+          this.error = '';
           this.body = this.history;
           this.loading = false;
           this.title = result.title;
           this.urls = result.furtherReading;
+          this.urlForAttribution = 'https://' + languagePrefix + '.wikipedia.org/wiki/' + queryString;
           if(result.langlinks && result.langlinks.size > 0) {
               this.langlinks = result.langlinks;
           }
         }
-        if (this.history.includes('CPU time usage:')){
-          this.loading = false;
-          this.error = 'Unfortunately, the language you requested has not been fully translated. '
-          + 'The data being shown is what the Wikipedia page returned.';
+        else {
+          this.loading = true;
+          this.urlForAttribution = '';
+          this.error = 'Unfortunately, the language you requested does not have an available tranlation '
+          + 'for this page. Please select a different language.';
         }
     });
   }
 
   onChangeLanguage(prefix: string) {
-    if (prefix === this.prevPreFix) {
-      this.changeLanguage(this.prevQuery, this.prevPreFix, this.prevWordForHistory);
-    }
-    else if (prefix === 'en' && !this.langlinks.get('en')) {
-      this.prevPreFix = prefix;
-      const language = this.langlinks['ca'];
-      this.query = language['searchQuery'];
-      this.prevQuery = this.query;
-      this.prevWordForHistory = 'History';
-      this.changeLanguage(this.query, 'en', 'History');
-    }
-    else {
       const language = this.langlinks.get(prefix);
-      this.prevPreFix = prefix;
       this.query = language.get('searchQuery');
-      this.prevQuery = this.query;
       const wordForHistory = this.languages[prefix]['WordForHistory'];
-      this.prevWordForHistory = wordForHistory;
       this.changeLanguage(this.query, prefix, wordForHistory);
-    }
   }
 }

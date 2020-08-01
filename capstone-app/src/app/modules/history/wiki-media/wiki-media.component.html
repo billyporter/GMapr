@@ -4,9 +4,10 @@
       <mat-card-title class="history-title">
         {{title}}
       </mat-card-title>
-      <div class="text">
-      {{body}}
+      <div class="text" *ngFor="let paragraph of body">
+        <p>{{paragraph}}</p>
       </div>
+      <i>All the data above was obtained <a href="{{urlForAttribution}}" target="_blank"><u class="tag">here</u></a>.</i>
     </mat-card>
   </div>
   <mat-card class="more-reading">
