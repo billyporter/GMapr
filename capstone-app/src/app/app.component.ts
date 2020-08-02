@@ -14,12 +14,8 @@ export class AppComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
 
-  openDialog() {
-    this.dialog.open(ContentComponent);
-  }
-
   ngOnInit() {
-    this.openDialog();
+    this.dialog.open(ContentComponent);
   }
 
   updateActiveMarker(newActiveMarker: string) {

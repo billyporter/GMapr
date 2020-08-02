@@ -1,104 +1,18 @@
 <h1>Learn the Basics of GMapr</h1>
 
 <mat-dialog-content class="mat-typography">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          GMapr Description
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about GMapr
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[0]">
-      <p>GMapr provides a snapshot in history of cities from over seventy-five years ago.</p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Maps Search Bar
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about the Search bar
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[1]">
-      <p>Use the search bar to search up any city in the world</p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Map Custom Markers
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about map custom markers 
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[2]">
-      <p>
-        Click any on the map to create custom markers.
-        To remove custom marker either use the remove all custom marker button 
-        or right click the custom marker. 
-      </p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Map Type/Themes
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about Map Types and Themes
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[3]">
-      <p>
-        Use the Marker Types button to change the search marker type. 
-        Use the Map Theme button to change the map color theme.
-      </p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Photo Filter Button
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about the Photo filter button
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[4]">
-      <p>Use the filter button to display photos by marker type</p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Language Feature
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about Language Feature
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[5]">
-      <p>Use the languages button to change the display language of the History section</p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Further Reading
-        </mat-panel-title>
-        <mat-panel-description>
-          Learn more about Further Reading button
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <img [src]="displayyPhotos[6]">
-      <p>Click on the further reading button to learn about history topic spoken about in the History section</p>
-    </mat-expansion-panel>
-
-  </mat-accordion>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let panelObj of panelObjs">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{panelObj.title}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelObj.description}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <img [src]="panelObj.photos">
+    <p>{{panelObj.paragraph}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
 </mat-dialog-content>

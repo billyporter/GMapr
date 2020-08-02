@@ -9,15 +9,22 @@ img {
 
 @media only screen and (max-width: 600px) {
     mat-panel-title ::ng-deep {
+        flex: auto;
         font-size: 12px;
         height: fit-content;
+        line-height: 12px;
         margin: 0;
+        
     }
 
-    mat-panel-description ::ng-deep {
+    mat-panel-description ::ng-deep  {
+        flex: auto;
         font-size: 12px;
         height: fit-content;
+        line-height: 12px;
         margin: 0;
+        padding: 0;
+        width: fit-content;
     }
     
     mat-expansion-panel p {

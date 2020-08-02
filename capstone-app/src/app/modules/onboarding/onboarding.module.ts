@@ -1,19 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import { ContentComponent } from './content/content.component';
 import { MaterialModule } from '../material/material.module';
+import { OnboardComponent } from './onboard/onboard.component';
 
 @NgModule({
-  declarations: [ContentComponent],
+  declarations: [ContentComponent, OnboardComponent],
   imports: [
     CommonModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
     MaterialModule,
   ],
   exports: [ContentComponent]
