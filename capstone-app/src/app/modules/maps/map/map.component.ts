@@ -167,8 +167,8 @@ export class MapComponent implements OnInit, OnChanges {
       this.location = autoComplete.getPlace().geometry.location;
       this.cityLocation = autoComplete.getPlace().formatted_address;
       this.placesRequest.type = 'tourist_attraction';
-      this.placesRequestFunc(this.location);
       this.placeCitySharer.setCityName(this.cityLocation);
+      this.placesRequestFunc(this.location);
       this.changeDetector.detectChanges();
     });
   }
@@ -224,7 +224,6 @@ export class MapComponent implements OnInit, OnChanges {
         this.cityLocation = resultArr[0].formatted_address;
       }
       this.placeCitySharer.setCityName(this.cityLocation);
-      console.log(this.location);
       this.placesRequestFunc(this.location);
     });
   }
