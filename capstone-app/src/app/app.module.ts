@@ -25,6 +25,10 @@ import { OnboardingModule } from './modules/onboarding/onboarding.module';
     OnboardingModule,
     MaterialModule,
   ],
+  // providers: [
+  //   { provide: PhotoFetcher, useExisting: MockPhotoFetcher },
+  //   { provide: WikiSearchHandler, useExisting: MockWikiHandlerService}
+  // ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

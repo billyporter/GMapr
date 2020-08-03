@@ -7,7 +7,7 @@
       <mat-panel-title>
         {{panelObj.title}}
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description *ngIf="!ishidden">
         {{panelObj.description}}
       </mat-panel-description>
     </mat-expansion-panel-header>

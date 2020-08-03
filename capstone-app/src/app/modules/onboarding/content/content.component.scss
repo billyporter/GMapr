@@ -7,27 +7,8 @@ img {
     height: 400px;
 }
 
-@media only screen and (max-width: 600px) {
-    mat-panel-title ::ng-deep {
-        flex: auto;
-        font-size: 12px;
-        height: fit-content;
-        line-height: 12px;
-        margin: 0;
-        
-    }
-
-    mat-panel-description ::ng-deep  {
-        flex: auto;
-        font-size: 12px;
-        height: fit-content;
-        line-height: 12px;
-        margin: 0;
-        padding: 0;
-        width: fit-content;
-    }
-    
-    mat-expansion-panel p {
-        font-size: 12px;
+@media only screen and (min-width: 700px) and (max-width: 1000px) {
+    img {
+        width: 550px;
     }
 }
