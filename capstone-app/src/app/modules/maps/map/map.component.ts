@@ -176,22 +176,9 @@ export class MapComponent implements OnInit, OnChanges {
   placesRequestFunc(location: google.maps.LatLng) {
     this.placesRequest.location = this.location;
     this.nearSearch.nearbySearch(this.placesRequest, results => {
-      console.log(results);
-      if (this.placesRequest.location !== this.location) {
-        console.log(this.placesRequest.location + ' doesnt equal ' + this.location);
-        return;
-      }
-      let city;
-      this.placeCitySharer.getCityName().subscribe(cities => {
-        city = cities;
-      })
-      if (city !== this.cityLocation) {
-        return;
-      }
       // resetting data
       this.searchMarkers = [];
       this.markerData.clear();
-      console.log(this.location.toString());
       for (const result of results) {
        
         this.searchMarkers.push(this.createMarker(result));
