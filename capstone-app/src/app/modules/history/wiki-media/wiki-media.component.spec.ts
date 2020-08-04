@@ -17,6 +17,8 @@ describe('WikiMediaComponent', () => {
   let fixture: ComponentFixture<WikiMediaComponent>;
   let testWikiServiceResponse: WikiServiceResult;
   let testWikiGermanServiceResponse: WikiServiceResult;
+  let testEmptyResponse: WikiServiceResult;
+  let mockResponse: WikiServiceResult;
 
   beforeEach(async(() => {
     testWikiServiceResponse = {
@@ -66,7 +68,13 @@ describe('WikiMediaComponent', () => {
     germanLangLinks.set('es', es);
     testWikiGermanServiceResponse.langlinks = germanLangLinks;
 
-    const mockResponse: WikiServiceResult = {
+    testEmptyResponse = {
+          title: 'Ney York City',
+          history: [],
+          langlinks: new Map()
+      }
+
+  mockResponse = {
       title: MockWikiServiceResponse.title,
       history: MockWikiServiceResponse.history,
       furtherReading: new Map(Object.entries(MockWikiServiceResponse.furtherReading)),
@@ -187,5 +195,10 @@ describe('WikiMediaComponent', () => {
       expect(component.langlinks).toEqual(testWikiGermanServiceResponse.langlinks);
     });
 
+    it('history is empty, error message is set correctly', () => {
+      mockResponse.history = null;
+      component.getResults('New York City');
+      expect(component.error).toEqual('Unfortunately there is no history to display.');
+    });
   });
 });
