@@ -1,0 +1,14 @@
+h1 {
+    align-items: center;
+    text-align: center;
+}
+
+img {
+    height: 400px;
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1000px) {
+    .onboard-photos {
+        width: 550px;
+    }
+}

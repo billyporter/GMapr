@@ -1,0 +1,18 @@
+<h1>Learn the Basics of GMapr</h1>
+
+<mat-dialog-content class="mat-typography">
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let panelObj of panelObjs">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{panelObj.title}}
+      </mat-panel-title>
+      <mat-panel-description *ngIf="!ishidden">
+        {{panelObj.description}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <img class="onboard-photos" [src]="panelObj.photos">
+    <p>{{panelObj.paragraph}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+</mat-dialog-content>

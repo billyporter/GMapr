@@ -19,6 +19,7 @@
     "@angular/fire": "^6.0.0",
     "@angular/forms": "~9.1.9",
     "@angular/google-maps": "^9.2.4",
+    "@angular/localize": "~9.1.9",
     "@angular/material": "^9.2.4",
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
