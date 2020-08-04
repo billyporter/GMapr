@@ -195,7 +195,7 @@ describe('WikiMediaComponent', () => {
       expect(component.error).toEqual('Unfortunately there is no history to display.');
     });
 
-    fit('if history on langChange is empty, correct message is set', () => {
+    it('if history on langChange is empty, correct message is set', () => {
       mockGermanResponse.history = [];
       component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
       expect(component.error).toEqual('Unfortunately, the language you requested does not have an available tranlation '
