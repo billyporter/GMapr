@@ -7,8 +7,8 @@ import { panelObject } from './../assets/panelObject';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-  computerPhotos = ['assets/gmaprGen.gif', 'assets/mapsSearchbar.gif', 'assets/markerCustomBetter.gif',
-    'assets/mapTypeThemes.gif', 'assets/markerPhotos.gif', 'assets/photos.gif', 'assets/language.gif', 'assets/furtherReading.gif'];
+  computerPhotos = ['assets/gmaprShort.gif', 'assets/mapsSearchbar.gif', 'assets/markerCustomBetter.gif',
+    'assets/mapTypeThemes.gif', 'assets/markerPhotos.gif', 'assets/photoShort.gif', 'assets/language.gif', 'assets/furtherReadShort.gif'];
   mobilePhotos = ['assets/mobileGmapr.gif', 'assets/mobileSearch.gif', 'assets/mobileCustomMark.gif',
   'assets/mobileMapTheme.gif', 'assets/moblieMarkerPhotos.gif', 'assets/mobilePhotos.gif', 'assets/mobileLanguage.gif', 'assets/mobileFurtherReading.gif'];  
   displayPhotos: string[] = [];
