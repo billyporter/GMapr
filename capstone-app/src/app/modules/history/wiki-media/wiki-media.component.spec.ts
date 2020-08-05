@@ -17,6 +17,8 @@ describe('WikiMediaComponent', () => {
   let fixture: ComponentFixture<WikiMediaComponent>;
   let testWikiServiceResponse: WikiServiceResult;
   let testWikiGermanServiceResponse: WikiServiceResult;
+  let mockResponse: WikiServiceResult;
+  let mockGermanResponse: WikiServiceResult;
 
   beforeEach(async(() => {
     testWikiServiceResponse = {
@@ -66,7 +68,7 @@ describe('WikiMediaComponent', () => {
     germanLangLinks.set('es', es);
     testWikiGermanServiceResponse.langlinks = germanLangLinks;
 
-    const mockResponse: WikiServiceResult = {
+  mockResponse = {
       title: MockWikiServiceResponse.title,
       history: MockWikiServiceResponse.history,
       furtherReading: new Map(Object.entries(MockWikiServiceResponse.furtherReading)),
@@ -82,7 +84,7 @@ describe('WikiMediaComponent', () => {
       mockResponse.langlinks.set(lang, links);
     }
 
-    const mockGermanResponse: WikiServiceResult = {
+    mockGermanResponse = {
       title: MockWikiServiceGermanResponse.title,
       history: MockWikiServiceGermanResponse.history,
       furtherReading: new Map(Object.entries(MockWikiServiceGermanResponse.furtherReading)),
@@ -187,5 +189,17 @@ describe('WikiMediaComponent', () => {
       expect(component.langlinks).toEqual(testWikiGermanServiceResponse.langlinks);
     });
 
+    it('history is empty, error message is set correctly', () => {
+      mockResponse.history = null;
+      component.getResults('New York City');
+      expect(component.error).toEqual('Unfortunately there is no history to display.');
+    });
+
+    it('if history on langChange is empty, correct message is set', () => {
+      mockGermanResponse.history = [];
+      component.changeLanguage('Stillwater, (Oklahoma)', 'de', 'Geschichte');
+      expect(component.error).toEqual('Unfortunately, the language you requested does not have an available tranlation '
+      + 'for this page. Please select a different language.');
+    });
   });
 });

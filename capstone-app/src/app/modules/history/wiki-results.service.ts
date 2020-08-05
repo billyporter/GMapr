@@ -136,7 +136,7 @@ export class WikiResultsService {
     const regexForRefrenceNumbers = /\[[\s\S]+?]/gi;
     const regexForAnyRemainingCSSStyling = /.mw-[\s\S]+?}/gi;
     const regexForDivStyleTags = /<div style=[\s\S]*?<\/div>/gi;
-    const regexForQuoteBox = /<div class="quotebox [\s\S]+?<\/p>/gi;
+    const regexForQuoteBox = /<div class="quotebox [\s\S]+?p>/gi;
     tempHistory = tempHistory.replace(regexCaptions, '').replace(regexParsing, '').replace(regexForCatLinks, '>');
     tempHistory = tempHistory.replace(regexForOLists, '').replace(regexForULists, '').replace(regexForDabLinks, '');
     tempHistory = tempHistory.replace(regexForTables, '').replace(regexForNotes, '');
